@@ -1,7 +1,8 @@
 ﻿using MovieBookingApi.Context;
 using MovieBookingApi.Iterfaces;
 using MovieBookingApi.Models;
-using System.Data.Entity;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieBookingApi.Repositories
 {

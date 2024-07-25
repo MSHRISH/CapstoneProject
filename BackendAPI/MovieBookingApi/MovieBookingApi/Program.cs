@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieBookingApi.Iterfaces;
 using MovieBookingApi.Repositories;
 using MovieBookingApi.Models;
+using MovieBookingApi.Services;
 
 
 namespace MovieBookingApi
@@ -44,6 +45,11 @@ namespace MovieBookingApi
             builder.Services.AddScoped<IRepository<int, Ticket>, TicketRepository>();
             builder.Services.AddScoped<IRepository<int, User>, UserRepository>();
             builder.Services.AddScoped<IRepository<int, UserAuth>, UserAuthRepository>();
+            #endregion
+
+            #region Services
+            builder.Services.AddScoped<IAuthenticationServices, AuthenticationServices>();
+            builder.Services.AddScoped<ITokenServices, TokenServices>();
             #endregion
 
             var app = builder.Build();

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MovieBookingApi.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MovieBookingApi.Context
 {
@@ -41,7 +43,11 @@ namespace MovieBookingApi.Context
 
             modelBuilder.Entity<Movie>(ConfigureMovie);
             modelBuilder.Entity<CastCrew>(ConfigureCastCrew);
+            
+            //Artists
             modelBuilder.Entity<Artist>(ConfigureArtist);
+            BuildArtists(modelBuilder);
+
             modelBuilder.Entity<Theater>(ConfigureTheater);
             modelBuilder.Entity<Screen>(ConfigureScreen);
             modelBuilder.Entity<ScreenSchema>(ConfigureScreenSchema);
@@ -50,8 +56,13 @@ namespace MovieBookingApi.Context
             modelBuilder.Entity<Booking>(ConfigureBooking);
             modelBuilder.Entity<Snack>(ConfigureSnack);
             modelBuilder.Entity<SnackOrder>(ConfigureSnackOrder);
+            
+            //Admin
             modelBuilder.Entity<Admin>(ConfigureAdmin);
+            BuildAdmin(modelBuilder);
             modelBuilder.Entity<AdminAuth>(ConfigureAdminAuth);
+            BuildAdminAuth(modelBuilder);
+
             modelBuilder.Entity<User>(ConfigureUser);
             modelBuilder.Entity<UserAuth>(ConfigureUserAuth);
         }
@@ -260,7 +271,12 @@ namespace MovieBookingApi.Context
             builder.HasOne(a => a.AdminAuth)
                 .WithOne(aa => aa.Admin)
                 .HasForeignKey<AdminAuth>(aa => aa.AdminId);
-                
+        }
+        private void BuildAdmin(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Admin>().HasData(
+                new Admin { Id=1, Name="Shrish", Email="Shrish@gmail.com"}
+                );
         }
 
         private void ConfigureAdminAuth(EntityTypeBuilder<AdminAuth> builder)
@@ -273,6 +289,16 @@ namespace MovieBookingApi.Context
                 .WithOne(a => a.AdminAuth)
                 .HasForeignKey<AdminAuth>(aa => aa.AdminId);
                 
+        }
+
+        private void BuildAdminAuth(ModelBuilder modelBuilder)
+        {
+            var password = "string";
+            HMACSHA512 hMACSHA = new HMACSHA512();
+
+            modelBuilder.Entity<AdminAuth>().HasData(
+                new AdminAuth { Id=1, AdminId=1, PasswordHashKey= hMACSHA.Key, PasswordHash= hMACSHA.ComputeHash(Encoding.UTF8.GetBytes(password)) }
+                );
         }
         private void ConfigureUser(EntityTypeBuilder<User> builder)
         {

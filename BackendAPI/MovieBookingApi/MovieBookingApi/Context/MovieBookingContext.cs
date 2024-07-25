@@ -27,9 +27,18 @@ namespace MovieBookingApi.Context
         public DbSet<UserAuth> UserAuths { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Format
             modelBuilder.Entity<Format>(ConfigureFormat);
+            BuildFormats(modelBuilder);
+
+            //Language
             modelBuilder.Entity<Language>(ConfigureLanguage);
+            BuildLanguages(modelBuilder);
+            
+            //Certification
             modelBuilder.Entity<Certification>(ConfigureCertification);
+            BuildCertifications(modelBuilder);
+
             modelBuilder.Entity<Movie>(ConfigureMovie);
             modelBuilder.Entity<CastCrew>(ConfigureCastCrew);
             modelBuilder.Entity<Artist>(ConfigureArtist);
@@ -51,15 +60,42 @@ namespace MovieBookingApi.Context
             builder.HasKey(f => f.Id);
             builder.Property(f => f.FormatName).IsRequired();
         }
+        private void BuildFormats(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Format>().HasData(
+                new Format {Id=1, FormatName = "2D" },
+                new Format { Id=2, FormatName = "3D" },
+                new Format { Id=3, FormatName = "IMAX" }
+                );
+        }
         private void ConfigureLanguage(EntityTypeBuilder<Language> builder)
         {
             builder.HasKey(l => l.Id);
             builder.Property(l => l.LanguageName).IsRequired();
         }
+
+        private void BuildLanguages(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Language>().HasData(
+                new Language { Id=1, LanguageName="English"},
+                new Language { Id=2, LanguageName="Tamil"},
+                new Language { Id=3, LanguageName="Hindi"},
+                new Language { Id=4, LanguageName="Japanese"}
+                );
+        }
         private void ConfigureCertification(EntityTypeBuilder<Certification> builder)
         {
             builder.HasKey(c => c.Id);
             builder.Property(c => c.CertificateType).IsRequired();
+        }
+
+        private void BuildCertifications(ModelBuilder modelBuilder) 
+        {
+            modelBuilder.Entity<Certification>().HasData(
+                new Certification { Id=1, CertificateType="U"},
+                new Certification { Id=2, CertificateType="U/A"},
+                new Certification { Id=3, CertificateType="A"}
+                );
         }
         private void ConfigureMovie(EntityTypeBuilder<Movie> builder)
         {
@@ -100,6 +136,15 @@ namespace MovieBookingApi.Context
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Name).IsRequired();
             builder.Property(a => a.About).IsRequired(false);
+        }
+
+        private void BuildArtists(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Artist>().HasData(
+                new Artist { Id=1, Name="Brad Pitt", About="Great Actor."},
+                new Artist { Id=2, Name="Edward Norton", About="Great Actor."},
+                new Artist { Id=3, Name="David Fincher", About="Great Director."}
+                );
         }
         private void ConfigureTheater(EntityTypeBuilder<Theater> builder)
         {
@@ -250,7 +295,6 @@ namespace MovieBookingApi.Context
             builder.HasOne(ua => ua.User)
                 .WithOne(u => u.UserAuth)
                 .HasForeignKey<UserAuth>(ua => ua.UserId);
-                
         }
     }
 }

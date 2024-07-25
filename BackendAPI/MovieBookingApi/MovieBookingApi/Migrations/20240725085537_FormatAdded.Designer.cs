@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieBookingApi.Context;
 
@@ -11,9 +12,10 @@ using MovieBookingApi.Context;
 namespace MovieBookingApi.Migrations
 {
     [DbContext(typeof(MovieBookingContext))]
-    partial class MovieBookingContextModelSnapshot : ModelSnapshot
+    [Migration("20240725085537_FormatAdded")]
+    partial class FormatAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,23 +172,6 @@ namespace MovieBookingApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Certifications");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CertificateType = "U"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CertificateType = "U/A"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CertificateType = "A"
-                        });
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.Format", b =>
@@ -209,17 +194,17 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 1,
-                            FormatName = "2D"
+                            FormatName = "U"
                         },
                         new
                         {
                             Id = 2,
-                            FormatName = "3D"
+                            FormatName = "U/A"
                         },
                         new
                         {
                             Id = 3,
-                            FormatName = "IMAX"
+                            FormatName = "A"
                         });
                 });
 
@@ -238,28 +223,6 @@ namespace MovieBookingApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Languages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            LanguageName = "English"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            LanguageName = "Tamil"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            LanguageName = "Hindi"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            LanguageName = "Japanese"
-                        });
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.Movie", b =>

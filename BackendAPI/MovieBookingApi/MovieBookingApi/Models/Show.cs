@@ -1,4 +1,7 @@
-﻿namespace MovieBookingApi.Models
+﻿using MovieBookingApi.Models.MovieModels;
+using MovieBookingApi.Models.TheaterModels;
+
+namespace MovieBookingApi.Models
 {
     public class Show
     {

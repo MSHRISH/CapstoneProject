@@ -2,19 +2,19 @@
 using MovieBookingApi.Execptions;
 using MovieBookingApi.Iterfaces;
 using MovieBookingApi.Models;
-using MovieBookingApi.Models.DTOs;
+using MovieBookingApi.Models.DTOs.AccessDTOs;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace MovieBookingApi.Services
 {
-    public class AuthenticationServices:IAuthenticationServices
+    public class AccessServices:IAccessServices
     {
         private readonly IRepository<int, Admin> _adminRepository;
         private readonly IRepository<int, AdminAuth> _adminAuthRepository;
         private readonly ITokenServices _tokenServices;
 
-        public AuthenticationServices(IRepository<int,Admin> adminRepository, IRepository<int,AdminAuth> adminAuthRepository, 
+        public AccessServices(IRepository<int,Admin> adminRepository, IRepository<int,AdminAuth> adminAuthRepository, 
                                         ITokenServices tokenServices) 
         {
             _adminRepository=adminRepository;

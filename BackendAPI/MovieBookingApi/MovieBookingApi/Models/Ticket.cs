@@ -1,4 +1,6 @@
-﻿namespace MovieBookingApi.Models
+﻿using MovieBookingApi.Models.TheaterModels;
+
+namespace MovieBookingApi.Models
 {
     public class Ticket
     {
@@ -6,6 +8,6 @@
         public int BookingId { get; set; }
         public Booking Booking { get; set; }
         public int SeatId { get; set; }
-        public ScreenSchema Seat { get; set; }
+        public SchemaLayout Seat { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MovieBookingApi.Models;
+using MovieBookingApi.Models.MovieModels;
+using MovieBookingApi.Models.TheaterModels;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -13,11 +15,12 @@ namespace MovieBookingApi.Context
         public DbSet<Language> Languages { get; set; }
         public DbSet<Certification> Certifications { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<MemberType> MemberTypes { get; set; }
         public DbSet<CastCrew> CastCrews { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Theater> Theaters { get; set; }
         public DbSet<Screen> Screens { get; set; }
-        public DbSet<ScreenSchema> ScreenSchemas { get; set; }
+        public DbSet<SchemaLayout> ScreenSchemas { get; set; }
         public DbSet<Show> Shows { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Booking> Bookings { get; set; }
@@ -43,14 +46,18 @@ namespace MovieBookingApi.Context
 
             modelBuilder.Entity<Movie>(ConfigureMovie);
             modelBuilder.Entity<CastCrew>(ConfigureCastCrew);
-            
+
+            //MemberTypes (i.e Cast/Crew)
+            modelBuilder.Entity<MemberType>(ConfigureMemberType);
+            BuildMemberTypes(modelBuilder);
+
             //Artists
             modelBuilder.Entity<Artist>(ConfigureArtist);
             BuildArtists(modelBuilder);
 
             modelBuilder.Entity<Theater>(ConfigureTheater);
             modelBuilder.Entity<Screen>(ConfigureScreen);
-            modelBuilder.Entity<ScreenSchema>(ConfigureScreenSchema);
+            modelBuilder.Entity<SchemaLayout>(ConfigureScreenSchema);
             modelBuilder.Entity<Show>(ConfigureShow);
             modelBuilder.Entity<Ticket>(ConfigureTicket);
             modelBuilder.Entity<Booking>(ConfigureBooking);
@@ -66,6 +73,20 @@ namespace MovieBookingApi.Context
             modelBuilder.Entity<User>(ConfigureUser);
             modelBuilder.Entity<UserAuth>(ConfigureUserAuth);
         }
+
+        private void ConfigureMemberType(EntityTypeBuilder<MemberType> builder)
+        {
+            builder.HasKey(mt => mt.Id);
+            builder.Property(mt => mt.MemberName).IsRequired();
+        }
+        private void BuildMemberTypes(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<MemberType>().HasData(
+                new MemberType { Id=1, MemberName="Cast"},
+                new MemberType { Id=2, MemberName="Crew"}
+                );
+        }
+
         private void ConfigureFormat(EntityTypeBuilder<Format> builder)
         {
             builder.HasKey(f => f.Id);
@@ -177,7 +198,7 @@ namespace MovieBookingApi.Context
                 .WithMany(t => t.Screens)
                 .HasForeignKey(s => s.TheaterId);
         }
-        private void ConfigureScreenSchema(EntityTypeBuilder<ScreenSchema> builder)
+        private void ConfigureScreenSchema(EntityTypeBuilder<SchemaLayout> builder)
         {
             builder.HasKey(ss => ss.Id);
             builder.Property(ss => ss.Row).IsRequired();

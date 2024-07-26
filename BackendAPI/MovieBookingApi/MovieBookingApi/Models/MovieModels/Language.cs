@@ -1,4 +1,4 @@
-﻿namespace MovieBookingApi.Models
+﻿namespace MovieBookingApi.Models.MovieModels
 {
     public class Language
     {

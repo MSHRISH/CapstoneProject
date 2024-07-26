@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieBookingApi.Iterfaces;
 using MovieBookingApi.Models;
-using MovieBookingApi.Models.DTOs;
+using MovieBookingApi.Models.DTOs.AccessDTOs;
 
 namespace MovieBookingApi.Controllers
 {
-    public class AuthenticationController : Controller
+    public class AccessController : Controller
     {
-        private readonly IAuthenticationServices _authenticationServices;
+        private readonly IAccessServices _authenticationServices;
 
-        public AuthenticationController(IAuthenticationServices authenticationServices) 
+        public AccessController(IAccessServices authenticationServices) 
         {
             _authenticationServices=authenticationServices;
         }

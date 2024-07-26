@@ -1,4 +1,6 @@
-﻿namespace MovieBookingApi.Models
+﻿using MovieBookingApi.Models.TheaterModels;
+
+namespace MovieBookingApi.Models
 {
     public class Snack
     {

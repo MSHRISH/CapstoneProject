@@ -1,10 +1,10 @@
-﻿namespace MovieBookingApi.Models
+﻿namespace MovieBookingApi.Models.TheaterModels
 {
-    public class ScreenSchema
+    public class SchemaLayout
     {
         public int Id { get; set; }
-        public int ScreenId { get; set; }
-        public Screen Screen { get; set; }
+        public int SchemaId { get; set; }
+        public Schema Schema { get; set; }
         public int Row { get; set; }
         public string Column { get; set; }
         public bool IsSeat { get; set; }

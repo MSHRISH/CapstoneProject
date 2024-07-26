@@ -1,8 +1,8 @@
-﻿using MovieBookingApi.Models.DTOs;
+﻿using MovieBookingApi.Models.DTOs.AccessDTOs;
 
 namespace MovieBookingApi.Iterfaces
 {
-    public interface IAuthenticationServices
+    public interface IAccessServices
     {
         public Task<TokenDTO> LoginAdmin(LoginDTO loginDTO);
     }

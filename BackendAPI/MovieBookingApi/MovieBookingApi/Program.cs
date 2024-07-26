@@ -4,6 +4,8 @@ using MovieBookingApi.Iterfaces;
 using MovieBookingApi.Repositories;
 using MovieBookingApi.Models;
 using MovieBookingApi.Services;
+using MovieBookingApi.Models.MovieModels;
+using MovieBookingApi.Models.TheaterModels;
 
 
 namespace MovieBookingApi
@@ -37,7 +39,7 @@ namespace MovieBookingApi
             builder.Services.AddScoped<IRepository<int, Language>, LanguageRepository>();
             builder.Services.AddScoped<IRepository<int, Movie>, MovieRepository>();
             builder.Services.AddScoped<IRepository<int, Screen>, ScreenRepository>();
-            builder.Services.AddScoped<IRepository<int, ScreenSchema>, ScreenSchemaRepository>();
+            builder.Services.AddScoped<IRepository<int, SchemaLayout>, ScreenSchemaRepository>();
             builder.Services.AddScoped<IRepository<int, Show>, ShowRepository>();
             builder.Services.AddScoped<IRepository<int, Snack>, SnackRepository>();
             builder.Services.AddScoped<IRepository<int, SnackOrder>, SnackOrdersRepository>();
@@ -48,8 +50,9 @@ namespace MovieBookingApi
             #endregion
 
             #region Services
-            builder.Services.AddScoped<IAuthenticationServices, AuthenticationServices>();
+            builder.Services.AddScoped<IAccessServices, AccessServices>();
             builder.Services.AddScoped<ITokenServices, TokenServices>();
+            builder.Services.AddScoped<IMovieServices, MovieServices>();
             #endregion
 
             var app = builder.Build();

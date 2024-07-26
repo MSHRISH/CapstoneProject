@@ -1,4 +1,4 @@
-﻿namespace MovieBookingApi.Models.DTOs
+﻿namespace MovieBookingApi.Models.DTOs.AccessDTOs
 {
     public class LoginDTO
     {

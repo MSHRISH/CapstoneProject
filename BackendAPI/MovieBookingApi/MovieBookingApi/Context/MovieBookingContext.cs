@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MovieBookingApi.Models;
 using MovieBookingApi.Models.MovieModels;
 using MovieBookingApi.Models.TheaterModels;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Security.Cryptography;
 using System.Text;
+using System;
 
 namespace MovieBookingApi.Context
 {
@@ -20,6 +23,7 @@ namespace MovieBookingApi.Context
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Theater> Theaters { get; set; }
         public DbSet<Screen> Screens { get; set; }
+        public DbSet<Schema> Schemas { get; set; }
         public DbSet<SchemaLayout> ScreenSchemas { get; set; }
         public DbSet<Show> Shows { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
@@ -55,9 +59,22 @@ namespace MovieBookingApi.Context
             modelBuilder.Entity<Artist>(ConfigureArtist);
             BuildArtists(modelBuilder);
 
+            //Theater
             modelBuilder.Entity<Theater>(ConfigureTheater);
+            BuildTheaters(modelBuilder);
+
+            //Schemas
+            modelBuilder.Entity<Schema>(ConfigureSchema);
+            BuildSchemas(modelBuilder);
+
+            //Screens
             modelBuilder.Entity<Screen>(ConfigureScreen);
+            BuildScreens(modelBuilder);
+            
+            //ScreenLayout
             modelBuilder.Entity<SchemaLayout>(ConfigureScreenSchema);
+            BuildSchemaLayout(modelBuilder);
+
             modelBuilder.Entity<Show>(ConfigureShow);
             modelBuilder.Entity<Ticket>(ConfigureTicket);
             modelBuilder.Entity<Booking>(ConfigureBooking);
@@ -74,6 +91,7 @@ namespace MovieBookingApi.Context
             modelBuilder.Entity<UserAuth>(ConfigureUserAuth);
         }
 
+  
         private void ConfigureMemberType(EntityTypeBuilder<MemberType> builder)
         {
             builder.HasKey(mt => mt.Id);
@@ -186,17 +204,49 @@ namespace MovieBookingApi.Context
             builder.Property(t => t.Address).IsRequired();
             builder.Property(t => t.District).IsRequired();
         }
+        private void BuildTheaters(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Theater>().HasData(
+                new Theater { Id=1, Name="INOX Theater", Phone="1231231231", Address="xyz,xxx", District="Chennai"},
+                new Theater { Id=2, Name="Rohini Theater", Phone="1234123434", Address="asd,asd", District="Chennai"},
+                new Theater { Id=3, Name="Theater X", Phone="1234512345", Address="qwe,asd", District="Chennai"}
+                );
+        }
+
         private void ConfigureScreen(EntityTypeBuilder<Screen> builder)
         {
             builder.HasKey(s => s.Id);
             builder.Property(s => s.ScreenName).IsRequired();
-            builder.Property(s => s.DimensionRow).IsRequired();
-            builder.Property(s => s.DimensionColumn).IsRequired();
-            builder.Property(s => s.SeatingCapacity).IsRequired();
+
 
             builder.HasOne(s => s.Theater)
                 .WithMany(t => t.Screens)
                 .HasForeignKey(s => s.TheaterId);
+
+            builder.HasOne(s => s.Schema)
+                .WithMany(sc => sc.Screens)
+                .HasForeignKey(s => s.SchemaId);
+        }
+
+        private void BuildScreens(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Screen>().HasData(
+                new Screen { Id=1, ScreenName="Screen 1", TheaterId=1, SchemaId=1}
+                );
+        }
+        private void ConfigureSchema(EntityTypeBuilder<Schema> builder)
+        {
+            builder.HasKey(s => s.Id);
+            builder.Property(s => s.Name).IsRequired();
+            builder.Property(s => s.RowDimension).IsRequired();
+            builder.Property(s => s.ColumnDimension).IsRequired();
+        }
+
+        private void BuildSchemas(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Schema>().HasData(
+                new Schema { Id=1, Name="Schema 1", RowDimension=15, ColumnDimension=16}
+                );
         }
         private void ConfigureScreenSchema(EntityTypeBuilder<SchemaLayout> builder)
         {
@@ -206,9 +256,29 @@ namespace MovieBookingApi.Context
             builder.Property(ss => ss.IsSeat).IsRequired();
             builder.Property(ss => ss.Price).IsRequired();
 
-            builder.HasOne(ss => ss.Screen)
-                .WithMany(s => s.ScreenSchemas)
-                .HasForeignKey(ss => ss.ScreenId);
+            builder.HasOne(sl => sl.Schema)
+                .WithMany(s => s.Layouts)
+                .HasForeignKey(sl => sl.SchemaId);
+        }
+
+        private void BuildSchemaLayout(ModelBuilder modelBuilder)
+        {
+            int id = 1;
+            for (int row = 1; row < 15; row++)
+            {
+                for (int column = 0; column < 16; column++)
+                {
+                    bool IsSeat = true;
+                    if(row == 10 || row == 11 || column == 7 || column == 8)
+                    {
+                        IsSeat = false;
+                    }
+                    modelBuilder.Entity<SchemaLayout>().HasData(
+                        new SchemaLayout { Id = id, Row = row, Column = column, Price = 100, IsSeat = IsSeat, SchemaId = 1 }
+                        );
+                    id++;
+                }
+            }
         }
         private void ConfigureShow(EntityTypeBuilder<Show> builder)
         {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieBookingApi.Context;
 
@@ -11,9 +12,10 @@ using MovieBookingApi.Context;
 namespace MovieBookingApi.Migrations
 {
     [DbContext(typeof(MovieBookingContext))]
-    partial class MovieBookingContextModelSnapshot : ModelSnapshot
+    [Migration("20240729064009_ScreenSchemaInjection")]
+    partial class ScreenSchemaInjection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,8 +84,8 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 1,
                             AdminId = 1,
-                            PasswordHash = new byte[] { 150, 94, 223, 60, 118, 235, 216, 76, 183, 14, 150, 90, 115, 204, 226, 151, 13, 55, 158, 120, 217, 205, 71, 191, 138, 130, 111, 232, 238, 13, 145, 59, 140, 191, 139, 202, 255, 37, 237, 76, 182, 94, 91, 237, 214, 112, 249, 83, 251, 161, 103, 74, 242, 218, 144, 195, 44, 110, 31, 192, 75, 3, 157, 105 },
-                            PasswordHashKey = new byte[] { 245, 227, 41, 189, 6, 120, 56, 139, 41, 68, 202, 208, 54, 151, 76, 230, 232, 163, 223, 54, 232, 23, 45, 192, 13, 12, 31, 17, 74, 202, 220, 158, 113, 172, 190, 116, 234, 145, 212, 221, 212, 49, 210, 88, 13, 106, 217, 4, 172, 80, 236, 44, 230, 78, 180, 158, 67, 40, 124, 45, 0, 8, 231, 171, 76, 35, 4, 78, 230, 241, 43, 136, 152, 85, 255, 110, 64, 215, 108, 47, 140, 35, 202, 162, 41, 191, 85, 252, 234, 53, 206, 123, 174, 198, 49, 58, 92, 85, 187, 118, 74, 210, 45, 131, 52, 125, 131, 76, 162, 110, 89, 52, 235, 114, 24, 205, 233, 215, 28, 141, 241, 12, 222, 12, 150, 15, 198, 184 }
+                            PasswordHash = new byte[] { 238, 158, 143, 65, 74, 113, 206, 126, 66, 142, 166, 62, 49, 33, 237, 162, 65, 230, 138, 254, 166, 236, 119, 222, 233, 229, 239, 228, 47, 42, 165, 186, 234, 79, 94, 253, 61, 143, 251, 164, 135, 225, 137, 237, 47, 57, 193, 81, 5, 251, 99, 201, 145, 66, 75, 78, 166, 138, 65, 139, 180, 250, 129, 235 },
+                            PasswordHashKey = new byte[] { 80, 86, 251, 104, 219, 19, 170, 2, 132, 163, 205, 83, 164, 96, 65, 219, 231, 42, 39, 40, 147, 130, 254, 22, 40, 12, 246, 101, 39, 69, 174, 215, 185, 129, 245, 143, 102, 204, 189, 189, 67, 35, 245, 223, 10, 20, 5, 48, 70, 96, 181, 13, 32, 17, 120, 204, 137, 168, 22, 183, 188, 31, 253, 69, 74, 238, 40, 106, 254, 151, 81, 89, 212, 211, 139, 193, 219, 214, 91, 156, 170, 29, 25, 10, 149, 82, 105, 22, 138, 231, 17, 215, 33, 109, 58, 245, 27, 43, 234, 70, 107, 54, 232, 90, 31, 145, 192, 75, 60, 154, 205, 119, 165, 222, 215, 190, 80, 121, 87, 141, 164, 200, 123, 28, 5, 166, 84, 235 }
                         });
                 });
 
@@ -535,7 +537,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 1,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -544,7 +546,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 2,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -553,7 +555,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 3,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -562,7 +564,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 4,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -571,7 +573,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 5,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -580,7 +582,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 6,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -589,7 +591,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 7,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -598,7 +600,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 8,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -607,7 +609,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 9,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -616,7 +618,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 10,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -625,7 +627,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 11,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -634,7 +636,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 12,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -643,7 +645,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 13,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -652,7 +654,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 14,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -661,7 +663,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 15,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -670,7 +672,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 16,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -679,7 +681,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 17,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -688,7 +690,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 18,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -697,7 +699,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 19,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -706,7 +708,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 20,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -715,7 +717,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 21,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -724,7 +726,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 22,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -733,7 +735,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 23,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -742,7 +744,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 24,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -751,7 +753,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 25,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -760,7 +762,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 26,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -769,7 +771,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 27,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -778,7 +780,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 28,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -787,7 +789,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 29,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -796,7 +798,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 30,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -805,7 +807,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 31,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -814,7 +816,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 32,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 2,
                             SchemaId = 1
@@ -823,7 +825,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 33,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -832,7 +834,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 34,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -841,7 +843,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 35,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -850,7 +852,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 36,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -859,7 +861,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 37,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -868,7 +870,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 38,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -877,7 +879,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 39,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -886,7 +888,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 40,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -895,7 +897,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 41,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -904,7 +906,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 42,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -913,7 +915,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 43,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -922,7 +924,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 44,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -931,7 +933,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 45,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -940,7 +942,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 46,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -949,7 +951,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 47,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -958,7 +960,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 48,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -967,7 +969,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 49,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -976,7 +978,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 50,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -985,7 +987,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 51,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -994,7 +996,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 52,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1003,7 +1005,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 53,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1012,7 +1014,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 54,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1021,7 +1023,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 55,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1030,7 +1032,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 56,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1039,7 +1041,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 57,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1048,7 +1050,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 58,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1057,7 +1059,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 59,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1066,7 +1068,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 60,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1075,7 +1077,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 61,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1084,7 +1086,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 62,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1093,7 +1095,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 63,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1102,7 +1104,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 64,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1111,7 +1113,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 65,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1120,7 +1122,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 66,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1129,7 +1131,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 67,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1138,7 +1140,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 68,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1147,7 +1149,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 69,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1156,7 +1158,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 70,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1165,7 +1167,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 71,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1174,7 +1176,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 72,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1183,7 +1185,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 73,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1192,7 +1194,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 74,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1201,7 +1203,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 75,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1210,7 +1212,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 76,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1219,7 +1221,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 77,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1228,7 +1230,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 78,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1237,7 +1239,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 79,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1246,7 +1248,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 80,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1255,7 +1257,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 81,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1264,7 +1266,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 82,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1273,7 +1275,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 83,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1282,7 +1284,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 84,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1291,7 +1293,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 85,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1300,7 +1302,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 86,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1309,7 +1311,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 87,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1318,7 +1320,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 88,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1327,7 +1329,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 89,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1336,7 +1338,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 90,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1345,7 +1347,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 91,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1354,7 +1356,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 92,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1363,7 +1365,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 93,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1372,7 +1374,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 94,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1381,7 +1383,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 95,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1390,7 +1392,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 96,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1399,7 +1401,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 97,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1408,7 +1410,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 98,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1417,7 +1419,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 99,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1426,7 +1428,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 100,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1435,7 +1437,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 101,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1444,7 +1446,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 102,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1453,7 +1455,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 103,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1462,7 +1464,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 104,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1471,7 +1473,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 105,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1480,7 +1482,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 106,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1489,7 +1491,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 107,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1498,7 +1500,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 108,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1507,7 +1509,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 109,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1516,7 +1518,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 110,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1525,7 +1527,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 111,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1534,7 +1536,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 112,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 7,
                             SchemaId = 1
@@ -1543,7 +1545,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 113,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1552,7 +1554,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 114,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1561,7 +1563,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 115,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1570,7 +1572,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 116,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1579,7 +1581,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 117,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1588,7 +1590,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 118,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1597,7 +1599,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 119,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1606,7 +1608,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 120,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1615,7 +1617,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 121,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1624,7 +1626,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 122,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1633,7 +1635,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 123,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1642,7 +1644,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 124,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1651,7 +1653,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 125,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1660,7 +1662,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 126,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1669,7 +1671,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 127,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1678,7 +1680,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 128,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1687,7 +1689,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 129,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1696,7 +1698,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 130,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1705,7 +1707,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 131,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1714,7 +1716,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 132,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1723,7 +1725,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 133,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1732,7 +1734,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 134,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1741,7 +1743,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 135,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1750,7 +1752,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 136,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1759,7 +1761,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 137,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1768,7 +1770,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 138,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1777,7 +1779,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 139,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1786,7 +1788,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 140,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1795,7 +1797,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 141,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1804,7 +1806,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 142,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1813,7 +1815,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 143,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1822,7 +1824,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 144,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 9,
                             SchemaId = 1
@@ -1831,7 +1833,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 145,
                             Column = 0,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1840,7 +1842,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 146,
                             Column = 1,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1849,7 +1851,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 147,
                             Column = 2,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1858,7 +1860,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 148,
                             Column = 3,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1867,7 +1869,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 149,
                             Column = 4,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1876,7 +1878,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 150,
                             Column = 5,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1885,7 +1887,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 151,
                             Column = 6,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1894,7 +1896,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 152,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1903,7 +1905,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 153,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1912,7 +1914,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 154,
                             Column = 9,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1921,7 +1923,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 155,
                             Column = 10,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1930,7 +1932,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 156,
                             Column = 11,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1939,7 +1941,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 157,
                             Column = 12,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1948,7 +1950,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 158,
                             Column = 13,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1957,7 +1959,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 159,
                             Column = 14,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1966,7 +1968,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 160,
                             Column = 15,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 10,
                             SchemaId = 1
@@ -1975,7 +1977,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 161,
                             Column = 0,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -1984,7 +1986,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 162,
                             Column = 1,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -1993,7 +1995,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 163,
                             Column = 2,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2002,7 +2004,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 164,
                             Column = 3,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2011,7 +2013,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 165,
                             Column = 4,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2020,7 +2022,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 166,
                             Column = 5,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2029,7 +2031,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 167,
                             Column = 6,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2038,7 +2040,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 168,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2047,7 +2049,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 169,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2056,7 +2058,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 170,
                             Column = 9,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2065,7 +2067,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 171,
                             Column = 10,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2074,7 +2076,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 172,
                             Column = 11,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2083,7 +2085,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 173,
                             Column = 12,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2092,7 +2094,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 174,
                             Column = 13,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2101,7 +2103,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 175,
                             Column = 14,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2110,7 +2112,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 176,
                             Column = 15,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 11,
                             SchemaId = 1
@@ -2119,7 +2121,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 177,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2128,7 +2130,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 178,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2137,7 +2139,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 179,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2146,7 +2148,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 180,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2155,7 +2157,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 181,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2164,7 +2166,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 182,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2173,7 +2175,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 183,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2182,7 +2184,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 184,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2191,7 +2193,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 185,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2200,7 +2202,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 186,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2209,7 +2211,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 187,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2218,7 +2220,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 188,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2227,7 +2229,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 189,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2236,7 +2238,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 190,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2245,7 +2247,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 191,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2254,7 +2256,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 192,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 12,
                             SchemaId = 1
@@ -2263,7 +2265,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 193,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2272,7 +2274,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 194,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2281,7 +2283,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 195,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2290,7 +2292,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 196,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2299,7 +2301,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 197,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2308,7 +2310,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 198,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2317,7 +2319,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 199,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2326,7 +2328,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 200,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2335,7 +2337,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 201,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2344,7 +2346,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 202,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2353,7 +2355,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 203,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2362,7 +2364,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 204,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2371,7 +2373,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 205,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2380,7 +2382,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 206,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2389,7 +2391,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 207,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2398,7 +2400,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 208,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 13,
                             SchemaId = 1
@@ -2407,7 +2409,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 209,
                             Column = 0,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2416,7 +2418,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 210,
                             Column = 1,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2425,7 +2427,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 211,
                             Column = 2,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2434,7 +2436,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 212,
                             Column = 3,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2443,7 +2445,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 213,
                             Column = 4,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2452,7 +2454,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 214,
                             Column = 5,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2461,7 +2463,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 215,
                             Column = 6,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2470,7 +2472,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 216,
                             Column = 7,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2479,7 +2481,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 217,
                             Column = 8,
-                            IsSeat = false,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2488,7 +2490,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 218,
                             Column = 9,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2497,7 +2499,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 219,
                             Column = 10,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2506,7 +2508,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 220,
                             Column = 11,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2515,7 +2517,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 221,
                             Column = 12,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2524,7 +2526,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 222,
                             Column = 13,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2533,7 +2535,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 223,
                             Column = 14,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1
@@ -2542,7 +2544,7 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 224,
                             Column = 15,
-                            IsSeat = true,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 14,
                             SchemaId = 1

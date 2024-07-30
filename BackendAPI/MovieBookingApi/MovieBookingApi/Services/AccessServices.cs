@@ -3,6 +3,7 @@ using MovieBookingApi.Execptions;
 using MovieBookingApi.Iterfaces;
 using MovieBookingApi.Models;
 using MovieBookingApi.Models.DTOs.AccessDTOs;
+using MovieBookingApi.Repositories;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -13,13 +14,18 @@ namespace MovieBookingApi.Services
         private readonly IRepository<int, Admin> _adminRepository;
         private readonly IRepository<int, AdminAuth> _adminAuthRepository;
         private readonly ITokenServices _tokenServices;
+        private readonly IRepository<int, User> _userRepository;
+        private readonly IRepository<int, UserAuth> _userAuthRepository;
 
         public AccessServices(IRepository<int,Admin> adminRepository, IRepository<int,AdminAuth> adminAuthRepository, 
-                                        ITokenServices tokenServices) 
+                                        ITokenServices tokenServices, IRepository<int,User> userRepository, 
+                                        IRepository<int,UserAuth> userAuthRepository) 
         {
             _adminRepository=adminRepository;
             _adminAuthRepository=adminAuthRepository;
             _tokenServices=tokenServices;
+            _userRepository=userRepository;
+            _userAuthRepository=userAuthRepository;
         }
 
         public async Task<TokenDTO> LoginAdmin(LoginDTO loginDTO)
@@ -59,6 +65,25 @@ namespace MovieBookingApi.Services
                 }
             }
             return true;
+        }
+
+        public async Task<TokenDTO> LoginUser(LoginDTO loginDTO)
+        {
+            var user = (await _userRepository.GetAll()).FirstOrDefault(u => u.Email == loginDTO.Email);
+            if (user== null)
+            {
+                throw new InvalidCredentials();
+            }
+
+            UserAuth userAuth = (await _userAuthRepository.GetAll()).FirstOrDefault(ua => ua.UserId== user.Id);
+            HMACSHA512 hMACSHA = new HMACSHA512(userAuth.PasswordHashKey);
+            var PasswordHash = hMACSHA.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
+            bool isHashSame = ComparePassword(PasswordHash, userAuth.PasswordHash);
+            if (isHashSame)
+            {
+                return GenerateTokenDTO(user.Id, "User");
+            }
+            throw new InvalidCredentials();
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieBookingApi.Context;
 
@@ -11,9 +12,10 @@ using MovieBookingApi.Context;
 namespace MovieBookingApi.Migrations
 {
     [DbContext(typeof(MovieBookingContext))]
-    partial class MovieBookingContextModelSnapshot : ModelSnapshot
+    [Migration("20240729092246_Shows")]
+    partial class Shows
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,8 +84,8 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 1,
                             AdminId = 1,
-                            PasswordHash = new byte[] { 9, 30, 233, 100, 229, 124, 99, 184, 148, 56, 223, 174, 166, 163, 232, 129, 93, 202, 149, 57, 192, 30, 42, 110, 21, 85, 10, 61, 53, 12, 26, 181, 164, 73, 26, 8, 118, 237, 26, 200, 205, 229, 168, 138, 119, 20, 53, 68, 108, 160, 122, 128, 5, 143, 201, 146, 141, 99, 32, 8, 123, 97, 151, 100 },
-                            PasswordHashKey = new byte[] { 148, 236, 227, 85, 123, 32, 191, 191, 152, 40, 122, 89, 165, 33, 37, 120, 21, 241, 125, 40, 235, 75, 127, 61, 118, 33, 96, 228, 12, 156, 7, 59, 170, 169, 162, 66, 212, 145, 86, 157, 47, 62, 122, 108, 170, 28, 39, 16, 21, 82, 209, 94, 201, 44, 18, 242, 124, 184, 185, 154, 46, 0, 171, 220, 78, 212, 64, 7, 193, 219, 206, 240, 134, 72, 252, 240, 202, 186, 244, 5, 27, 140, 191, 81, 206, 110, 231, 34, 141, 24, 34, 120, 209, 207, 134, 42, 104, 132, 3, 140, 120, 93, 174, 87, 202, 15, 61, 217, 38, 136, 105, 32, 87, 69, 26, 107, 134, 147, 126, 126, 114, 138, 100, 156, 34, 11, 118, 202 }
+                            PasswordHash = new byte[] { 140, 239, 238, 73, 226, 165, 213, 172, 148, 192, 11, 73, 59, 230, 1, 95, 77, 249, 0, 114, 236, 88, 152, 132, 135, 109, 119, 13, 160, 115, 150, 201, 151, 203, 189, 55, 241, 205, 140, 42, 122, 64, 60, 62, 93, 228, 242, 19, 96, 12, 28, 172, 224, 0, 171, 134, 43, 87, 132, 14, 11, 226, 134, 37 },
+                            PasswordHashKey = new byte[] { 78, 75, 45, 34, 165, 54, 17, 52, 160, 145, 49, 100, 193, 27, 207, 136, 73, 142, 202, 91, 159, 207, 232, 180, 163, 62, 135, 240, 192, 15, 2, 140, 213, 104, 193, 109, 119, 132, 141, 60, 35, 79, 76, 51, 87, 179, 145, 100, 196, 230, 76, 141, 192, 218, 32, 220, 205, 155, 160, 214, 65, 91, 198, 142, 170, 231, 115, 17, 174, 57, 228, 201, 239, 102, 125, 111, 111, 161, 144, 142, 137, 185, 199, 220, 231, 211, 38, 14, 193, 249, 238, 220, 149, 125, 38, 175, 47, 179, 104, 5, 5, 107, 207, 157, 1, 156, 53, 185, 200, 102, 180, 225, 9, 88, 200, 39, 64, 120, 122, 215, 53, 48, 4, 100, 110, 157, 142, 107 }
                         });
                 });
 
@@ -109,12 +111,6 @@ namespace MovieBookingApi.Migrations
 
                     b.Property<int>("ShowId")
                         .HasColumnType("int");
-
-                    b.Property<float>("SnackAmount")
-                        .HasColumnType("real");
-
-                    b.Property<float>("TicketAmount")
-                        .HasColumnType("real");
 
                     b.Property<float>("TotalAmount")
                         .HasColumnType("real");
@@ -404,6 +400,9 @@ namespace MovieBookingApi.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MovieId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("ScreenId")
                         .HasColumnType("int");
 
@@ -413,6 +412,8 @@ namespace MovieBookingApi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MovieId");
+
+                    b.HasIndex("MovieId1");
 
                     b.HasIndex("ScreenId");
 
@@ -440,9 +441,6 @@ namespace MovieBookingApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -469,9 +467,6 @@ namespace MovieBookingApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("BookingId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("SnackId")
@@ -587,7 +582,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 1,
-                            Column = 1,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -596,7 +591,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 2,
-                            Column = 2,
+                            Column = 1,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -605,7 +600,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 3,
-                            Column = 3,
+                            Column = 2,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -614,7 +609,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 4,
-                            Column = 4,
+                            Column = 3,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -623,7 +618,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 5,
-                            Column = 5,
+                            Column = 4,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -632,7 +627,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 6,
-                            Column = 6,
+                            Column = 5,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -641,8 +636,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 7,
-                            Column = 7,
-                            IsSeat = false,
+                            Column = 6,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -650,7 +645,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 8,
-                            Column = 8,
+                            Column = 7,
                             IsSeat = false,
                             Price = 100f,
                             Row = 1,
@@ -659,8 +654,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 9,
-                            Column = 9,
-                            IsSeat = true,
+                            Column = 8,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 1,
                             SchemaId = 1
@@ -668,7 +663,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 10,
-                            Column = 10,
+                            Column = 9,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -677,7 +672,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 11,
-                            Column = 11,
+                            Column = 10,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -686,7 +681,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 12,
-                            Column = 12,
+                            Column = 11,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -695,7 +690,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 13,
-                            Column = 13,
+                            Column = 12,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -704,7 +699,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 14,
-                            Column = 14,
+                            Column = 13,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -713,7 +708,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 15,
-                            Column = 15,
+                            Column = 14,
                             IsSeat = true,
                             Price = 100f,
                             Row = 1,
@@ -722,16 +717,16 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 16,
-                            Column = 1,
+                            Column = 15,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 2,
+                            Row = 1,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 17,
-                            Column = 2,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -740,7 +735,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 18,
-                            Column = 3,
+                            Column = 1,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -749,7 +744,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 19,
-                            Column = 4,
+                            Column = 2,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -758,7 +753,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 20,
-                            Column = 5,
+                            Column = 3,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -767,7 +762,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 21,
-                            Column = 6,
+                            Column = 4,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -776,6 +771,24 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 22,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 24,
                             Column = 7,
                             IsSeat = false,
                             Price = 100f,
@@ -784,7 +797,7 @@ namespace MovieBookingApi.Migrations
                         },
                         new
                         {
-                            Id = 23,
+                            Id = 25,
                             Column = 8,
                             IsSeat = false,
                             Price = 100f,
@@ -793,26 +806,8 @@ namespace MovieBookingApi.Migrations
                         },
                         new
                         {
-                            Id = 24,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
                             Id = 26,
-                            Column = 11,
+                            Column = 9,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -821,7 +816,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 27,
-                            Column = 12,
+                            Column = 10,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -830,7 +825,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 28,
-                            Column = 13,
+                            Column = 11,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -839,7 +834,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 29,
-                            Column = 14,
+                            Column = 12,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -848,7 +843,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 30,
-                            Column = 15,
+                            Column = 13,
                             IsSeat = true,
                             Price = 100f,
                             Row = 2,
@@ -857,25 +852,25 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 31,
-                            Column = 1,
+                            Column = 14,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 3,
+                            Row = 2,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 32,
-                            Column = 2,
+                            Column = 15,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 3,
+                            Row = 2,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 33,
-                            Column = 3,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 3,
@@ -884,7 +879,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 34,
-                            Column = 4,
+                            Column = 1,
                             IsSeat = true,
                             Price = 100f,
                             Row = 3,
@@ -893,7 +888,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 35,
-                            Column = 5,
+                            Column = 2,
                             IsSeat = true,
                             Price = 100f,
                             Row = 3,
@@ -902,7 +897,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 36,
-                            Column = 6,
+                            Column = 3,
                             IsSeat = true,
                             Price = 100f,
                             Row = 3,
@@ -911,8 +906,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 37,
-                            Column = 7,
-                            IsSeat = false,
+                            Column = 4,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -920,8 +915,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 38,
-                            Column = 8,
-                            IsSeat = false,
+                            Column = 5,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -929,7 +924,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 39,
-                            Column = 9,
+                            Column = 6,
                             IsSeat = true,
                             Price = 100f,
                             Row = 3,
@@ -938,8 +933,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 40,
-                            Column = 10,
-                            IsSeat = true,
+                            Column = 7,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -947,8 +942,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 41,
-                            Column = 11,
-                            IsSeat = true,
+                            Column = 8,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 3,
                             SchemaId = 1
@@ -956,7 +951,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 42,
-                            Column = 12,
+                            Column = 9,
                             IsSeat = true,
                             Price = 100f,
                             Row = 3,
@@ -965,7 +960,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 43,
-                            Column = 13,
+                            Column = 10,
                             IsSeat = true,
                             Price = 100f,
                             Row = 3,
@@ -974,7 +969,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 44,
-                            Column = 14,
+                            Column = 11,
                             IsSeat = true,
                             Price = 100f,
                             Row = 3,
@@ -983,7 +978,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 45,
-                            Column = 15,
+                            Column = 12,
                             IsSeat = true,
                             Price = 100f,
                             Row = 3,
@@ -992,34 +987,34 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 46,
-                            Column = 1,
+                            Column = 13,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 4,
+                            Row = 3,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 47,
-                            Column = 2,
+                            Column = 14,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 4,
+                            Row = 3,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 48,
-                            Column = 3,
+                            Column = 15,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 4,
+                            Row = 3,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 49,
-                            Column = 4,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 4,
@@ -1028,7 +1023,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 50,
-                            Column = 5,
+                            Column = 1,
                             IsSeat = true,
                             Price = 100f,
                             Row = 4,
@@ -1037,7 +1032,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 51,
-                            Column = 6,
+                            Column = 2,
                             IsSeat = true,
                             Price = 100f,
                             Row = 4,
@@ -1046,8 +1041,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 52,
-                            Column = 7,
-                            IsSeat = false,
+                            Column = 3,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1055,8 +1050,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 53,
-                            Column = 8,
-                            IsSeat = false,
+                            Column = 4,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1064,7 +1059,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 54,
-                            Column = 9,
+                            Column = 5,
                             IsSeat = true,
                             Price = 100f,
                             Row = 4,
@@ -1073,7 +1068,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 55,
-                            Column = 10,
+                            Column = 6,
                             IsSeat = true,
                             Price = 100f,
                             Row = 4,
@@ -1082,8 +1077,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 56,
-                            Column = 11,
-                            IsSeat = true,
+                            Column = 7,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1091,8 +1086,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 57,
-                            Column = 12,
-                            IsSeat = true,
+                            Column = 8,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 4,
                             SchemaId = 1
@@ -1100,7 +1095,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 58,
-                            Column = 13,
+                            Column = 9,
                             IsSeat = true,
                             Price = 100f,
                             Row = 4,
@@ -1109,7 +1104,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 59,
-                            Column = 14,
+                            Column = 10,
                             IsSeat = true,
                             Price = 100f,
                             Row = 4,
@@ -1118,7 +1113,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 60,
-                            Column = 15,
+                            Column = 11,
                             IsSeat = true,
                             Price = 100f,
                             Row = 4,
@@ -1127,43 +1122,43 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 61,
-                            Column = 1,
+                            Column = 12,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 5,
+                            Row = 4,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 62,
-                            Column = 2,
+                            Column = 13,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 5,
+                            Row = 4,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 63,
-                            Column = 3,
+                            Column = 14,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 5,
+                            Row = 4,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 64,
-                            Column = 4,
+                            Column = 15,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 5,
+                            Row = 4,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 65,
-                            Column = 5,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 5,
@@ -1172,7 +1167,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 66,
-                            Column = 6,
+                            Column = 1,
                             IsSeat = true,
                             Price = 100f,
                             Row = 5,
@@ -1181,8 +1176,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 67,
-                            Column = 7,
-                            IsSeat = false,
+                            Column = 2,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1190,8 +1185,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 68,
-                            Column = 8,
-                            IsSeat = false,
+                            Column = 3,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1199,7 +1194,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 69,
-                            Column = 9,
+                            Column = 4,
                             IsSeat = true,
                             Price = 100f,
                             Row = 5,
@@ -1208,7 +1203,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 70,
-                            Column = 10,
+                            Column = 5,
                             IsSeat = true,
                             Price = 100f,
                             Row = 5,
@@ -1217,7 +1212,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 71,
-                            Column = 11,
+                            Column = 6,
                             IsSeat = true,
                             Price = 100f,
                             Row = 5,
@@ -1226,8 +1221,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 72,
-                            Column = 12,
-                            IsSeat = true,
+                            Column = 7,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1235,8 +1230,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 73,
-                            Column = 13,
-                            IsSeat = true,
+                            Column = 8,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 5,
                             SchemaId = 1
@@ -1244,7 +1239,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 74,
-                            Column = 14,
+                            Column = 9,
                             IsSeat = true,
                             Price = 100f,
                             Row = 5,
@@ -1253,7 +1248,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 75,
-                            Column = 15,
+                            Column = 10,
                             IsSeat = true,
                             Price = 100f,
                             Row = 5,
@@ -1262,52 +1257,52 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 76,
-                            Column = 1,
+                            Column = 11,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 6,
+                            Row = 5,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 77,
-                            Column = 2,
+                            Column = 12,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 6,
+                            Row = 5,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 78,
-                            Column = 3,
+                            Column = 13,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 6,
+                            Row = 5,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 79,
-                            Column = 4,
+                            Column = 14,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 6,
+                            Row = 5,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 80,
-                            Column = 5,
+                            Column = 15,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 6,
+                            Row = 5,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 81,
-                            Column = 6,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 6,
@@ -1316,8 +1311,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 82,
-                            Column = 7,
-                            IsSeat = false,
+                            Column = 1,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1325,8 +1320,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 83,
-                            Column = 8,
-                            IsSeat = false,
+                            Column = 2,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1334,7 +1329,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 84,
-                            Column = 9,
+                            Column = 3,
                             IsSeat = true,
                             Price = 100f,
                             Row = 6,
@@ -1343,7 +1338,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 85,
-                            Column = 10,
+                            Column = 4,
                             IsSeat = true,
                             Price = 100f,
                             Row = 6,
@@ -1352,7 +1347,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 86,
-                            Column = 11,
+                            Column = 5,
                             IsSeat = true,
                             Price = 100f,
                             Row = 6,
@@ -1361,7 +1356,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 87,
-                            Column = 12,
+                            Column = 6,
                             IsSeat = true,
                             Price = 100f,
                             Row = 6,
@@ -1370,8 +1365,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 88,
-                            Column = 13,
-                            IsSeat = true,
+                            Column = 7,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1379,8 +1374,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 89,
-                            Column = 14,
-                            IsSeat = true,
+                            Column = 8,
+                            IsSeat = false,
                             Price = 100f,
                             Row = 6,
                             SchemaId = 1
@@ -1388,7 +1383,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 90,
-                            Column = 15,
+                            Column = 9,
                             IsSeat = true,
                             Price = 100f,
                             Row = 6,
@@ -1397,6 +1392,69 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 91,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 92,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 93,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 94,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 95,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 96,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 97,
+                            Column = 0,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 98,
                             Column = 1,
                             IsSeat = true,
                             Price = 100f,
@@ -1405,71 +1463,8 @@ namespace MovieBookingApi.Migrations
                         },
                         new
                         {
-                            Id = 92,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 93,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 94,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 95,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 96,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 97,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 98,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
                             Id = 99,
-                            Column = 9,
+                            Column = 2,
                             IsSeat = true,
                             Price = 100f,
                             Row = 7,
@@ -1478,7 +1473,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 100,
-                            Column = 10,
+                            Column = 3,
                             IsSeat = true,
                             Price = 100f,
                             Row = 7,
@@ -1487,7 +1482,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 101,
-                            Column = 11,
+                            Column = 4,
                             IsSeat = true,
                             Price = 100f,
                             Row = 7,
@@ -1496,7 +1491,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 102,
-                            Column = 12,
+                            Column = 5,
                             IsSeat = true,
                             Price = 100f,
                             Row = 7,
@@ -1505,7 +1500,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 103,
-                            Column = 13,
+                            Column = 6,
                             IsSeat = true,
                             Price = 100f,
                             Row = 7,
@@ -1514,6 +1509,69 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 104,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 105,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 106,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 107,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 108,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 109,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 110,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 111,
                             Column = 14,
                             IsSeat = true,
                             Price = 100f,
@@ -1522,7 +1580,7 @@ namespace MovieBookingApi.Migrations
                         },
                         new
                         {
-                            Id = 105,
+                            Id = 112,
                             Column = 15,
                             IsSeat = true,
                             Price = 100f,
@@ -1531,72 +1589,9 @@ namespace MovieBookingApi.Migrations
                         },
                         new
                         {
-                            Id = 106,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 107,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 108,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 109,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 110,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 111,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 112,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
                             Id = 113,
-                            Column = 8,
-                            IsSeat = false,
+                            Column = 0,
+                            IsSeat = true,
                             Price = 100f,
                             Row = 8,
                             SchemaId = 1
@@ -1604,7 +1599,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 114,
-                            Column = 9,
+                            Column = 1,
                             IsSeat = true,
                             Price = 100f,
                             Row = 8,
@@ -1613,7 +1608,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 115,
-                            Column = 10,
+                            Column = 2,
                             IsSeat = true,
                             Price = 100f,
                             Row = 8,
@@ -1622,7 +1617,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 116,
-                            Column = 11,
+                            Column = 3,
                             IsSeat = true,
                             Price = 100f,
                             Row = 8,
@@ -1631,7 +1626,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 117,
-                            Column = 12,
+                            Column = 4,
                             IsSeat = true,
                             Price = 100f,
                             Row = 8,
@@ -1640,7 +1635,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 118,
-                            Column = 13,
+                            Column = 5,
                             IsSeat = true,
                             Price = 100f,
                             Row = 8,
@@ -1649,7 +1644,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 119,
-                            Column = 14,
+                            Column = 6,
                             IsSeat = true,
                             Price = 100f,
                             Row = 8,
@@ -1658,6 +1653,78 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 120,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 121,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 122,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 123,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 124,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 125,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 126,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 127,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 128,
                             Column = 15,
                             IsSeat = true,
                             Price = 100f,
@@ -1666,80 +1733,8 @@ namespace MovieBookingApi.Migrations
                         },
                         new
                         {
-                            Id = 121,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 122,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 123,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 124,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 125,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 126,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 127,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 128,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
                             Id = 129,
-                            Column = 9,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 9,
@@ -1748,7 +1743,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 130,
-                            Column = 10,
+                            Column = 1,
                             IsSeat = true,
                             Price = 100f,
                             Row = 9,
@@ -1757,7 +1752,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 131,
-                            Column = 11,
+                            Column = 2,
                             IsSeat = true,
                             Price = 100f,
                             Row = 9,
@@ -1766,7 +1761,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 132,
-                            Column = 12,
+                            Column = 3,
                             IsSeat = true,
                             Price = 100f,
                             Row = 9,
@@ -1775,7 +1770,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 133,
-                            Column = 13,
+                            Column = 4,
                             IsSeat = true,
                             Price = 100f,
                             Row = 9,
@@ -1784,7 +1779,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 134,
-                            Column = 14,
+                            Column = 5,
                             IsSeat = true,
                             Price = 100f,
                             Row = 9,
@@ -1793,7 +1788,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 135,
-                            Column = 15,
+                            Column = 6,
                             IsSeat = true,
                             Price = 100f,
                             Row = 9,
@@ -1802,88 +1797,88 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 136,
-                            Column = 1,
+                            Column = 7,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 10,
+                            Row = 9,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 137,
-                            Column = 2,
+                            Column = 8,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 10,
+                            Row = 9,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 138,
-                            Column = 3,
-                            IsSeat = false,
+                            Column = 9,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 10,
+                            Row = 9,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 139,
-                            Column = 4,
-                            IsSeat = false,
+                            Column = 10,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 10,
+                            Row = 9,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 140,
-                            Column = 5,
-                            IsSeat = false,
+                            Column = 11,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 10,
+                            Row = 9,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 141,
-                            Column = 6,
-                            IsSeat = false,
+                            Column = 12,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 10,
+                            Row = 9,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 142,
-                            Column = 7,
-                            IsSeat = false,
+                            Column = 13,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 10,
+                            Row = 9,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 143,
-                            Column = 8,
-                            IsSeat = false,
+                            Column = 14,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 10,
+                            Row = 9,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 144,
-                            Column = 9,
-                            IsSeat = false,
+                            Column = 15,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 10,
+                            Row = 9,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 145,
-                            Column = 10,
+                            Column = 0,
                             IsSeat = false,
                             Price = 100f,
                             Row = 10,
@@ -1892,7 +1887,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 146,
-                            Column = 11,
+                            Column = 1,
                             IsSeat = false,
                             Price = 100f,
                             Row = 10,
@@ -1901,7 +1896,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 147,
-                            Column = 12,
+                            Column = 2,
                             IsSeat = false,
                             Price = 100f,
                             Row = 10,
@@ -1910,7 +1905,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 148,
-                            Column = 13,
+                            Column = 3,
                             IsSeat = false,
                             Price = 100f,
                             Row = 10,
@@ -1919,7 +1914,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 149,
-                            Column = 14,
+                            Column = 4,
                             IsSeat = false,
                             Price = 100f,
                             Row = 10,
@@ -1928,7 +1923,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 150,
-                            Column = 15,
+                            Column = 5,
                             IsSeat = false,
                             Price = 100f,
                             Row = 10,
@@ -1937,97 +1932,97 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 151,
-                            Column = 1,
+                            Column = 6,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 152,
-                            Column = 2,
+                            Column = 7,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 153,
-                            Column = 3,
+                            Column = 8,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 154,
-                            Column = 4,
+                            Column = 9,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 155,
-                            Column = 5,
+                            Column = 10,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 156,
-                            Column = 6,
+                            Column = 11,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 157,
-                            Column = 7,
+                            Column = 12,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 158,
-                            Column = 8,
+                            Column = 13,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 159,
-                            Column = 9,
+                            Column = 14,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 160,
-                            Column = 10,
+                            Column = 15,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 11,
+                            Row = 10,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 161,
-                            Column = 11,
+                            Column = 0,
                             IsSeat = false,
                             Price = 100f,
                             Row = 11,
@@ -2036,7 +2031,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 162,
-                            Column = 12,
+                            Column = 1,
                             IsSeat = false,
                             Price = 100f,
                             Row = 11,
@@ -2045,7 +2040,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 163,
-                            Column = 13,
+                            Column = 2,
                             IsSeat = false,
                             Price = 100f,
                             Row = 11,
@@ -2054,7 +2049,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 164,
-                            Column = 14,
+                            Column = 3,
                             IsSeat = false,
                             Price = 100f,
                             Row = 11,
@@ -2063,7 +2058,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 165,
-                            Column = 15,
+                            Column = 4,
                             IsSeat = false,
                             Price = 100f,
                             Row = 11,
@@ -2072,106 +2067,106 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 166,
-                            Column = 1,
-                            IsSeat = true,
+                            Column = 5,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 167,
-                            Column = 2,
-                            IsSeat = true,
+                            Column = 6,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 168,
-                            Column = 3,
-                            IsSeat = true,
+                            Column = 7,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 169,
-                            Column = 4,
-                            IsSeat = true,
+                            Column = 8,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 170,
-                            Column = 5,
-                            IsSeat = true,
+                            Column = 9,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 171,
-                            Column = 6,
-                            IsSeat = true,
+                            Column = 10,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 172,
-                            Column = 7,
+                            Column = 11,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 173,
-                            Column = 8,
+                            Column = 12,
                             IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 174,
-                            Column = 9,
-                            IsSeat = true,
+                            Column = 13,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 175,
-                            Column = 10,
-                            IsSeat = true,
+                            Column = 14,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 176,
-                            Column = 11,
-                            IsSeat = true,
+                            Column = 15,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 12,
+                            Row = 11,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 177,
-                            Column = 12,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 12,
@@ -2180,7 +2175,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 178,
-                            Column = 13,
+                            Column = 1,
                             IsSeat = true,
                             Price = 100f,
                             Row = 12,
@@ -2189,7 +2184,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 179,
-                            Column = 14,
+                            Column = 2,
                             IsSeat = true,
                             Price = 100f,
                             Row = 12,
@@ -2198,7 +2193,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 180,
-                            Column = 15,
+                            Column = 3,
                             IsSeat = true,
                             Price = 100f,
                             Row = 12,
@@ -2207,115 +2202,115 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 181,
-                            Column = 1,
+                            Column = 4,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 182,
-                            Column = 2,
+                            Column = 5,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 183,
-                            Column = 3,
+                            Column = 6,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 184,
-                            Column = 4,
-                            IsSeat = true,
+                            Column = 7,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 185,
-                            Column = 5,
-                            IsSeat = true,
+                            Column = 8,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 186,
-                            Column = 6,
+                            Column = 9,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 187,
-                            Column = 7,
-                            IsSeat = false,
+                            Column = 10,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 188,
-                            Column = 8,
-                            IsSeat = false,
+                            Column = 11,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 189,
-                            Column = 9,
+                            Column = 12,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 190,
-                            Column = 10,
+                            Column = 13,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 191,
-                            Column = 11,
+                            Column = 14,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 192,
-                            Column = 12,
+                            Column = 15,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 13,
+                            Row = 12,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 193,
-                            Column = 13,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 13,
@@ -2324,7 +2319,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 194,
-                            Column = 14,
+                            Column = 1,
                             IsSeat = true,
                             Price = 100f,
                             Row = 13,
@@ -2333,7 +2328,7 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 195,
-                            Column = 15,
+                            Column = 2,
                             IsSeat = true,
                             Price = 100f,
                             Row = 13,
@@ -2342,124 +2337,124 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 196,
-                            Column = 1,
+                            Column = 3,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 197,
-                            Column = 2,
+                            Column = 4,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 198,
-                            Column = 3,
+                            Column = 5,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 199,
-                            Column = 4,
+                            Column = 6,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 200,
-                            Column = 5,
-                            IsSeat = true,
+                            Column = 7,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 201,
-                            Column = 6,
-                            IsSeat = true,
+                            Column = 8,
+                            IsSeat = false,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 202,
-                            Column = 7,
-                            IsSeat = false,
+                            Column = 9,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 203,
-                            Column = 8,
-                            IsSeat = false,
+                            Column = 10,
+                            IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 204,
-                            Column = 9,
+                            Column = 11,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 205,
-                            Column = 10,
+                            Column = 12,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 206,
-                            Column = 11,
+                            Column = 13,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 207,
-                            Column = 12,
+                            Column = 14,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 208,
-                            Column = 13,
+                            Column = 15,
                             IsSeat = true,
                             Price = 100f,
-                            Row = 14,
+                            Row = 13,
                             SchemaId = 1
                         },
                         new
                         {
                             Id = 209,
-                            Column = 14,
+                            Column = 0,
                             IsSeat = true,
                             Price = 100f,
                             Row = 14,
@@ -2468,6 +2463,132 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 210,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 211,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 212,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 213,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 214,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 215,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 216,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 217,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 218,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 219,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 220,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 221,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 222,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 223,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 224,
                             Column = 15,
                             IsSeat = true,
                             Price = 100f,
@@ -2577,15 +2698,6 @@ namespace MovieBookingApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "mynameisshrish@gmail.com",
-                            Name = "Shrish",
-                            Phone = "1231233123"
-                        });
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.UserAuth", b =>
@@ -2613,15 +2725,6 @@ namespace MovieBookingApi.Migrations
                         .IsUnique();
 
                     b.ToTable("UserAuths");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            PasswordHash = new byte[] { 20, 153, 57, 241, 46, 146, 49, 143, 160, 239, 35, 15, 98, 112, 68, 208, 163, 242, 153, 8, 164, 139, 25, 50, 7, 123, 72, 171, 15, 75, 188, 9, 70, 161, 85, 93, 87, 48, 209, 153, 246, 34, 104, 100, 183, 253, 113, 142, 64, 215, 135, 253, 177, 184, 236, 50, 37, 139, 17, 175, 126, 155, 116, 251 },
-                            PasswordHashKey = new byte[] { 236, 253, 100, 233, 245, 40, 71, 145, 71, 75, 130, 249, 57, 164, 94, 213, 115, 138, 38, 105, 180, 122, 185, 63, 134, 209, 150, 246, 164, 100, 102, 165, 77, 127, 229, 176, 139, 153, 245, 197, 15, 152, 63, 86, 59, 131, 63, 98, 46, 80, 70, 175, 14, 120, 168, 157, 168, 19, 22, 142, 43, 55, 113, 145, 186, 149, 150, 212, 8, 46, 224, 208, 153, 213, 178, 95, 150, 217, 55, 208, 235, 225, 115, 230, 212, 60, 218, 91, 47, 213, 241, 193, 226, 39, 251, 124, 32, 19, 71, 212, 134, 53, 25, 74, 189, 89, 34, 94, 200, 157, 14, 121, 191, 117, 122, 244, 230, 192, 178, 0, 147, 222, 44, 14, 248, 19, 173, 209 },
-                            UserId = 1
-                        });
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.AdminAuth", b =>
@@ -2711,10 +2814,14 @@ namespace MovieBookingApi.Migrations
             modelBuilder.Entity("MovieBookingApi.Models.Show", b =>
                 {
                     b.HasOne("MovieBookingApi.Models.MovieModels.Movie", "Movie")
-                        .WithMany("Shows")
+                        .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("MovieBookingApi.Models.MovieModels.Movie", null)
+                        .WithMany("Shows")
+                        .HasForeignKey("MovieId1");
 
                     b.HasOne("MovieBookingApi.Models.TheaterModels.Screen", "Screen")
                         .WithMany("Shows")

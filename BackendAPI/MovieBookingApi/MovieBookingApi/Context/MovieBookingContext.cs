@@ -11,9 +11,9 @@ using System;
 
 namespace MovieBookingApi.Context
 {
-    public class MovieBookingContext: DbContext
+    public class MovieBookingContext : DbContext
     {
-       public MovieBookingContext(DbContextOptions options):base (options) { }
+        public MovieBookingContext(DbContextOptions options) : base(options) { }
         public DbSet<Format> Formats { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Certification> Certifications { get; set; }
@@ -24,7 +24,7 @@ namespace MovieBookingApi.Context
         public DbSet<Theater> Theaters { get; set; }
         public DbSet<Screen> Screens { get; set; }
         public DbSet<Schema> Schemas { get; set; }
-        public DbSet<SchemaLayout> ScreenSchemas { get; set; }
+        public DbSet<ScreenLayout> ScreenLayouts { get; set; }
         public DbSet<Show> Shows { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Booking> Bookings { get; set; }
@@ -43,7 +43,7 @@ namespace MovieBookingApi.Context
             //Language
             modelBuilder.Entity<Language>(ConfigureLanguage);
             BuildLanguages(modelBuilder);
-            
+
             //Certification
             modelBuilder.Entity<Certification>(ConfigureCertification);
             BuildCertifications(modelBuilder);
@@ -70,28 +70,34 @@ namespace MovieBookingApi.Context
             //Screens
             modelBuilder.Entity<Screen>(ConfigureScreen);
             BuildScreens(modelBuilder);
-            
+
             //ScreenLayout
-            modelBuilder.Entity<SchemaLayout>(ConfigureScreenSchema);
+            modelBuilder.Entity<ScreenLayout>(ConfigureScreenLayout);
             BuildSchemaLayout(modelBuilder);
 
+            //Shows
             modelBuilder.Entity<Show>(ConfigureShow);
+            BuildShows(modelBuilder);
+
             modelBuilder.Entity<Ticket>(ConfigureTicket);
             modelBuilder.Entity<Booking>(ConfigureBooking);
             modelBuilder.Entity<Snack>(ConfigureSnack);
             modelBuilder.Entity<SnackOrder>(ConfigureSnackOrder);
-            
+
             //Admin
             modelBuilder.Entity<Admin>(ConfigureAdmin);
             BuildAdmin(modelBuilder);
             modelBuilder.Entity<AdminAuth>(ConfigureAdminAuth);
             BuildAdminAuth(modelBuilder);
 
+            //User
             modelBuilder.Entity<User>(ConfigureUser);
+            BuildUser(modelBuilder);
             modelBuilder.Entity<UserAuth>(ConfigureUserAuth);
+            BuildUserAuth(modelBuilder);
         }
 
-  
+
         private void ConfigureMemberType(EntityTypeBuilder<MemberType> builder)
         {
             builder.HasKey(mt => mt.Id);
@@ -100,8 +106,8 @@ namespace MovieBookingApi.Context
         private void BuildMemberTypes(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MemberType>().HasData(
-                new MemberType { Id=1, MemberName="Cast"},
-                new MemberType { Id=2, MemberName="Crew"}
+                new MemberType { Id = 1, MemberName = "Cast" },
+                new MemberType { Id = 2, MemberName = "Crew" }
                 );
         }
 
@@ -113,9 +119,9 @@ namespace MovieBookingApi.Context
         private void BuildFormats(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Format>().HasData(
-                new Format {Id=1, FormatName = "2D" },
-                new Format { Id=2, FormatName = "3D" },
-                new Format { Id=3, FormatName = "IMAX" }
+                new Format { Id = 1, FormatName = "2D" },
+                new Format { Id = 2, FormatName = "3D" },
+                new Format { Id = 3, FormatName = "IMAX" }
                 );
         }
         private void ConfigureLanguage(EntityTypeBuilder<Language> builder)
@@ -127,10 +133,10 @@ namespace MovieBookingApi.Context
         private void BuildLanguages(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Language>().HasData(
-                new Language { Id=1, LanguageName="English"},
-                new Language { Id=2, LanguageName="Tamil"},
-                new Language { Id=3, LanguageName="Hindi"},
-                new Language { Id=4, LanguageName="Japanese"}
+                new Language { Id = 1, LanguageName = "English" },
+                new Language { Id = 2, LanguageName = "Tamil" },
+                new Language { Id = 3, LanguageName = "Hindi" },
+                new Language { Id = 4, LanguageName = "Japanese" }
                 );
         }
         private void ConfigureCertification(EntityTypeBuilder<Certification> builder)
@@ -139,12 +145,12 @@ namespace MovieBookingApi.Context
             builder.Property(c => c.CertificateType).IsRequired();
         }
 
-        private void BuildCertifications(ModelBuilder modelBuilder) 
+        private void BuildCertifications(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Certification>().HasData(
-                new Certification { Id=1, CertificateType="U"},
-                new Certification { Id=2, CertificateType="U/A"},
-                new Certification { Id=3, CertificateType="A"}
+                new Certification { Id = 1, CertificateType = "U" },
+                new Certification { Id = 2, CertificateType = "U/A" },
+                new Certification { Id = 3, CertificateType = "A" }
                 );
         }
         private void ConfigureMovie(EntityTypeBuilder<Movie> builder)
@@ -191,9 +197,9 @@ namespace MovieBookingApi.Context
         private void BuildArtists(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Artist>().HasData(
-                new Artist { Id=1, Name="Brad Pitt", About="Great Actor."},
-                new Artist { Id=2, Name="Edward Norton", About="Great Actor."},
-                new Artist { Id=3, Name="David Fincher", About="Great Director."}
+                new Artist { Id = 1, Name = "Brad Pitt", About = "Great Actor." },
+                new Artist { Id = 2, Name = "Edward Norton", About = "Great Actor." },
+                new Artist { Id = 3, Name = "David Fincher", About = "Great Director." }
                 );
         }
         private void ConfigureTheater(EntityTypeBuilder<Theater> builder)
@@ -207,9 +213,9 @@ namespace MovieBookingApi.Context
         private void BuildTheaters(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Theater>().HasData(
-                new Theater { Id=1, Name="INOX Theater", Phone="1231231231", Address="xyz,xxx", District="Chennai"},
-                new Theater { Id=2, Name="Rohini Theater", Phone="1234123434", Address="asd,asd", District="Chennai"},
-                new Theater { Id=3, Name="Theater X", Phone="1234512345", Address="qwe,asd", District="Chennai"}
+                new Theater { Id = 1, Name = "INOX Theater", Phone = "1231231231", Address = "xyz,xxx", District = "Chennai" },
+                new Theater { Id = 2, Name = "Rohini Theater", Phone = "1234123434", Address = "asd,asd", District = "Chennai" },
+                new Theater { Id = 3, Name = "Theater X", Phone = "1234512345", Address = "qwe,asd", District = "Chennai" }
                 );
         }
 
@@ -231,7 +237,7 @@ namespace MovieBookingApi.Context
         private void BuildScreens(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Screen>().HasData(
-                new Screen { Id=1, ScreenName="Screen 1", TheaterId=1, SchemaId=1}
+                new Screen { Id = 1, ScreenName = "Screen 1", TheaterId = 1, SchemaId = 1 }
                 );
         }
         private void ConfigureSchema(EntityTypeBuilder<Schema> builder)
@@ -245,10 +251,11 @@ namespace MovieBookingApi.Context
         private void BuildSchemas(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Schema>().HasData(
-                new Schema { Id=1, Name="Schema 1", RowDimension=15, ColumnDimension=16}
+                new Schema { Id = 1, Name = "Schema 1", RowDimension = 15, ColumnDimension = 16 }
                 );
         }
-        private void ConfigureScreenSchema(EntityTypeBuilder<SchemaLayout> builder)
+
+        private void ConfigureScreenLayout(EntityTypeBuilder<ScreenLayout> builder)
         {
             builder.HasKey(ss => ss.Id);
             builder.Property(ss => ss.Row).IsRequired();
@@ -266,19 +273,27 @@ namespace MovieBookingApi.Context
             int id = 1;
             for (int row = 1; row < 15; row++)
             {
-                for (int column = 0; column < 16; column++)
+                for (int column = 1; column < 16; column++)
                 {
                     bool IsSeat = true;
-                    if(row == 10 || row == 11 || column == 7 || column == 8)
+                    if (row == 10 || row == 11 || column == 7 || column == 8)
                     {
                         IsSeat = false;
+
                     }
-                    modelBuilder.Entity<SchemaLayout>().HasData(
-                        new SchemaLayout { Id = id, Row = row, Column = column, Price = 100, IsSeat = IsSeat, SchemaId = 1 }
+                    modelBuilder.Entity<ScreenLayout>().HasData(
+                        new ScreenLayout { Id = id, Row = row, Column = column, Price = 100, IsSeat = IsSeat, SchemaId = 1 }
                         );
                     id++;
                 }
             }
+        }
+
+        private void BuildShows(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Show>().HasData(
+               new Show { Id = 1, Date = new DateTime(2024, 8, 15), MovieId = 1, ScreenId = 1, ShowTime = new TimeSpan(9, 30, 0) }
+                );
         }
         private void ConfigureShow(EntityTypeBuilder<Show> builder)
         {
@@ -291,7 +306,7 @@ namespace MovieBookingApi.Context
                 .HasForeignKey(s => s.ScreenId);
 
             builder.HasOne(s => s.Movie)
-               .WithMany()
+               .WithMany(m=>m.Shows)
                .HasForeignKey(s => s.MovieId);
         }
         private void ConfigureTicket(EntityTypeBuilder<Ticket> builder)
@@ -316,6 +331,8 @@ namespace MovieBookingApi.Context
             builder.Property(b => b.TotalAmount).IsRequired();
             builder.Property(b => b.PaymentStatus).IsRequired();
             builder.Property(b => b.BookedOn).IsRequired();
+            builder.Property(b => b.TicketAmount).IsRequired();
+           
 
             builder.HasOne(b => b.Show)
                 .WithMany(s => s.Bookings)
@@ -333,6 +350,7 @@ namespace MovieBookingApi.Context
             builder.Property(s => s.Name).IsRequired();
             builder.Property(s => s.Description).IsRequired(false);
             builder.Property(s => s.Price).IsRequired();
+            builder.Property(s => s.IsAvailable).IsRequired();
 
             builder.HasOne(s => s.Theater)
                .WithMany(t => t.Snacks)
@@ -342,6 +360,7 @@ namespace MovieBookingApi.Context
         private void ConfigureSnackOrder(EntityTypeBuilder<SnackOrder> builder)
         {
             builder.HasKey(so => so.Id);
+            builder.Property(so => so.Quantity).IsRequired();
 
             builder.HasOne(so => so.Booking)
                 .WithMany(b => b.SnackOrders)
@@ -366,7 +385,7 @@ namespace MovieBookingApi.Context
         private void BuildAdmin(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Admin>().HasData(
-                new Admin { Id=1, Name="Shrish", Email="Shrish@gmail.com"}
+                new Admin { Id = 1, Name = "Shrish", Email = "Shrish@gmail.com" }
                 );
         }
 
@@ -379,7 +398,7 @@ namespace MovieBookingApi.Context
             builder.HasOne(aa => aa.Admin)
                 .WithOne(a => a.AdminAuth)
                 .HasForeignKey<AdminAuth>(aa => aa.AdminId);
-                
+
         }
 
         private void BuildAdminAuth(ModelBuilder modelBuilder)
@@ -388,7 +407,7 @@ namespace MovieBookingApi.Context
             HMACSHA512 hMACSHA = new HMACSHA512();
 
             modelBuilder.Entity<AdminAuth>().HasData(
-                new AdminAuth { Id=1, AdminId=1, PasswordHashKey= hMACSHA.Key, PasswordHash= hMACSHA.ComputeHash(Encoding.UTF8.GetBytes(password)) }
+                new AdminAuth { Id = 1, AdminId = 1, PasswordHashKey = hMACSHA.Key, PasswordHash = hMACSHA.ComputeHash(Encoding.UTF8.GetBytes(password)) }
                 );
         }
         private void ConfigureUser(EntityTypeBuilder<User> builder)
@@ -401,8 +420,15 @@ namespace MovieBookingApi.Context
             builder.HasOne(u => u.UserAuth)
                 .WithOne(ua => ua.User)
                 .HasForeignKey<UserAuth>(ua => ua.UserId);
-                
+
         }
+        private void BuildUser(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, Email = "mynameisshrish@gmail.com", Name = "Shrish", Phone = "1231233123" }
+                );
+        }
+
         private void ConfigureUserAuth(EntityTypeBuilder<UserAuth> builder)
         {
             builder.HasKey(ua => ua.Id);
@@ -412,6 +438,16 @@ namespace MovieBookingApi.Context
             builder.HasOne(ua => ua.User)
                 .WithOne(u => u.UserAuth)
                 .HasForeignKey<UserAuth>(ua => ua.UserId);
+        }
+        private void BuildUserAuth(ModelBuilder modelBuilder)
+        {
+            var password = "string";
+            HMACSHA512 hMACSHA = new HMACSHA512();
+
+            modelBuilder.Entity<UserAuth>().HasData(
+                new UserAuth { Id = 1, UserId = 1, PasswordHashKey = hMACSHA.Key, PasswordHash = hMACSHA.ComputeHash(Encoding.UTF8.GetBytes(password)) }
+                );
+
         }
     }
 }

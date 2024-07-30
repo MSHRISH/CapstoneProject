@@ -1,6 +1,6 @@
 ﻿namespace MovieBookingApi.Models.TheaterModels
 {
-    public class SchemaLayout
+    public class ScreenLayout
     {
         public int Id { get; set; }
         public int SchemaId { get; set; }

@@ -7,5 +7,6 @@
         public Booking Booking { get; set; }
         public int SnackId { get; set; }
         public Snack Snack { get; set; }
+        public int Quantity {  get; set; }
     }
 }

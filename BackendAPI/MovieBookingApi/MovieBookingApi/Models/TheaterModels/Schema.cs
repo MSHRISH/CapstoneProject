@@ -8,6 +8,6 @@
         public int ColumnDimension { get; set; }
 
         public ICollection<Screen> Screens { get; set; }
-        public ICollection<SchemaLayout> Layouts { get; set; }
+        public ICollection<ScreenLayout> Layouts { get; set; }
     }
 }

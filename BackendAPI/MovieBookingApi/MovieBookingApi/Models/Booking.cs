@@ -9,6 +9,8 @@ namespace MovieBookingApi.Models
         public Show Show { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public float TicketAmount { get; set; }
+        public float SnackAmount { get; set; }
         public float BillAmount { get; set; }
         public float Discount { get; set; }
         public float TotalAmount { get; set; }

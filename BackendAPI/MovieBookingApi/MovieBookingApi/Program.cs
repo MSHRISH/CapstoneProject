@@ -39,7 +39,8 @@ namespace MovieBookingApi
             builder.Services.AddScoped<IRepository<int, Language>, LanguageRepository>();
             builder.Services.AddScoped<IRepository<int, Movie>, MovieRepository>();
             builder.Services.AddScoped<IRepository<int, Screen>, ScreenRepository>();
-            builder.Services.AddScoped<IRepository<int, SchemaLayout>, ScreenSchemaRepository>();
+            builder.Services.AddScoped<IRepository<int,Schema>, SchemaRepository>();
+            builder.Services.AddScoped<IRepository<int,ScreenLayout>,ScreenLayoutRepository>();
             builder.Services.AddScoped<IRepository<int, Show>, ShowRepository>();
             builder.Services.AddScoped<IRepository<int, Snack>, SnackRepository>();
             builder.Services.AddScoped<IRepository<int, SnackOrder>, SnackOrdersRepository>();
@@ -53,6 +54,7 @@ namespace MovieBookingApi
             builder.Services.AddScoped<IAccessServices, AccessServices>();
             builder.Services.AddScoped<ITokenServices, TokenServices>();
             builder.Services.AddScoped<IMovieServices, MovieServices>();
+            builder.Services.AddScoped<IBookingServices, BookingServices>();
             #endregion
 
             var app = builder.Build();

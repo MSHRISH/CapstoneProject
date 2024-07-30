@@ -8,7 +8,7 @@ namespace MovieBookingApi.Execptions
         public string message;
         public DiscountNotElgibleExecption()
         {
-            message = "You are eligible for the discount!";
+            message = "Discount not availalbe!";
         }
 
         public override string Message => message;

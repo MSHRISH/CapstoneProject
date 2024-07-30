@@ -3,14 +3,15 @@
 namespace MovieBookingApi.Execptions
 {
     [Serializable]
-    internal class BookingLimitExecption : Exception
+    internal class DeleteFailedExecption : Exception
     {
         public string message;
-        public BookingLimitExecption()
+        public DeleteFailedExecption()
         {
-            message = "Minimum 1 ticket and maximum 5 tickets are allowed";
+            message = "Delete Operation Failed";
         }
-
         public override string Message => message;
+
+
     }
 }

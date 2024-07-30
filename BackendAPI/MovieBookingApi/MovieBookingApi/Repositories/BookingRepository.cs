@@ -21,9 +21,16 @@ namespace MovieBookingApi.Repositories
             return item;
         }
 
-        public Task<Booking> Delete(int key)
+        public async Task<Booking> Delete(int key)
         {
-            throw new NotImplementedException();
+            var booking = await Get(key);
+            if (booking != null)
+            {
+                _context.Remove(booking);
+                await _context.SaveChangesAsync();
+                return booking;
+            }
+            return null;
         }
 
         public async Task<Booking> Get(int key)
@@ -38,9 +45,16 @@ namespace MovieBookingApi.Repositories
             return movies;
         }
 
-        public Task<Booking> Update(Booking item)
+        public async Task<Booking> Update(Booking item)
         {
-            throw new NotImplementedException();
+            var booking = await Get(item.Id);
+            if (booking != null)
+            {
+                _context.Update(item);
+                await _context.SaveChangesAsync();
+                return booking;
+            }
+            return null;
         }
     }
 }

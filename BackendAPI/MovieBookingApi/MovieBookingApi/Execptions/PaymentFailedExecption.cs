@@ -3,14 +3,14 @@
 namespace MovieBookingApi.Execptions
 {
     [Serializable]
-    internal class BookingLimitExecption : Exception
+    internal class PaymentFailedExecption : Exception
     {
         public string message;
-        public BookingLimitExecption()
+        public PaymentFailedExecption()
         {
-            message = "Minimum 1 ticket and maximum 5 tickets are allowed";
+            message = "Error Payment Failed!";
         }
-
         public override string Message => message;
+
     }
 }

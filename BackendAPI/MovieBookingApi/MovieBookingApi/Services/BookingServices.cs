@@ -6,6 +6,7 @@ using MovieBookingApi.Models;
 using MovieBookingApi.Models.DTOs.BookingDTOs;
 using MovieBookingApi.Models.DTOs.TheaterDTOs;
 using MovieBookingApi.Models.TheaterModels;
+using System.Drawing.Printing;
 
 namespace MovieBookingApi.Services
 {
@@ -40,7 +41,7 @@ namespace MovieBookingApi.Services
 
         public async Task<BookingDetailsDTO> BookTickets(BookTicketsDTO bookTicketsDTO,int userId)
         {
-            if (bookTicketsDTO.SeatsBooked.Count() > 5)
+            if (bookTicketsDTO.SeatsBooked.Count() > 5 || bookTicketsDTO.SeatsBooked.Count()==0)
             {
                 throw new BookingLimitExecption();
             }
@@ -50,10 +51,14 @@ namespace MovieBookingApi.Services
             {
                 throw new ShowNotFoundExecption();
             }
-
+            if (!CheckShowTime(show.Date, show.ShowTime))
+            {
+                throw new BookingClosedExecption();
+            }
             //Check if the SeatIds are valid
             var screen = await _screenRepository.Get(show.ScreenId);
-            var screenLayout = (await _screenLayoutRepository.GetAll()).Where(sl => sl.SchemaId == screen.SchemaId).ToList();
+            var screenLayouts = await _screenLayoutRepository.GetAll();
+            var screenLayout = screenLayouts.Where(sl => sl.SchemaId == screen.SchemaId).ToList();
 
             var validRowIds = screenLayout.Select(sl => sl.Id).ToHashSet();
             bool allValid = bookTicketsDTO.SeatsBooked.All(seatId => validRowIds.Contains(seatId));
@@ -92,11 +97,18 @@ namespace MovieBookingApi.Services
 
 
             //Check Snacks Availability
-            if (await SnackAvailability(bookTicketsDTO.Snacks))
+            if(bookTicketsDTO.Snacks.Count() != 0)
             {
-                throw new SnackUnavailableExecption();
+                if (! await SnackAvailability(bookTicketsDTO.Snacks))
+                {
+                    throw new SnackUnavailableExecption();
+                }
+                if(HasZeroQuantity(bookTicketsDTO.Snacks))
+                {
+                    throw new EmptySnackValuesExecption();
+                }
             }
-
+           
             //Make Booking
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
@@ -119,14 +131,17 @@ namespace MovieBookingApi.Services
                     }
                     //BillAmount
                     float billAmount = ticketAmount + snackAmount;
+                    //TotalAmount
+                    float totalAmount = billAmount;
                     //Discount
                     float discount = 0;
                     if (bookTicketsDTO.AvailDiscount == true)
                     {
                         discount = 10;
+                        totalAmount = billAmount * (1 - discount / 100.0f);
                     }
-                    //TotalAmount
-                    float totalAmount = billAmount * (discount / 100.0f);
+                    
+
 
                     //Make Booking
                     var newBooking = new Booking
@@ -150,10 +165,24 @@ namespace MovieBookingApi.Services
                         newTicket = await _ticketRepository.Add(newTicket);
                     }
 
+                    //Snack Discount
+                    if(bookTicketsDTO.AvailSnack == true)
+                    {
+                        var snacks = await _snackRepository.GetAll();
+                        var filteredSnack = snacks.Where(s => s.TheaterId == screen.TheaterId).FirstOrDefault(s => s.Name.Contains("Popcorn", StringComparison.OrdinalIgnoreCase));
+                        if(filteredSnack == null)
+                        {
+                            throw new DiscountNotElgibleExecption();
+                        }
+                        bookTicketsDTO.Snacks.Add(new BookSnackDTO { SnackID = filteredSnack.Id, Quantity = 1 });
+                    }
+                    
+
+
                     //Book Snacks
                     for (int i = 0; i < bookTicketsDTO.Snacks.Count(); i++)
                     {
-                       var newSnackOrder=new SnackOrder { BookingId=newBooking.Id, SnackId = bookTicketsDTO.Snacks[i].SnackID };
+                       var newSnackOrder=new SnackOrder { BookingId=newBooking.Id, SnackId = bookTicketsDTO.Snacks[i].SnackID, Quantity = bookTicketsDTO.Snacks[i].Quantity };
                         newSnackOrder=await _snackOrderRepository.Add(newSnackOrder);
                     }
 
@@ -161,7 +190,7 @@ namespace MovieBookingApi.Services
                     // Commit the transaction
                     await transaction.CommitAsync();
 
-                    return await ViewBooking(newBooking.Id,userId);
+                    return await ViewBooking(newBooking.Id,userId,false);
                 }
                 catch (Exception ex)
                 {
@@ -172,7 +201,23 @@ namespace MovieBookingApi.Services
             }
 
         }
+        private bool CheckShowTime(DateTime dateTime, TimeSpan timeSpan)
+        {
+            // Get current date and time
+            DateTime now = DateTime.Now;
+            DateTime showDateTime = dateTime.Date.Add(timeSpan);
+            if (now > showDateTime || (showDateTime - now).TotalMinutes <= 10)
+            {
+                return false;
+            }
 
+            return true;
+        }
+        private bool HasZeroQuantity(List<BookSnackDTO> snackLists)
+        {
+            bool hasZeroQuantity = snackLists.Any(snack => snack.Quantity == 0); 
+            return hasZeroQuantity; 
+        }
         private async Task<bool> SnackAvailability(List<BookSnackDTO> snacks)
         {
             var snackIds = snacks.Select(snack => snack.SnackID).ToList();
@@ -186,7 +231,7 @@ namespace MovieBookingApi.Services
             var bookings = await _BookingRepository.GetAll();
             int bookingCount=bookings.Where(b => b.UserId == userId && b.BookedOn >= oneWeekAgo).Count();
 
-            return bookingCount >= 3;
+            return bookingCount > 3;
         }
 
         public async Task<ScreenLayoutDTO> GetScreenLayout(int showId)
@@ -224,12 +269,19 @@ namespace MovieBookingApi.Services
             return new ScreenLayoutDTO { RowDimension = schema.RowDimension, ColumnDimension = schema.ColumnDimension, Seats = seatDTOs };
         }
 
-        public async Task<BookingDetailsDTO> ViewBooking(int bookingId, int userId)
+        public async Task<BookingDetailsDTO> ViewBooking(int bookingId, int userId, bool isAdmin)
         {
             var booking=await _BookingRepository.Get(bookingId);
-            if(booking == null || booking.UserId!=userId)
+            if(booking == null)
             {
                 throw new NoSuchBookingFoundExecption();
+            }
+            if(!isAdmin)
+            {
+                if(booking.UserId != userId)
+                {
+                    throw new NoSuchBookingFoundExecption();
+                }
             }
 
             //Getting Seat Positions
@@ -253,10 +305,15 @@ namespace MovieBookingApi.Services
                                 on snack.Id equals snackOrder.SnackId
                                 select new SnackDetailDTO { SnackName = snack.Name, Quantity = snackOrder.Quantity }).ToList();
 
+
+            return MapBookingToDTO(booking, seatPositions, snackDetails);
+        }
+        private BookingDetailsDTO MapBookingToDTO(Booking booking, List<string> seatPositions,List<SnackDetailDTO> snackDetails)
+        {
             var bookingDetailsDTO = new BookingDetailsDTO
             {
-                BookingId = bookingId,
-                BookedBy = userId,
+                BookingId = booking.Id,
+                BookedBy = booking.UserId,
                 TicketAmount = booking.TicketAmount,
                 SnackAmount = booking.SnackAmount,
                 BillAmount = booking.BillAmount,
@@ -265,7 +322,7 @@ namespace MovieBookingApi.Services
                 PaymentStatus = booking.PaymentStatus,
                 TotalAmount = booking.TotalAmount,
                 BookedSeats = seatPositions,
-                Snacks=snackDetails
+                Snacks = snackDetails
             };
             return bookingDetailsDTO;
         }
@@ -284,6 +341,61 @@ namespace MovieBookingApi.Services
 
             return $"{rowLetter}{column}";
         }
-     
+
+
+        //Payment Update Service
+        public async Task<BookingDetailsDTO> PayForBooking(int bookingId, int userId)
+        {
+            var booking = await _BookingRepository.Get(bookingId);
+            if (booking == null || booking.UserId != userId)
+            {
+                throw new NoSuchBookingFoundExecption();
+            }
+            booking.PaymentStatus = true;
+            booking=await _BookingRepository.Update(booking);
+            if (booking == null)
+            {
+                throw new PaymentFailedExecption();
+            }
+            return await ViewBooking(bookingId, userId, false);
+        }
+
+        public async Task<BookingDetailsDTO> DeleteBooking(int bookingId)
+        {
+            var booking = await ViewBooking(bookingId, 0, true);           
+            if(booking.PaymentStatus)
+            {
+                throw new DeleteFailedExecption();
+            }
+            var delBooking=await _BookingRepository.Delete(bookingId);
+            if (delBooking == null)
+            {
+                throw new DeleteFailedExecption();
+            }
+            return booking;
+        }
+
+        public async Task<List<BookingDetailsDTO>> GetAllBookings(int page,int userId,bool admin)
+        {
+            var bookings=await _BookingRepository.GetAll();
+            if (!admin)
+            {
+                bookings = bookings.Where(b => b.UserId == userId);
+            }
+            if (bookings.Count() == 0)
+            {
+                throw new NoBookingsFound();
+            }
+            var pagedBookings = bookings.Skip((page - 1) * 5).Take(5).ToList();
+            
+            var bookingDTOs = new List<BookingDetailsDTO>();
+            for(int i = 0; i < pagedBookings.Count(); i++)
+            {
+                var bookingDTO=await ViewBooking(pagedBookings[i].Id, 0,true);
+                bookingDTOs.Add(bookingDTO);
+            }
+            return bookingDTOs;
+
+        }
     }
 }

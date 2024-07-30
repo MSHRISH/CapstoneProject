@@ -81,7 +81,10 @@ namespace MovieBookingApi.Context
 
             modelBuilder.Entity<Ticket>(ConfigureTicket);
             modelBuilder.Entity<Booking>(ConfigureBooking);
+
+            //Snacks
             modelBuilder.Entity<Snack>(ConfigureSnack);
+            BuildSnacks(modelBuilder);
             modelBuilder.Entity<SnackOrder>(ConfigureSnackOrder);
 
             //Admin
@@ -316,8 +319,8 @@ namespace MovieBookingApi.Context
             builder.HasOne(t => t.Booking)
                 .WithMany(b => b.Tickets)
                 .HasForeignKey(t => t.BookingId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
+               
 
             builder.HasOne(t => t.Seat)
                 .WithMany()
@@ -357,6 +360,15 @@ namespace MovieBookingApi.Context
                .HasForeignKey(s => s.TheaterId)
                .OnDelete(DeleteBehavior.Restrict);
         }
+
+        private void BuildSnacks(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Snack>().HasData(
+                new Snack { Id=1, Name="Regular Popcorn", Description="Salted Popcorn", IsAvailable=true, Price=250, TheaterId=1},
+                new Snack { Id=2, Name="Nachos", Description="Crispy Nachos", IsAvailable=true, Price=200, TheaterId=1},
+                new Snack { Id=3, Name="Coffee", Description="Hot Coffee", IsAvailable=true, Price=200, TheaterId=1}
+                );
+        }
         private void ConfigureSnackOrder(EntityTypeBuilder<SnackOrder> builder)
         {
             builder.HasKey(so => so.Id);
@@ -370,7 +382,7 @@ namespace MovieBookingApi.Context
             builder.HasOne(so => so.Snack)
                .WithMany()
                .HasForeignKey(so => so.SnackId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Cascade);
         }
         private void ConfigureAdmin(EntityTypeBuilder<Admin> builder)
         {

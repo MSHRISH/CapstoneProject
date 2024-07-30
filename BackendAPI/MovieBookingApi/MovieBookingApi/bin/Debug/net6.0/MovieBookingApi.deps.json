@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "MovieBookingApi/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.32",
           "Microsoft.EntityFramework.SqlServer": "6.5.1",
           "Microsoft.EntityFrameworkCore": "6.0.32",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.32",
@@ -76,6 +77,17 @@
           "lib/netstandard2.0/Humanizer.dll": {
             "assemblyVersion": "2.8.0.0",
             "fileVersion": "2.8.26.1919"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.32": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.35.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "assemblyVersion": "6.0.32.0",
+            "fileVersion": "6.0.3224.31405"
           }
         }
       },
@@ -806,6 +818,13 @@
       "sha512": "sha512-OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "path": "humanizer.core/2.8.26",
       "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.32": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jKOKSNc2F/ZFE5UQcDUzGkmwyn9BOMvKsbg+bkFiJRKJTyF06ItAx/My08Ff420U4NGOncRE/n6J0yVjUjjrQw==",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/6.0.32",
+      "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.6.0.32.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TxdvldcJk5GrOp8C3Egdkb1lSLxYd4K2KJIrKUpW4jaAI+/eBlnm/riZr5Q7gJeyh1jN76pEIW06NIEsNEJ5WA==",
+  "dgSpecHash": "HOcgwCUHRjCbDT0tLRVcvgw2Ad6b2upSG5krcptW+edzjYJ2quhSDOlp4CNR6Y6COn6tEwhruLan5HIseGCVYA==",
   "success": true,
   "projectFilePath": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\MovieBookingApi.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\VC\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\entityframework\\6.5.1\\entityframework.6.5.1.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\VC\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.32\\microsoft.aspnetcore.authentication.jwtbearer.6.0.32.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.5\\microsoft.data.sqlclient.5.1.5.nupkg.sha512",

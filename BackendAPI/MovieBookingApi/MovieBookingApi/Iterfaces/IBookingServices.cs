@@ -15,6 +15,15 @@ namespace MovieBookingApi.Iterfaces
         public Task<bool> DiscountEligibility(int userId);
 
         //View a Booking
-        public Task<BookingDetailsDTO> ViewBooking(int bookingId,int userId);
+        public Task<BookingDetailsDTO> ViewBooking(int bookingId,int userId,bool isAdmin);
+
+        //Update Payment
+        public Task<BookingDetailsDTO> PayForBooking(int bookingId,int userId);
+
+        //Delete Booking
+        public Task<BookingDetailsDTO> DeleteBooking(int bookingId);
+
+        //GetAll Bookings
+        public Task<List<BookingDetailsDTO>> GetAllBookings(int page, int userId, bool admin);
     }
 }

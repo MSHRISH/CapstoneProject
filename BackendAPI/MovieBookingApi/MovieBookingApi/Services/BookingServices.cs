@@ -4,8 +4,11 @@ using MovieBookingApi.Iterfaces;
 using MovieBookingApi.Migrations;
 using MovieBookingApi.Models;
 using MovieBookingApi.Models.DTOs.BookingDTOs;
+using MovieBookingApi.Models.DTOs.MovieDTOs;
 using MovieBookingApi.Models.DTOs.TheaterDTOs;
+using MovieBookingApi.Models.MovieModels;
 using MovieBookingApi.Models.TheaterModels;
+using MovieBookingApi.Repositories;
 using System.Drawing.Printing;
 
 namespace MovieBookingApi.Services
@@ -21,12 +24,15 @@ namespace MovieBookingApi.Services
         private readonly IRepository<int, Snack> _snackRepository;
         private readonly MovieBookingContext _dbContext;
         private readonly IRepository<int, SnackOrder> _snackOrderRepository;
+        private readonly IRepository<int, Movie> _movieRepository;
+        private readonly IRepository<int, Theater> _theaterRepository;
 
         public BookingServices(IRepository<int,Show> showRepository,IRepository<int,Screen> screenRepository,
                 IRepository<int,Booking> bookingRepository, IRepository<int,Schema> schemaRepository, 
                 IRepository<int,ScreenLayout> screenLayoutRepository, IRepository<int,Ticket> ticketRepository,
                 IRepository<int,Snack> SnackRepository, MovieBookingContext dbContext,
-                IRepository<int,SnackOrder> snackOrderRepository)
+                IRepository<int,SnackOrder> snackOrderRepository, IRepository<int,Movie> movieRepository,
+                IRepository<int,Theater> theaterRepository)
         {
             _showRepository = showRepository;
             _screenRepository= screenRepository;
@@ -37,6 +43,8 @@ namespace MovieBookingApi.Services
             _snackRepository=SnackRepository;
             _dbContext= dbContext;
             _snackOrderRepository= snackOrderRepository;
+            _movieRepository= movieRepository;
+            _theaterRepository= theaterRepository;
         }
 
         public async Task<BookingDetailsDTO> BookTickets(BookTicketsDTO bookTicketsDTO,int userId)
@@ -51,10 +59,12 @@ namespace MovieBookingApi.Services
             {
                 throw new ShowNotFoundExecption();
             }
-            if (!CheckShowTime(show.Date, show.ShowTime))
+           
+            if (!CheckShowTime(show.ShowDateTime))
             {
                 throw new BookingClosedExecption();
             }
+
             //Check if the SeatIds are valid
             var screen = await _screenRepository.Get(show.ScreenId);
             var screenLayouts = await _screenLayoutRepository.GetAll();
@@ -201,12 +211,13 @@ namespace MovieBookingApi.Services
             }
 
         }
-        private bool CheckShowTime(DateTime dateTime, TimeSpan timeSpan)
+        private bool CheckShowTime(DateTime dateTime)
         {
-            // Get current date and time
-            DateTime now = DateTime.Now;
-            DateTime showDateTime = dateTime.Date.Add(timeSpan);
-            if (now > showDateTime || (showDateTime - now).TotalMinutes <= 10)
+            DateTime currentTime = DateTime.Now;
+            TimeSpan timeDifference = dateTime - currentTime;
+
+            // Return false if current time is within 10 minutes of the given datetime or past the datetime
+            if (timeDifference.TotalMinutes <= 10 || timeDifference.TotalMinutes < 0)
             {
                 return false;
             }
@@ -234,6 +245,7 @@ namespace MovieBookingApi.Services
             return bookingCount > 3;
         }
 
+        //Get LAyout of Screen
         public async Task<ScreenLayoutDTO> GetScreenLayout(int showId)
         {
             var show = await _showRepository.Get(showId);
@@ -261,7 +273,9 @@ namespace MovieBookingApi.Services
                 Row = s.Row,
                 Column = s.Column,
                 Price = s.Price,
-                IsAvailable = !bookedSeatIds.Contains(s.Id)
+                IsAvailable = !bookedSeatIds.Contains(s.Id),
+                 IsSeat=s.IsSeat
+                
             }).OrderBy(seat => seat.Row)
               .ThenBy(seat => seat.Column)
               .ToList();
@@ -288,6 +302,8 @@ namespace MovieBookingApi.Services
             var tickets = (await _ticketRepository.GetAll()).Where(t => t.BookingId==bookingId).ToList();
             var show=await _showRepository.Get(booking.ShowId);
             var screen=await _screenRepository.Get(show.ScreenId);
+            var theater = await _theaterRepository.Get(screen.TheaterId);
+            var movie=await _movieRepository.Get(show.MovieId);
 
             var screenLayout=(await _screenLayoutRepository.GetAll()).Where(sl => sl.SchemaId==screen.SchemaId);
 
@@ -306,9 +322,10 @@ namespace MovieBookingApi.Services
                                 select new SnackDetailDTO { SnackName = snack.Name, Quantity = snackOrder.Quantity }).ToList();
 
 
-            return MapBookingToDTO(booking, seatPositions, snackDetails);
+            return MapBookingToDTO(booking, seatPositions, snackDetails, screen, movie, theater);
         }
-        private BookingDetailsDTO MapBookingToDTO(Booking booking, List<string> seatPositions,List<SnackDetailDTO> snackDetails)
+        private BookingDetailsDTO MapBookingToDTO(Booking booking, List<string> seatPositions,List<SnackDetailDTO> snackDetails, 
+                                                    Screen screen, Movie movie, Theater theater)
         {
             var bookingDetailsDTO = new BookingDetailsDTO
             {
@@ -322,7 +339,10 @@ namespace MovieBookingApi.Services
                 PaymentStatus = booking.PaymentStatus,
                 TotalAmount = booking.TotalAmount,
                 BookedSeats = seatPositions,
-                Snacks = snackDetails
+                Snacks = snackDetails,
+                MovieName=movie.Title,
+                ScreenName=screen.ScreenName,
+                TheaterName=theater.Name
             };
             return bookingDetailsDTO;
         }
@@ -360,9 +380,10 @@ namespace MovieBookingApi.Services
             return await ViewBooking(bookingId, userId, false);
         }
 
-        public async Task<BookingDetailsDTO> DeleteBooking(int bookingId)
+        //Delete Booking
+        public async Task<BookingDetailsDTO> DeleteBooking(int bookingId,int userId,bool admin)
         {
-            var booking = await ViewBooking(bookingId, 0, true);           
+            var booking = await ViewBooking(bookingId, userId, admin);           
             if(booking.PaymentStatus)
             {
                 throw new DeleteFailedExecption();
@@ -396,6 +417,216 @@ namespace MovieBookingApi.Services
             }
             return bookingDTOs;
 
+        }
+
+        public async Task<ShowDetailsDTO> AddShow(AddShowDTO addShowDTO)
+        {
+            if (!IsShowTimeValid(addShowDTO))
+            {
+                throw new ImporperShowTimeExecption();
+            }
+            var screen = await _screenRepository.Get(addShowDTO.ScreenId);
+            if (screen == null)
+            {
+                throw new NoSuchScreenFoundExecption();
+            }
+            var movie=await _movieRepository.Get(addShowDTO.MovieId);
+            if(movie == null)
+            {
+                throw new MovieNotFoundExecption();
+            }
+            var allShows = await _showRepository.GetAll();
+            allShows=allShows.Where(s => s.ScreenId == screen.Id);
+            //Conflict Detection
+            var movieDuration = TimeSpan.FromMinutes(movie.Duration);
+            var minimumTimeDifference = movieDuration + TimeSpan.FromMinutes(30);
+            foreach (var currentshow in allShows)
+            {
+                // Assuming show.StartTime and show.EndTime are of type TimeSpan
+                var showEndTime = currentshow.ShowDateTime+ movieDuration;
+
+                if ((addShowDTO.ShowDateTime >= currentshow.ShowDateTime && addShowDTO.ShowDateTime< showEndTime) ||
+                    (addShowDTO.ShowDateTime+ movieDuration > currentshow.ShowDateTime && addShowDTO.ShowDateTime+ movieDuration <= showEndTime))
+                {
+                    throw new ShowTimeTooCloseException();
+                }
+
+                // Check minimum time difference
+                if (Math.Abs((addShowDTO.ShowDateTime- currentshow.ShowDateTime).TotalMinutes) < minimumTimeDifference.TotalMinutes)
+                {
+                    throw new ShowTimeTooCloseException();
+                }
+            }
+
+            var show= new Show { ScreenId=addShowDTO.ScreenId, MovieId=addShowDTO.MovieId, ShowDateTime =addShowDTO.ShowDateTime};
+            show=await _showRepository.Add(show);
+            if(show == null)
+            {
+                throw new RegistrationFailedExecption();
+            }
+            return new ShowDetailsDTO
+            {
+                ID = show.Id,
+                MovieId = show.MovieId,
+                ScreenId = screen.Id,
+                 ShowDateTime=show.ShowDateTime
+            };
+        }
+        private bool IsShowTimeValid(AddShowDTO addShowDTO)
+        {
+            DateTime currentTime = DateTime.Now;
+            DateTime showDateTime = addShowDTO.ShowDateTime;
+            TimeSpan timeDifference = showDateTime - currentTime;
+
+            // Return false if ShowDateTime is in the past or within 30 minutes from now
+            if (timeDifference.TotalMinutes <= 30 || timeDifference.TotalMinutes < 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<List<DateTime>> GetRunningDatesOfMovie(int movieId,string district)
+        {
+            var movie=await _movieRepository.Get(movieId);
+            if (movie == null)
+            {
+                throw new MovieNotFoundExecption();
+            }
+            var shows = await _showRepository.GetAll();
+            var theaters = await _theaterRepository.GetAll();
+            var screens = await _screenRepository.GetAll();
+
+            var districtTheaterIds = theaters.Where(t => t.District == district)
+                                      .Select(t => t.Id)
+                                      .ToList();
+            var districtScreenIds = screens.Where(sc => districtTheaterIds.Contains(sc.TheaterId))
+                                    .Select(sc => sc.Id)
+                                    .ToList();
+
+
+            var runningDates = shows.Where(s => s.MovieId == movieId && districtScreenIds.Contains(s.ScreenId))
+                            .Select(s => s.ShowDateTime.Date)
+                            .Distinct()
+                            .OrderBy(d => d)
+                            .ToList();
+            return runningDates;
+        }
+
+        public async Task<Dictionary<string, List<ShowDetailsDTO>>> GetShowsByDateForMovie(int movieId, DateTime date,string district)
+        {
+            var movie = await _movieRepository.Get(movieId);
+            if (movie == null)
+            {
+                throw new MovieNotFoundExecption();
+            }
+
+            var shows = await _showRepository.GetAll();
+            var theaters = await _theaterRepository.GetAll();
+            var screens = await _screenRepository.GetAll(); // Assuming you have a repository for screens
+
+            // Filter shows by movie ID and the specified date
+            var filteredShows = shows.Where(s => s.MovieId == movieId && s.ShowDateTime.Date == date.Date).ToList();
+
+            // Create a dictionary to store shows grouped by theater
+            var showsGroupedByTheater = new Dictionary<string, List<ShowDetailsDTO>>();
+
+            // Group shows by screen ID, which is assumed to map to a theater
+            foreach (var group in filteredShows.GroupBy(s => s.ScreenId))
+            {
+                var screen = screens.FirstOrDefault(sc => sc.Id == group.Key);
+                
+                var theater = theaters.FirstOrDefault(t => t.Id == screen.TheaterId && t.District == district);
+                if (theater != null)
+                {
+                    var theaterDetails = new TheaterDetailsDTO
+                    {
+                        Id = theater.Id,
+                        Name = theater.Name,
+                        Phone = theater.Phone,
+                        Address = theater.Address,
+                        District = theater.District
+                    };
+
+                    var showDetailsList = group.Select(s => new ShowDetailsDTO
+                    {
+                        ID = s.Id,
+                        ScreenId = s.ScreenId,
+                        ScreenName = screen.ScreenName,
+                        MovieId = s.MovieId,
+                        ShowDateTime = s.ShowDateTime
+                    }).ToList();
+
+                    showsGroupedByTheater[theater.Name] = showDetailsList;
+                }
+
+            }
+            if (!showsGroupedByTheater.Any())
+            {
+                throw new NoShowsFoundException();
+            }
+
+            return showsGroupedByTheater;
+        }
+
+        public async Task<List<MovieDetailDTO>> GetRunningMovies(string district)
+        {
+            var shows = await _showRepository.GetAll();
+            var theaters = await _theaterRepository.GetAll();
+            var movies = await _movieRepository.GetAll();
+            var screens = await _screenRepository.GetAll(); // Assuming you have a repository for screens
+            var currentDateTime = DateTime.Now;
+
+            // Get theater IDs in the specified district
+            var districtTheaterIds = theaters.Where(t => t.District == district)
+                                             .Select(t => t.Id)
+                                             .ToList();
+
+            // Get screen IDs in the specified district
+            var districtScreenIds = screens.Where(sc => districtTheaterIds.Contains(sc.TheaterId))
+                                           .Select(sc => sc.Id)
+                                           .ToList();
+
+            // Filter shows based on district and ShowDateTime greater than current date and time
+            var filteredShows = shows.Where(s => s.ShowDateTime > currentDateTime && districtScreenIds.Contains(s.ScreenId))
+                                     .ToList();
+
+            // Get distinct movie IDs from filtered shows
+            var movieIds = filteredShows.Select(s => s.MovieId).Distinct().ToList();
+
+            // Get details of these movies
+            var runningMovies = movies.Where(m => movieIds.Contains(m.Id))
+                                      .Select(m => new MovieDetailDTO
+                                      {
+                                          Id = m.Id,
+                                          Title = m.Title,
+                                          PosterUrl = m.PosterUrl,
+                                      }).ToList();
+
+            return runningMovies;
+
+        }
+
+
+        //Helper Services
+        public async Task<List<AllScreensMiniDTO>> GetAllScreensList()
+        {
+            var screens=await _screenRepository.GetAll();
+            var theaters=await _theaterRepository.GetAll();
+
+            var res = (from screen in screens
+                      join theater in theaters
+                      on screen.TheaterId equals theater.Id
+                      select new AllScreensMiniDTO { ScreenId = screen.Id, ScreenName = screen.ScreenName, TheaterName = theater.Name }).ToList();
+            return res;
+        }
+
+        public async Task<List<AllmoviesMiniDTO>> GetAllMoviesList()
+        {
+            var movie=await _movieRepository.GetAll();
+            var res = movie.Select(m => new AllmoviesMiniDTO { MovieId = m.Id, MovieName = m.Title, ReleaseDate = m.RealeaseDate }).ToList();
+            return res;
         }
     }
 }

@@ -12,6 +12,10 @@
         public bool PaymentStatus { get; set; }
         public DateTime BookedOn { get; set; }
 
+        public string MovieName { get; set; }
+        public string TheaterName { get; set; }
+        public string ScreenName { get; set; }
+
         public List<string> BookedSeats { get; set; }
         public List<SnackDetailDTO> Snacks { get; set; }
         

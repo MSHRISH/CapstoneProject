@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.Features.Authentication;
+using MovieBookingApi.Context;
 using MovieBookingApi.Execptions;
 using MovieBookingApi.Iterfaces;
 using MovieBookingApi.Models;
@@ -16,16 +17,18 @@ namespace MovieBookingApi.Services
         private readonly ITokenServices _tokenServices;
         private readonly IRepository<int, User> _userRepository;
         private readonly IRepository<int, UserAuth> _userAuthRepository;
+        private readonly MovieBookingContext _dbContext;
 
         public AccessServices(IRepository<int,Admin> adminRepository, IRepository<int,AdminAuth> adminAuthRepository, 
                                         ITokenServices tokenServices, IRepository<int,User> userRepository, 
-                                        IRepository<int,UserAuth> userAuthRepository) 
+                                        IRepository<int,UserAuth> userAuthRepository, MovieBookingContext dbContext) 
         {
             _adminRepository=adminRepository;
             _adminAuthRepository=adminAuthRepository;
             _tokenServices=tokenServices;
             _userRepository=userRepository;
             _userAuthRepository=userAuthRepository;
+            _dbContext=dbContext;
         }
 
         public async Task<TokenDTO> LoginAdmin(LoginDTO loginDTO)
@@ -84,6 +87,83 @@ namespace MovieBookingApi.Services
                 return GenerateTokenDTO(user.Id, "User");
             }
             throw new InvalidCredentials();
+        }
+
+        public async Task<UserDetailsDTO> RegisterUser(RegisterUserDTO registerUserDTO)
+        {
+            //Check Email
+            if(await CheckRegisterEmail(registerUserDTO.Email))
+            {
+                throw new EmailAlreadyExistExecption();
+            }
+            //Check Phone Number
+            if(await CheckRegosterPhone(registerUserDTO.Phone))
+            {
+                throw new PhoneAlreadyExistExecption();
+            }
+
+            //Register
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var user = new User { Name = registerUserDTO.Name, Email = registerUserDTO.Email, Phone = registerUserDTO.Phone };
+                    user = await _userRepository.Add(user);
+                    if (user == null)
+                    {
+                        throw new RegistrationFailedExecption();
+                    }
+                    HMACSHA512 hMACSHA = new HMACSHA512();
+                    var userAuth = new UserAuth { UserId = user.Id, PasswordHashKey = hMACSHA.Key,
+                        PasswordHash = hMACSHA.ComputeHash(Encoding.UTF8.GetBytes(registerUserDTO.Password)) };
+                    userAuth = await _userAuthRepository.Add(userAuth);
+
+                    if(userAuth == null)
+                    {
+                        throw new RegistrationFailedExecption();
+                    }
+
+                    await _dbContext.SaveChangesAsync();
+                    // Commit the transaction
+                    await transaction.CommitAsync();
+                    return await GetUserDetail(user.Id);
+                }
+                catch (Exception ex)
+                {
+                    // Roll back the transaction
+                    await transaction.RollbackAsync();
+                    throw new RegistrationFailedExecption();
+                }
+            }
+        }
+
+        private async Task<bool> CheckRegisterEmail(string email)
+        {
+            var allUsers=await _userRepository.GetAll();
+            bool exists = allUsers.Any(u => u.Email == email);
+            return exists;
+        }
+        private async Task<bool> CheckRegosterPhone(string Phone)
+        {
+            var allUsers=await _userRepository.GetAll();
+            bool exists = allUsers.Any(u => u.Phone == Phone);
+            return exists;
+        }
+
+        public async Task<UserDetailsDTO> GetUserDetail(int userid)
+        {
+            var user = await _userRepository.Get(userid);
+            if(user == null)
+            {
+                throw new NoSuchUserFoundExecption();
+            }
+            return new UserDetailsDTO
+            {
+                UserId = userid,
+                Name = user.Name,
+                Email = user.Email,
+                Phone = user.Phone,
+            };
         }
     }
 }

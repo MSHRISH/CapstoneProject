@@ -189,6 +189,10 @@ namespace MovieBookingApi.Context
             builder.HasOne(c => c.Artist)
                 .WithMany()
                 .HasForeignKey(c => c.ArtistId);
+
+            builder.HasOne(c => c.MemberType)
+                .WithMany()
+                .HasForeignKey(c => c.MemberTypeId);
         }
         private void ConfigureArtist(EntityTypeBuilder<Artist> builder)
         {
@@ -295,14 +299,14 @@ namespace MovieBookingApi.Context
         private void BuildShows(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Show>().HasData(
-               new Show { Id = 1, Date = new DateTime(2024, 8, 15), MovieId = 1, ScreenId = 1, ShowTime = new TimeSpan(9, 30, 0) }
+               new Show { Id = 1, ShowDateTime = new DateTime(2024, 8, 15, 14, 30, 0), MovieId = 1, ScreenId = 1}
                 );
         }
         private void ConfigureShow(EntityTypeBuilder<Show> builder)
         {
             builder.HasKey(s => s.Id);
-            builder.Property(s => s.Date).IsRequired();
-            builder.Property(s => s.ShowTime).IsRequired();
+            builder.Property(s => s.ShowDateTime).IsRequired();
+
 
             builder.HasOne(s => s.Screen)
                 .WithMany(scr => scr.Shows)

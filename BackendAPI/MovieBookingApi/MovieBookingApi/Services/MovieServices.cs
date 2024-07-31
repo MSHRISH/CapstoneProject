@@ -2,6 +2,7 @@
 using MovieBookingApi.Iterfaces;
 using MovieBookingApi.Models.DTOs.MovieDTOs;
 using MovieBookingApi.Models.MovieModels;
+using MovieBookingApi.Repositories;
 
 namespace MovieBookingApi.Services
 {
@@ -13,10 +14,12 @@ namespace MovieBookingApi.Services
         private readonly IRepository<int, Certification> _certificationRepository;
         private readonly IRepository<int, Format> _formatRepository;
         private readonly IRepository<int, Language> _languageRepository;
+        private readonly IRepository<int, MemberType> _memberTypeRepository;
 
         public MovieServices(IRepository<int,Movie> movieRepository, IRepository<int, Artist> artistRepository,
                             IRepository<int,CastCrew> castCrewRepository, IRepository<int,Certification> certificationRepository,
-                            IRepository<int,Format> formatRepository,IRepository<int,Language> languageRepository) 
+                            IRepository<int,Format> formatRepository,IRepository<int,Language> languageRepository,
+                            IRepository<int,MemberType> memberTypeRepository) 
         {
             _movieRepository= movieRepository;
             _artistRepository= artistRepository;
@@ -24,6 +27,34 @@ namespace MovieBookingApi.Services
             _certificationRepository= certificationRepository;
             _formatRepository= formatRepository;
             _languageRepository= languageRepository;
+            _memberTypeRepository= memberTypeRepository;
+        }
+
+        public async Task<ArtistDetailsDTO> AddArtist(AddArtistDTO addArtistDTO)
+        {
+            if(await CheckArtistName(addArtistDTO.Name))
+            {
+                throw new ArtistAlreadyExistsExecption();
+            }
+            var artist=new Artist {  Name= addArtistDTO.Name, About=addArtistDTO.About };
+            artist=await _artistRepository.Add(artist);
+
+            return new ArtistDetailsDTO { Id = artist.Id, Name = artist.Name, About = artist.About };
+        }
+        public async Task<ArtistDetailsDTO> GetArtistDetails(int artistId)
+        {
+            var artist=await _artistRepository.Get(artistId);
+            if (artist == null)
+            {
+                throw new NoSuchArtistFoundExecption();
+            }
+            return new ArtistDetailsDTO { Id=artist.Id, Name= artist.Name, About=artist.About };
+        }
+        private async Task<bool> CheckArtistName( string artistName)
+        {
+            var artists=await _artistRepository.GetAll();
+            bool exists=artists.Any(a => a.Name== artistName);
+            return exists;
         }
 
         public async Task<MovieDetailDTO> AddMovie(AddMovieDTO addMovieDTO)
@@ -105,6 +136,66 @@ namespace MovieBookingApi.Services
                 throw new MovieNotFoundExecption();
             }
             
+        }
+
+        public async Task<CastCrewDetailsDTO> AddCastCrew(AddCastCrewDTO addCastCrewDTO)
+        {
+            var artist=await _artistRepository.Get(addCastCrewDTO.ArtistId);
+            if(artist==null)
+            {
+                throw new NoSuchArtistFoundExecption();
+            }
+            var movie=await _movieRepository.Get(addCastCrewDTO.MovieId);
+            if(movie == null)
+            {
+                throw new MovieNotFoundExecption();
+            }
+            var membertype=await _memberTypeRepository.Get(addCastCrewDTO.MemberType);
+            if (membertype == null)
+            {
+                throw new NoSuchMemberTypeExecption();
+            }
+            var castCrew=new CastCrew { ArtistId=artist.Id,  MovieId=movie.Id, MemberTypeId=addCastCrewDTO.MemberType, Role=addCastCrewDTO.Role };
+            castCrew=await _castCrewRepository.Add(castCrew);
+            if (castCrew == null)
+            {
+                throw new RegistrationFailedExecption();
+            }
+
+            return new CastCrewDetailsDTO
+            {
+                ArtistId = artist.Id,
+                ArtistName=artist.Name,
+                MovieId = movie.Id,
+                MemberType = addCastCrewDTO.MemberType,
+                Role = addCastCrewDTO.Role,
+                Id = castCrew.Id,
+            };
+        }
+
+        public async Task<List<CastCrewDetailsDTO>> GetCastCrew(int movieId)
+        {
+            var movie = await _movieRepository.Get(movieId);
+            if (movie == null)
+            {
+                throw new MovieNotFoundExecption();
+            }
+            var castCrew = await _castCrewRepository.GetAll();
+            var artists=await _artistRepository.GetAll();
+
+            var castCrewDTO = from castcrew in castCrew
+                              join artist in artists on castcrew.ArtistId equals artist.Id
+                              where castcrew.MovieId == movieId
+                              select new CastCrewDetailsDTO
+                              {
+                                  Id = castcrew.Id,
+                                  ArtistId = castcrew.ArtistId,
+                                  ArtistName = artist.Name,
+                                  MovieId = movie.Id,
+                                  Role = castcrew.Role,
+                                  MemberType = castcrew.MemberTypeId
+                              };
+            return castCrewDTO.ToList();
         }
     }
 }

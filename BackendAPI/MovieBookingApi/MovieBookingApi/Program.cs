@@ -75,6 +75,7 @@ namespace MovieBookingApi
             {
                 options.AddPolicy("RequireUserRole", policy => policy.RequireRole("User"));
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("RequireAdminUserRole", policy => policy.RequireRole("Admin", "User"));
 
             });
             #endregion
@@ -90,6 +91,7 @@ namespace MovieBookingApi
             builder.Services.AddScoped<IRepository<int, Artist>, ArtistRepository>();
             builder.Services.AddScoped<IRepository<int, Booking>, BookingRepository>();
             builder.Services.AddScoped<IRepository<int, CastCrew>, CastCrewRepository>();
+            builder.Services.AddScoped<IRepository<int,MemberType>,MemberTypeRepository>();
             builder.Services.AddScoped<IRepository<int, Certification>, CertificationRepository>();
             builder.Services.AddScoped<IRepository<int, Format>, FormatRepository>();
             builder.Services.AddScoped<IRepository<int, Language>, LanguageRepository>();
@@ -111,6 +113,7 @@ namespace MovieBookingApi
             builder.Services.AddScoped<ITokenServices, TokenServices>();
             builder.Services.AddScoped<IMovieServices, MovieServices>();
             builder.Services.AddScoped<IBookingServices, BookingServices>();
+            builder.Services.AddScoped<ITheaterServices, TheaterServices>();
             #endregion
 
             var app = builder.Build();

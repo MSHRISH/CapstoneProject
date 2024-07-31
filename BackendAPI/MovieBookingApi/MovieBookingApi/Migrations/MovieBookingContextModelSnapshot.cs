@@ -82,8 +82,8 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 1,
                             AdminId = 1,
-                            PasswordHash = new byte[] { 53, 0, 143, 249, 111, 137, 36, 119, 231, 220, 82, 143, 145, 55, 6, 248, 234, 169, 171, 177, 218, 213, 125, 244, 83, 52, 160, 32, 243, 152, 36, 107, 177, 168, 1, 14, 237, 147, 52, 205, 226, 95, 127, 149, 147, 251, 94, 241, 61, 140, 143, 116, 30, 193, 52, 39, 95, 78, 128, 107, 219, 62, 58, 49 },
-                            PasswordHashKey = new byte[] { 27, 83, 76, 44, 72, 142, 44, 112, 251, 0, 18, 225, 11, 2, 89, 225, 243, 156, 189, 87, 61, 209, 236, 55, 126, 206, 128, 34, 203, 41, 100, 159, 14, 72, 77, 208, 159, 74, 233, 190, 223, 154, 172, 56, 227, 248, 109, 250, 194, 170, 183, 123, 46, 221, 221, 53, 190, 137, 80, 10, 50, 136, 129, 228, 60, 6, 195, 248, 122, 129, 148, 248, 12, 181, 139, 182, 167, 84, 126, 66, 147, 228, 163, 239, 105, 54, 50, 79, 63, 143, 130, 38, 188, 202, 47, 123, 110, 49, 244, 255, 99, 208, 135, 231, 157, 71, 118, 147, 56, 141, 42, 75, 98, 99, 100, 229, 70, 236, 137, 33, 73, 226, 139, 220, 209, 232, 41, 133 }
+                            PasswordHash = new byte[] { 162, 57, 31, 178, 132, 40, 148, 187, 185, 249, 99, 216, 34, 147, 150, 40, 64, 40, 197, 129, 20, 122, 154, 184, 205, 28, 55, 44, 22, 76, 201, 138, 171, 43, 147, 250, 213, 24, 175, 113, 184, 81, 203, 237, 54, 211, 195, 227, 155, 75, 197, 44, 245, 218, 137, 24, 167, 108, 147, 201, 133, 199, 59, 100 },
+                            PasswordHashKey = new byte[] { 172, 13, 60, 16, 90, 91, 20, 106, 49, 157, 66, 105, 14, 29, 209, 196, 111, 25, 40, 90, 233, 102, 224, 23, 106, 105, 140, 210, 72, 1, 249, 22, 173, 23, 77, 183, 83, 72, 188, 201, 230, 98, 95, 117, 179, 98, 55, 124, 198, 233, 125, 126, 107, 148, 132, 142, 91, 245, 40, 69, 242, 117, 135, 126, 0, 146, 154, 137, 3, 41, 123, 162, 20, 90, 58, 109, 58, 23, 110, 86, 102, 111, 187, 196, 219, 169, 241, 206, 183, 153, 181, 129, 232, 38, 26, 44, 81, 43, 220, 140, 100, 166, 225, 24, 212, 87, 180, 163, 8, 84, 178, 189, 150, 133, 54, 174, 90, 208, 125, 50, 174, 211, 29, 111, 21, 17, 101, 52 }
                         });
                 });
 
@@ -182,7 +182,7 @@ namespace MovieBookingApi.Migrations
                     b.Property<int>("ArtistId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MemberType")
+                    b.Property<int>("MemberTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("MovieId")
@@ -192,16 +192,13 @@ namespace MovieBookingApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("memberTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ArtistId");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MemberTypeId");
 
-                    b.HasIndex("memberTypeId");
+                    b.HasIndex("MovieId");
 
                     b.ToTable("CastCrews");
                 });
@@ -398,17 +395,14 @@ namespace MovieBookingApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
                     b.Property<int>("ScreenId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("ShowTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("ShowDateTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -422,10 +416,9 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2024, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MovieId = 1,
                             ScreenId = 1,
-                            ShowTime = new TimeSpan(0, 9, 30, 0, 0)
+                            ShowDateTime = new DateTime(2024, 8, 15, 14, 30, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -2647,8 +2640,8 @@ namespace MovieBookingApi.Migrations
                         new
                         {
                             Id = 1,
-                            PasswordHash = new byte[] { 45, 208, 155, 249, 97, 22, 87, 112, 59, 154, 44, 37, 40, 198, 5, 248, 107, 140, 137, 210, 248, 193, 127, 144, 38, 237, 185, 222, 40, 20, 165, 110, 114, 153, 142, 89, 234, 165, 29, 80, 0, 210, 92, 54, 27, 161, 203, 241, 3, 43, 206, 84, 180, 46, 70, 216, 109, 83, 33, 206, 92, 178, 168, 177 },
-                            PasswordHashKey = new byte[] { 162, 80, 172, 204, 236, 212, 228, 138, 49, 161, 153, 223, 74, 185, 191, 98, 164, 128, 63, 249, 31, 102, 162, 232, 254, 140, 201, 46, 89, 110, 86, 39, 90, 18, 87, 27, 13, 221, 236, 169, 224, 68, 153, 107, 36, 129, 221, 68, 186, 174, 25, 7, 110, 96, 225, 34, 185, 146, 185, 58, 115, 212, 139, 148, 136, 0, 228, 109, 237, 210, 108, 230, 127, 54, 140, 96, 65, 232, 204, 11, 145, 169, 210, 44, 43, 223, 99, 44, 212, 148, 245, 184, 15, 162, 172, 114, 2, 17, 116, 175, 231, 75, 199, 1, 102, 73, 234, 65, 200, 57, 166, 110, 156, 4, 201, 61, 223, 102, 83, 169, 11, 148, 111, 53, 55, 46, 43, 175 },
+                            PasswordHash = new byte[] { 59, 39, 114, 191, 192, 17, 255, 134, 187, 215, 18, 179, 131, 77, 129, 100, 88, 187, 70, 243, 26, 11, 19, 94, 240, 111, 37, 100, 232, 10, 64, 183, 198, 252, 237, 170, 64, 184, 135, 198, 178, 163, 35, 220, 198, 61, 5, 222, 65, 211, 164, 193, 102, 120, 159, 151, 177, 222, 39, 109, 175, 44, 188, 83 },
+                            PasswordHashKey = new byte[] { 139, 243, 14, 7, 112, 127, 61, 87, 36, 62, 133, 198, 192, 73, 0, 19, 64, 211, 199, 139, 77, 51, 222, 40, 237, 172, 121, 106, 187, 238, 225, 94, 29, 70, 221, 184, 205, 178, 169, 37, 216, 200, 125, 50, 103, 88, 102, 238, 180, 79, 48, 164, 80, 172, 17, 58, 216, 218, 129, 141, 208, 169, 185, 136, 175, 189, 142, 98, 9, 16, 253, 198, 141, 77, 102, 252, 157, 231, 233, 185, 218, 101, 204, 204, 210, 0, 11, 127, 102, 194, 157, 33, 135, 252, 55, 157, 24, 219, 20, 40, 9, 149, 85, 48, 121, 255, 167, 103, 237, 213, 48, 65, 120, 92, 13, 76, 191, 184, 45, 143, 123, 187, 97, 145, 138, 132, 17, 63 },
                             UserId = 1
                         });
                 });
@@ -2691,23 +2684,23 @@ namespace MovieBookingApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MovieBookingApi.Models.MovieModels.MemberType", "MemberType")
+                        .WithMany()
+                        .HasForeignKey("MemberTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MovieBookingApi.Models.MovieModels.Movie", "Movie")
                         .WithMany("CastCrews")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieBookingApi.Models.MovieModels.MemberType", "memberType")
-                        .WithMany()
-                        .HasForeignKey("memberTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Artist");
 
-                    b.Navigation("Movie");
+                    b.Navigation("MemberType");
 
-                    b.Navigation("memberType");
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.MovieModels.Movie", b =>

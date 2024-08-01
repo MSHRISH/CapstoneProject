@@ -6,6 +6,8 @@ using MovieBookingApi.Models.DTOs.TheaterDTOs;
 
 namespace MovieBookingApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class TheaterController : Controller
     {
         private readonly ITheaterServices _theaterServices;

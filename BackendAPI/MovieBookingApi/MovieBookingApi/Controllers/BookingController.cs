@@ -9,6 +9,8 @@ using System.Security.Claims;
 
 namespace MovieBookingApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class BookingController : Controller
     {
         private readonly IBookingServices _bookingServices;

@@ -9,6 +9,8 @@ using MovieBookingApi.Services;
 
 namespace MovieBookingApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class MoiveController : Controller
     {
         private readonly IMovieServices _movieServices;

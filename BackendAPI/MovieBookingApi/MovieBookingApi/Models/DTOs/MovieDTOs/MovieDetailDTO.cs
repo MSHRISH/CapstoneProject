@@ -9,6 +9,8 @@
         public FormatDetailDTO Format { get; set; }
         public LanguageDetailDTO Language { get; set; }
         public CertificationDetailDTO Certification { get; set; }
+
+        public List<CastCrewDetailsDTO> CastCrewDetails { get; set; }
         public string PosterUrl { get; set; }
         public string LetterBoxUrl { get; set; }
         public DateTime RealeaseDate { get; set; }

@@ -117,6 +117,16 @@ namespace MovieBookingApi.Services
                 var format = await _formatRepository.Get(movie.FormatId);
                 var language = await _languageRepository.Get(movie.LanguageId);
                 var certification = await _certificationRepository.Get(movie.CertificateId);
+                var castCrews=await _castCrewRepository.GetAll();
+                var artists=await _artistRepository.GetAll();
+                var castCrewList = (from castcrew in castCrews
+                                    join artist in artists on castcrew.ArtistId equals artist.Id
+                                    where castcrew.MovieId==movieId
+                                    select new CastCrewDetailsDTO
+                                    {
+                                        ArtistName=artist.Name,
+                                        Role=castcrew.Role
+                                    }).ToList();
                 return new MovieDetailDTO
                 {
                     Id = movie.Id,
@@ -125,6 +135,7 @@ namespace MovieBookingApi.Services
                     Format = new FormatDetailDTO { Id = format.Id, FormatName = format.FormatName},
                     Language=new LanguageDetailDTO { LanguageId=language.Id, LanguageName=language.LanguageName},
                     Certification=new CertificationDetailDTO { CertificationId=certification.Id, CertificateType=certification.CertificateType},
+                    CastCrewDetails=castCrewList,
                     PosterUrl = movie.PosterUrl,
                     LetterBoxUrl = movie.LetterBoxUrl,
                     RealeaseDate = movie.RealeaseDate,

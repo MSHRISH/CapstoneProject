@@ -130,11 +130,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 console.log(data);
                 alert("Redirecting to Payments Page");
+                window.location.href="PaymentPage.html?bookingid="+data.bookingId;
                 
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
                 alert(error);
+                location.reload();
             });
     });
 
@@ -177,6 +179,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if(eligibility){
             document.getElementById('discount-options').classList.remove('hidden');
         }
+
+        ConfirmBooking.innerText="Pay Rs."+Price;
         FetchSnacks();
         OptionsModol.classList.remove('hidden');
     }

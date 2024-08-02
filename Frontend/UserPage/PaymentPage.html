@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book My Movie</title>
+    <!--Tailwind-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../Global/css/sidebar.css">
+    <script src="../Global/js/globalvariables.js"></script>
+    <script src="js/userValidation.js"></script>
+</head>
+<body class="bg-slate-400">
+    <!--MenuIcon-->
+    <span class="absolute  block lg:hidden cursor-pointer" id="menu-button"> 
+        <img class="h-[50px] bg-slate-400" src="../Global/media/icons/list.svg">
+    </span>
+    <!--CloseButton-->
+    <span class="absolute ml-[250px] mt-2 hidden cursor-pointer z-20" id="close-button">
+        <img class="h-[40px]" src="../Global/media/icons/close.svg">
+    </span>
+    <div class="flex">
+        <!--Sidebar-->
+        <div id="sidebar" class="hidden lg:block h-screen bg-gray-400 flex flex-col items-center px-6 z-10">
+            <!--Logo-->
+            <span  class="">
+                <img class="w-32 h-32 ml-[50px]" src="../Global/media/logo.png">
+            </span>
+            <!--SidebarContent-->
+            <ul class="flex flex-col gap-2 mt-10 w-[250px]">
+                <li class="text-center">
+                    <span class="text-2xl font-bold">User</span>
+                </li>
+                <li class="flex gap-2 items-center justify-center px-4 py-2 border-2 rounded-lg hover:bg-[snow]">
+                    <span><img class="w-[20px]" src="../Global/media/icons/film.svg"></span>
+                    <a href="Home.html" class="text-lg font-bold">Home</a>
+                </li>
+                
+                <li class="flex gap-2 items-center justify-center px-4 py-2 border-2 rounded-lg hover:bg-[snow]">
+                    <span><img class="w-[20px]" src="../Global/media/icons/logout.svg"></span>
+                    <a href="#" id="logout-sidebar" class="text-lg font-bold">Logout</a>
+                </li>
+                
+            </ul>
+        </div>
+        
+         <!-- Logout Modal -->
+         <div id="logout-modal" class=" hidden bg-[grey] bg-opacity-70 absolute z-50 h-dvh w-dvh fixed inset-0 flex items-center justify-center">
+            <div class="bg-white rounded-lg shadow-lg max-w-sm w-full p-6">
+              <h2 class="text-xl font-semibold mb-4">Are you sure you want to logout?</h2>
+              <div class="flex justify-end space-x-4">
+                  <button id="logout-cancel-Button" class="px-4 py-2 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75">Cancel</button>
+                  <button id="logout-button" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75">Logout</button>
+              </div>
+          </div>
+        </div>
+
+        <!--Content-->
+        <div class="flex-1 w-full h-screen flex items-center justify-center w-full h-dvh  bg-gradient-to-b from-slate-300 to-slate-200 overflow-auto px-4">
+             <!-- Ticket Details Card -->
+            <div class="h-fit max-w-4xl w-80 bg-white rounded-lg items-center flex flex-col py-2 px-2">
+                <div class="font-bold text-xl mb-2 border-2 flex gap-1 justify-center w-full h-fit  px-2 rounded-lg bg-slate-400">
+                    <span id="movie-name">MovieName</span>
+                    <span id="certificate">( U/A )</span>
+                </div>
+                <div class="mb-2 border-2 flex justify-center gap-1 h-fit  px-2  bg-slate-300 rounded-lg">
+                    <span id="lang-format">Language, 2D</span>
+                </div>
+                <div class="font-bold text-xl mb-2 border-2 flex flex-col items-center justify-center w-fit h-fit  px-2 rounded-lg bg-slate-400">
+                    <span id="theater">Theater Name</span>
+                    <span id="screen">Screen Name</span>
+                </div>
+
+                <div class="mb-2 border-2 flex justify-center gap-1 h-fit  px-2  bg-slate-300 rounded-lg">
+                    <span id="show-date">Sat, 27 Jul</span>
+                    <span>|</span>
+                    <span id="show-time">06:50 PM</span>
+                </div>
+
+                <div class=" flex flex-col items-center   h-fit  px-2 rounded-lg  py-2">
+                    <span id="tickets">5 Tickets(s)</span>
+                    <div id="ticket-container" class="flex flex-wrap gap-3">
+                        <span class="bg-gray-200 rounded-lg px-2 py-1">N17</span>                    
+                        <span class="bg-gray-200 rounded-lg px-2 py-1">N17</span>
+                        <span class="bg-gray-200 rounded-lg px-2 py-1">N17</span>
+                        <span class="bg-gray-200 rounded-lg px-2 py-1">N17</span>
+                        <span class="bg-gray-200 rounded-lg px-2 py-1">N17</span>
+                    </div>
+                </div>
+                <div id="snack-container" class="hidden w-fit px-2 h-fit flex flex-col items-center border-2 rounded-lg">
+                    <div>Snack1 X 2</div>
+                    <div>Snack1 X 2</div>
+                    <div>Snack1 X 2</div>
+                    <div>Snack1 X 2</div>
+                </div>
+                <div id="bill-container" class="w-fit h-fit mt-2 px-2 flex flex-col items-center border-2 rounded-lg">
+                    <div id="ticket-amount">TicketAmount: 400</div>
+                    <div id="snack-amount">Snack Amount: 300</div>
+                    <div id="discount"></div>
+                    <div id="total-amount">Total Amount: 2000</div>
+                </div>
+                <div class="mt-2">
+                    <button id="pay-button" class="border border-green-500 text-green-700 hover:bg-green-500 px-2 rounded-lg ">
+                        Pay Rs.100
+                    </button>
+                </div>
+                <div class="mt-2">
+                    <button id="cancel-button" class="border border-red-500 text-red-700 hover:bg-red-500 px-2 rounded-lg ">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+</html>
+
+
+<script src="../Global/js/sidebar.js"></script>
+<script src="js/PaymentPage.js"></script>
+<script src="js/logoutmodal.js"></script>

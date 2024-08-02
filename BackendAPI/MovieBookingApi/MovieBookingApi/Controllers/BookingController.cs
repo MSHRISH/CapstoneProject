@@ -77,12 +77,12 @@ namespace MovieBookingApi.Controllers
         [ProducesResponseType(typeof(List<BookingDetailsDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "RequireUserRole")]
-        public async Task<ActionResult<List<BookingDetailsDTO>>> GetAllMyBookings([FromQuery] int page = 1)
+        public async Task<ActionResult<List<BookingDetailsDTO>>> GetAllMyBookings()
         {
             try
             {
                 int.TryParse(User.FindFirst(ClaimTypes.Name)?.Value, out int parsedUserId);
-                var res = await _bookingServices.GetAllBookings(page, parsedUserId, false);
+                var res = await _bookingServices.GetAllBookings(parsedUserId, false);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -96,11 +96,11 @@ namespace MovieBookingApi.Controllers
         [ProducesResponseType(typeof(List<BookingDetailsDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<ActionResult<List<BookingDetailsDTO>>> GetAllBookings([FromQuery] int page = 1)
+        public async Task<ActionResult<List<BookingDetailsDTO>>> GetAllBookings()
         {
             try
             {
-                var res = await _bookingServices.GetAllBookings(page, 0, true);
+                var res = await _bookingServices.GetAllBookings(0, true);
                 return Ok(res);
             }
             catch (Exception ex)

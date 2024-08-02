@@ -34,7 +34,7 @@ namespace MovieBookingApi.Iterfaces
         public Task<BookingDetailsDTO> DeleteBooking(int bookingId, int userId, bool admin);
 
         //GetAll Bookings
-        public Task<List<BookingDetailsDTO>> GetAllBookings(int page, int userId, bool admin);
+        public Task<List<BookingDetailsDTO>> GetAllBookings(int userId, bool admin);
 
         //Get Movies from a District that are running i.e ShowDateTime greater than CurrentDateTime
         public Task<List<MovieDetailDTO>> GetRunningMovies(string district);

@@ -13,9 +13,17 @@
         public DateTime BookedOn { get; set; }
 
         public string MovieName { get; set; }
+        public string Format {  get; set; }
+        public string Language { get; set; }
+
+        public string Certification { get; set; }
+
         public string TheaterName { get; set; }
         public string ScreenName { get; set; }
 
+        public DateTime ShowDateTime { get; set; }
+
+        
         public List<string> BookedSeats { get; set; }
         public List<SnackDetailDTO> Snacks { get; set; }
         

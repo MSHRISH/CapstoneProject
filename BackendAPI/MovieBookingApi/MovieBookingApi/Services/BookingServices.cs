@@ -26,13 +26,17 @@ namespace MovieBookingApi.Services
         private readonly IRepository<int, SnackOrder> _snackOrderRepository;
         private readonly IRepository<int, Movie> _movieRepository;
         private readonly IRepository<int, Theater> _theaterRepository;
+        private readonly IRepository<int, Language> _languageRepository;
+        private readonly IRepository<int, Format> _formatRepository;
+        private readonly IRepository<int, Certification> _certificationRepository;
 
         public BookingServices(IRepository<int,Show> showRepository,IRepository<int,Screen> screenRepository,
                 IRepository<int,Booking> bookingRepository, IRepository<int,Schema> schemaRepository, 
                 IRepository<int,ScreenLayout> screenLayoutRepository, IRepository<int,Ticket> ticketRepository,
                 IRepository<int,Snack> SnackRepository, MovieBookingContext dbContext,
                 IRepository<int,SnackOrder> snackOrderRepository, IRepository<int,Movie> movieRepository,
-                IRepository<int,Theater> theaterRepository)
+                IRepository<int,Theater> theaterRepository, IRepository<int,Language> languageRepository,
+                IRepository<int,Format> formatRepository, IRepository<int,Certification> certificationRepository)
         {
             _showRepository = showRepository;
             _screenRepository= screenRepository;
@@ -45,6 +49,9 @@ namespace MovieBookingApi.Services
             _snackOrderRepository= snackOrderRepository;
             _movieRepository= movieRepository;
             _theaterRepository= theaterRepository;
+            _languageRepository= languageRepository;
+            _formatRepository= formatRepository;
+            _certificationRepository= certificationRepository;
         }
 
         public async Task<BookingDetailsDTO> BookTickets(BookTicketsDTO bookTicketsDTO,int userId)
@@ -184,7 +191,20 @@ namespace MovieBookingApi.Services
                         {
                             throw new DiscountNotElgibleExecption();
                         }
-                        bookTicketsDTO.Snacks.Add(new BookSnackDTO { SnackID = filteredSnack.Id, Quantity = 1 });
+                        var alreadyPresent = false;
+                        for (int i = 0;i < bookTicketsDTO.Snacks.Count();i++)
+                        {
+                            if (bookTicketsDTO.Snacks[i].SnackID == filteredSnack.Id)
+                            {
+                                alreadyPresent = true;
+                                bookTicketsDTO.Snacks[i].Quantity += 1;
+                            }
+                        }
+                        if (!alreadyPresent)
+                        {
+                            bookTicketsDTO.Snacks.Add(new BookSnackDTO { SnackID = filteredSnack.Id, Quantity = 1 });
+                        }
+                        
                     }
                     
 
@@ -304,6 +324,9 @@ namespace MovieBookingApi.Services
             var screen=await _screenRepository.Get(show.ScreenId);
             var theater = await _theaterRepository.Get(screen.TheaterId);
             var movie=await _movieRepository.Get(show.MovieId);
+            var language=await _languageRepository.Get(movie.LanguageId);
+            var certification = await _certificationRepository.Get(movie.CertificateId);
+            var format = await _formatRepository.Get(movie.FormatId);
 
             var screenLayout=(await _screenLayoutRepository.GetAll()).Where(sl => sl.SchemaId==screen.SchemaId);
 
@@ -322,10 +345,11 @@ namespace MovieBookingApi.Services
                                 select new SnackDetailDTO { SnackName = snack.Name, Quantity = snackOrder.Quantity }).ToList();
 
 
-            return MapBookingToDTO(booking, seatPositions, snackDetails, screen, movie, theater);
+            return MapBookingToDTO(booking, seatPositions, snackDetails, screen, movie, theater,show,format,certification,language);
         }
         private BookingDetailsDTO MapBookingToDTO(Booking booking, List<string> seatPositions,List<SnackDetailDTO> snackDetails, 
-                                                    Screen screen, Movie movie, Theater theater)
+                                                    Screen screen, Movie movie, Theater theater,Show show,Format format,
+                                                    Certification certification,Language language)
         {
             var bookingDetailsDTO = new BookingDetailsDTO
             {
@@ -342,7 +366,11 @@ namespace MovieBookingApi.Services
                 Snacks = snackDetails,
                 MovieName=movie.Title,
                 ScreenName=screen.ScreenName,
-                TheaterName=theater.Name
+                TheaterName=theater.Name,
+                 ShowDateTime=show.ShowDateTime,
+                  Format=format.FormatName,
+                   Language=language.LanguageName,
+                    Certification=certification.CertificateType
             };
             return bookingDetailsDTO;
         }
@@ -371,6 +399,10 @@ namespace MovieBookingApi.Services
             {
                 throw new NoSuchBookingFoundExecption();
             }
+            if (booking.PaymentStatus)
+            {
+                throw new AlreadyPaymentDoneExecption();
+            }
             booking.PaymentStatus = true;
             booking=await _BookingRepository.Update(booking);
             if (booking == null)
@@ -396,7 +428,7 @@ namespace MovieBookingApi.Services
             return booking;
         }
 
-        public async Task<List<BookingDetailsDTO>> GetAllBookings(int page,int userId,bool admin)
+        public async Task<List<BookingDetailsDTO>> GetAllBookings(int userId,bool admin)
         {
             var bookings=await _BookingRepository.GetAll();
             if (!admin)
@@ -407,12 +439,11 @@ namespace MovieBookingApi.Services
             {
                 throw new NoBookingsFound();
             }
-            var pagedBookings = bookings.Skip((page - 1) * 5).Take(5).ToList();
-            
+            var bookingslist = bookings.OrderByDescending(b => b.BookedOn).ToList();
             var bookingDTOs = new List<BookingDetailsDTO>();
-            for(int i = 0; i < pagedBookings.Count(); i++)
+            for(int i = 0; i < bookingslist.Count(); i++)
             {
-                var bookingDTO=await ViewBooking(pagedBookings[i].Id, 0,true);
+                var bookingDTO=await ViewBooking(bookingslist[i].Id, 0,true);
                 bookingDTOs.Add(bookingDTO);
             }
             return bookingDTOs;

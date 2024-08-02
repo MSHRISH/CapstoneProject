@@ -6,6 +6,8 @@ namespace MovieBookingApi.Iterfaces
 {
     public interface IBookingServices
     {
+        //CheckIf a User is Elgible for Discount
+        public Task<bool> DiscountEligibility(int userid);
         //Add A Show
         public Task<ShowDetailsDTO> AddShow(AddShowDTO addShowDTO);
 
@@ -21,9 +23,7 @@ namespace MovieBookingApi.Iterfaces
         //book a seat(s)
         public Task<BookingDetailsDTO> BookTickets(BookTicketsDTO bookTicketsDTO,int userId);
 
-        //Check Discount eligibility of a user
-        public Task<bool> DiscountEligibility(int userId);
-
+   
         //View a Booking
         public Task<BookingDetailsDTO> ViewBooking(int bookingId,int userId,bool isAdmin);
 

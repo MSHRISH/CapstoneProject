@@ -144,5 +144,21 @@ namespace MovieBookingApi.Controllers
 
 
         }
+
+        [HttpGet("GetSnacksForShow")]
+        [ProducesResponseType(typeof(List<TheaterSnackDetailsDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<TheaterSnackDetailsDTO>>> GetSnacksForShow(int showid)
+        {
+            try
+            {
+                var res = await _theaterServices.GetSnackDetailsOfShow(showid);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModel(400, ex.Message));
+            }
+        }
     }
 }

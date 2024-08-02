@@ -278,9 +278,9 @@ namespace MovieBookingApi.Context
         private void BuildSchemaLayout(ModelBuilder modelBuilder)
         {
             int id = 1;
-            for (int row = 1; row < 15; row++)
+            for (int row = 1; row <= 15; row++)
             {
-                for (int column = 1; column < 16; column++)
+                for (int column = 1; column <= 16; column++)
                 {
                     bool IsSeat = true;
                     if (row == 10 || row == 11 || column == 7 || column == 8)

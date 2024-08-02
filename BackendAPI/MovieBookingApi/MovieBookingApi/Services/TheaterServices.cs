@@ -1,7 +1,9 @@
 ﻿using MovieBookingApi.Execptions;
 using MovieBookingApi.Iterfaces;
+using MovieBookingApi.Models;
 using MovieBookingApi.Models.DTOs.TheaterDTOs;
 using MovieBookingApi.Models.TheaterModels;
+using MovieBookingApi.Repositories;
 
 namespace MovieBookingApi.Services
 {
@@ -10,13 +12,18 @@ namespace MovieBookingApi.Services
         private readonly IRepository<int, Theater> _theaterRepository;
         private readonly IRepository<int, Screen> _screenRepository;
         private readonly IRepository<int, Schema> _schemaRepository;
+        private readonly IRepository<int, Show> _showRepository;
+        private readonly IRepository<int, Snack> _snackRepository;
 
         public TheaterServices(IRepository<int,Theater> theaterRepository, IRepository<int,Screen> screenRepository,
-                                IRepository<int,Schema> schemaRepository)
+                                IRepository<int,Schema> schemaRepository, IRepository<int,Show> showRepository
+                                ,IRepository<int,Snack> snackRepository)
         {
             _theaterRepository=theaterRepository;
             _screenRepository=screenRepository;
             _schemaRepository = schemaRepository;
+            _showRepository=showRepository;
+            _snackRepository = snackRepository;
         }
 
       
@@ -154,6 +161,28 @@ namespace MovieBookingApi.Services
                 SchemaName = s.Name,
             }).ToList();
             return result;
+        }
+
+        public async Task<List<TheaterSnackDetailsDTO>> GetSnackDetailsOfShow(int showid)
+        {
+            var show=await _showRepository.Get(showid);
+            if (show == null)
+            {
+                throw new ShowNotFoundExecption();
+            }
+            var screen = await _screenRepository.Get(show.ScreenId);
+            var theater = await _theaterRepository.Get(screen.TheaterId);
+
+            var snacks = await _snackRepository.GetAll();
+            var res = snacks.Where(s => s.TheaterId == theater.Id && s.IsAvailable==true).Select(s => new TheaterSnackDetailsDTO
+                {
+                     Id = s.Id,
+                     IsAvailable = s.IsAvailable,
+                     Price =s.Price,
+                     SnackName=s.Name,
+                }).ToList();
+            return res;
+
         }
     }
 }

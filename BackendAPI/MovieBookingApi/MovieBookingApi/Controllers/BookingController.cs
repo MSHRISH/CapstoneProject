@@ -262,5 +262,23 @@ namespace MovieBookingApi.Controllers
             }
 
         }
+
+        [HttpGet("CheckDiscountEligibility")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "RequireUserRole")]
+        public async Task<ActionResult<bool>> CheckDiscountEligibility()
+        {
+            try
+            {
+                int.TryParse(User.FindFirst(ClaimTypes.Name)?.Value, out int parsedUserId);
+                var res = await _bookingServices.DiscountEligibility(parsedUserId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModel(400, ex.Message));
+            }
+        }
     }
 }

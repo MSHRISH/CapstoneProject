@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book My Movie</title>
+    <!--Tailwind-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../Global/css/sidebar.css">
+    <link rel="stylesheet" href="css/scrollbar.css">
+    <script src="js/userValidation.js"></script>
+    
+</head>
+<body class="bg-slate-400">
+    <!--MenuIcon-->
+    <span class="absolute  block lg:hidden cursor-pointer" id="menu-button"> 
+        <img class="h-[50px] bg-slate-400" src="../Global/media/icons/list.svg">
+    </span>
+    <!--CloseButton-->
+    <span class="absolute ml-[250px] mt-2 hidden cursor-pointer z-20" id="close-button">
+        <img class="h-[40px]" src="../Global/media/icons/close.svg">
+    </span>
+    <div class="flex">
+        <!--Sidebar-->
+        <div id="sidebar" class="hidden lg:block h-screen bg-gray-400 flex flex-col items-center px-6 z-10">
+            <!--Logo-->
+            <span  class="">
+                <img class="w-32 h-32 ml-[50px]" src="../Global/media/logo.png">
+            </span>
+            <!--SidebarContent-->
+            <ul class="flex flex-col gap-2 mt-10 w-[250px]">
+                <li class="text-center">
+                    <span class="text-2xl font-bold">User</span>
+                </li>
+                <li class="flex gap-2 items-center justify-center px-4 py-2 border-2 rounded-lg hover:bg-[snow]">
+                    <span><img class="w-[20px]" src="../Global/media/icons/film.svg"></span>
+                    <a href="Home.html" class="text-lg font-bold">Home</a>
+                </li>
+                
+                <li class="flex gap-2 items-center justify-center px-4 py-2 border-2 rounded-lg hover:bg-[snow]">
+                    <span><img class="w-[20px]" src="../Global/media/icons/logout.svg"></span>
+                    <a href="#" id="logout-sidebar" class="text-lg font-bold">Logout</a>
+                </li>
+                
+            </ul>
+        </div>
+        
+        <!-- Option Modal -->
+        <div id="options-modal" class="hidden bg-[grey] bg-opacity-70 absolute z-100 h-dvh w-dvh fixed inset-0 flex items-center justify-center">
+            <div class="bg-white rounded-lg shadow-lg max-w-sm w-full p-6">
+              <div class="flex flex-col items-center justify-center">
+                <div id="discount-options" class="hidden">
+                    <!--10% Discount-->
+                    <div class=" flex flex-row gap-2 px-2">
+                        <span>Apply Discount</span>
+                        <input class="mt-1" type="radio" name="option" value="discount">
+                    </div>
+                    <div class=" flex flex-row gap-2 px-2">
+                        <span>Free Popcorn</span>
+                        <input class="mt-1" type="radio" name="option" value="popcorn">
+                    </div>
+                </div>
+                
+                <!--Snack Div-->
+                <div id="snack-options" class="hidden flex flex-col items-center">
+                    <span id="Add-Snack">Add Snacks</span>
+                    <!--Snack List-->
+                    <div id="snack-container" class="w-96 max-h-48 h-auto border-2 flex flex-col px-2 py-1 overflow-auto scrollbar-hide">
+                        <!--Snack Row-->
+                        <div class="grid grid-cols-3 gap-8 border-2 px-2 py-1">
+                            <span>Regular</span>
+                            <span>Rs.200</span>
+                         
+                            <!--Snack Plus minus Button-->
+                            <div class="">
+                                <button id="minus-snack-button" class="border text-red-500 border-red-500 rounded-xl px-1">-</button>
+                                <span>Add</span>
+                                <button id="plus-snack-button" class="border text-green-500 border-green-500 rounded-xl px-1">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!--Booking Button-->
+                <div>
+                    <button id="confirming-booking-button" class="bg-green-500 px-2 py-1 rounded-lg mt-2">Pay </button>
+                </div>
+                <!--Cancel Button-->
+                <div>
+                    <button id="cancel-booking-button" class="bg-red-500 px-2 py-1 rounded-lg mt-2">Cancel</button>
+                </div>
+              </div>
+          </div>
+        </div>
+
+         <!-- Logout Modal -->
+         <div id="logout-modal" class=" hidden bg-[grey] bg-opacity-70 absolute z-50 h-dvh w-dvh fixed inset-0 flex items-center justify-center">
+            <div class="bg-white rounded-lg shadow-lg max-w-sm w-full p-6">
+              <h2 class="text-xl font-semibold mb-4">Are you sure you want to logout?</h2>
+              <div class="flex justify-end space-x-4">
+                  <button id="logout-cancel-Button" class="px-4 py-2 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75">Cancel</button>
+                  <button id="logout-button" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75">Logout</button>
+              </div>
+          </div>
+        </div>
+
+        <!--Content-->
+        <div class="flex-1 w-full h-screen bg-gradient-to-b from-slate-300 to-slate-200 overflow-auto px-4">
+            <!--Show Details Content-->
+            <div class="mt-4 flex flex-col gap-4 p-6 bg-white rounded shadow-lg">
+                <span id="movie-name" class="font-bold text-xl mb-2">Movie Name</span>
+                <div class="bg-gray-200 w-64 rounded-lg px-3 py-1 flex flex-col justify-center items-center h-full">
+                    <span id="show-time">10:30</span>
+                    <span id="screen-name">ScreenName</span>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex flex-col items-center">
+                        <div class="h-10 w-10 border border-black text-center py-2 bg-green-500"></div>
+                        <span>Selected</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="h-10 w-10 border border-black text-center py-2"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="h-10 w-10 border border-black text-center py-2 bg-gray-300"></div>
+                        <span>Not Available</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!--Seats Layout-->
+            <div id="seat-layout-container" class="mt-8 flex flex-col  flex-wrap overflow-y-auto  overflow-x-auto scrollbar-hide gap-4 p-6 bg-white rounded shadow-lg">               
+                <!--Row-->
+                <div class="flex flex-row gap-4">
+                    <div class="mt-2 w-10">A</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">1</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">2</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">3</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">4</div>
+                    <div class="h-10 w-10 border border-black text-center py-2 bg-green-500">5</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">6</div>
+                    <div class="h-10 w-10 border border-black text-center py-2 bg-gray-300 text-[snow]">7</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">8</div>
+                    <div class="w-10"></div>
+                    <div class="w-10"></div>
+                    <div class="h-10 w-10 border border-black text-center py-2">11</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">12</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">13</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">14</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">15</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">16</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">17</div>
+                    <div class="h-10 w-10 border border-black text-center py-2">18</div>
+                 
+                
+                </div>
+                
+                <div class="flex  mb-6  items-center justify-center">
+                    <div class="text-center border-2 w-[300px] h-8 border-black mb">Screen</div>
+                </div>
+            </div>
+
+            <div id="book-tickets-button" class="cursor-pointer hover:bg-red-600 hidden w-80 rounded-lg fixed bottom-0 left-1/2 lg:left-[770px] transform -translate-x-1/2  bg-red-500 text-white text-center py-2 z-50">
+                Pay Rs. 190.78
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+
+<script src="../Global/js/globalvariables.js"></script>
+<script src="../Global/js/sidebar.js"></script>
+<script src="js/SelectSeats.js"></script>
+<script src="js/logoutmodal.js"></script>

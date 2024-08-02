@@ -175,6 +175,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const ScreenNameSpan=document.createElement('span');
                 ScreenNameSpan.innerText=show.screenName;
 
+                ShowDiv.addEventListener('click',function(event){
+                    window.location.href="SelectSeats.html?showid="+ShowDiv.id
+                                            +"&moviename="+movieName
+                                            +"&showtime="+ShowTimeSpan.innerText
+                                            +"&screenname="+ScreenNameSpan.innerText;
+                });
+
                 ShowDiv.appendChild(ShowTimeSpan);
                 ShowDiv.appendChild(ScreenNameSpan);
             

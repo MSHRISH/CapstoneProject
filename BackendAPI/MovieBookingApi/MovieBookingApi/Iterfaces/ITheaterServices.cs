@@ -16,5 +16,7 @@ namespace MovieBookingApi.Iterfaces
 
         //Get All Schemas
         public Task<List<AllSchemasMiniDTO>> GetAllTheSchemasList();
+
+        public Task<List<TheaterSnackDetailsDTO>> GetSnackDetailsOfShow(int showid);
     }
 }

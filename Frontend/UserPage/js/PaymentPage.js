@@ -52,7 +52,7 @@ function DeleteBooking(bookingid){
 
 window.addEventListener('beforeunload', function(event){
     DeleteBooking(getQueryParam('bookingid'));
-    window.location.href="Home.html";
+    // window.location.href="Home.html";
 });
 
 
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
             alert(error);
-            // window.location.href="Home.html";
+            window.location.href="Home.html";
         });
     
     //Render Booking Details

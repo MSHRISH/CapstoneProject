@@ -49,6 +49,7 @@ namespace MovieBookingApi.Context
             BuildCertifications(modelBuilder);
 
             modelBuilder.Entity<Movie>(ConfigureMovie);
+            BuildMovies(modelBuilder);
             modelBuilder.Entity<CastCrew>(ConfigureCastCrew);
 
             //MemberTypes (i.e Cast/Crew)
@@ -100,7 +101,7 @@ namespace MovieBookingApi.Context
             BuildUserAuth(modelBuilder);
         }
 
-
+      
         private void ConfigureMemberType(EntityTypeBuilder<MemberType> builder)
         {
             builder.HasKey(mt => mt.Id);
@@ -178,6 +179,16 @@ namespace MovieBookingApi.Context
                 .WithMany()
                 .HasForeignKey(m => m.CertificateId);
         }
+        private void BuildMovies(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Movie>().HasData(
+                new Movie { Id=1, Title="Fight Club", CertificateId=3, Description ="First Rule of Fight Club is You do not talk about Fight Club",
+                     FormatId =1, Duration=139, LanguageId=1, LetterBoxUrl = "https://letterboxd.com/film/fight-club/", RealeaseDate = new DateTime(1999, 10, 15)
+                     , PosterUrl = "https://a.ltrbxd.com/resized/film-poster/5/1/5/6/8/51568-fight-club-0-500-0-750-crop.jpg?v=768b32dfa4"
+                }
+                );
+        }
+
         private void ConfigureCastCrew(EntityTypeBuilder<CastCrew> builder)
         {
             builder.HasKey(c => c.Id);
@@ -295,7 +306,7 @@ namespace MovieBookingApi.Context
                 }
             }
         }
-
+        
         private void BuildShows(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Show>().HasData(

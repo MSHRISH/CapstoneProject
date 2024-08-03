@@ -1,7 +1,7 @@
 ﻿using MovieBookingApi.Context;
 using MovieBookingApi.Execptions;
 using MovieBookingApi.Iterfaces;
-using MovieBookingApi.Migrations;
+
 using MovieBookingApi.Models;
 using MovieBookingApi.Models.DTOs.BookingDTOs;
 using MovieBookingApi.Models.DTOs.MovieDTOs;

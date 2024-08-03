@@ -12,8 +12,8 @@ using MovieBookingApi.Context;
 namespace MovieBookingApi.Migrations
 {
     [DbContext(typeof(MovieBookingContext))]
-    [Migration("20240729064530_ScreenSchemaInjection-2")]
-    partial class ScreenSchemaInjection2
+    [Migration("20240803080239_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,8 +84,8 @@ namespace MovieBookingApi.Migrations
                         {
                             Id = 1,
                             AdminId = 1,
-                            PasswordHash = new byte[] { 150, 94, 223, 60, 118, 235, 216, 76, 183, 14, 150, 90, 115, 204, 226, 151, 13, 55, 158, 120, 217, 205, 71, 191, 138, 130, 111, 232, 238, 13, 145, 59, 140, 191, 139, 202, 255, 37, 237, 76, 182, 94, 91, 237, 214, 112, 249, 83, 251, 161, 103, 74, 242, 218, 144, 195, 44, 110, 31, 192, 75, 3, 157, 105 },
-                            PasswordHashKey = new byte[] { 245, 227, 41, 189, 6, 120, 56, 139, 41, 68, 202, 208, 54, 151, 76, 230, 232, 163, 223, 54, 232, 23, 45, 192, 13, 12, 31, 17, 74, 202, 220, 158, 113, 172, 190, 116, 234, 145, 212, 221, 212, 49, 210, 88, 13, 106, 217, 4, 172, 80, 236, 44, 230, 78, 180, 158, 67, 40, 124, 45, 0, 8, 231, 171, 76, 35, 4, 78, 230, 241, 43, 136, 152, 85, 255, 110, 64, 215, 108, 47, 140, 35, 202, 162, 41, 191, 85, 252, 234, 53, 206, 123, 174, 198, 49, 58, 92, 85, 187, 118, 74, 210, 45, 131, 52, 125, 131, 76, 162, 110, 89, 52, 235, 114, 24, 205, 233, 215, 28, 141, 241, 12, 222, 12, 150, 15, 198, 184 }
+                            PasswordHash = new byte[] { 210, 81, 34, 135, 254, 35, 133, 60, 86, 17, 115, 1, 46, 216, 134, 109, 161, 47, 212, 3, 140, 245, 9, 117, 182, 68, 229, 160, 78, 44, 23, 96, 165, 242, 86, 13, 188, 172, 61, 188, 160, 188, 128, 47, 51, 1, 193, 63, 140, 183, 75, 159, 111, 51, 255, 158, 28, 217, 117, 249, 116, 148, 121, 107 },
+                            PasswordHashKey = new byte[] { 122, 250, 116, 5, 199, 246, 175, 170, 52, 170, 66, 243, 5, 89, 83, 166, 192, 166, 121, 86, 161, 129, 137, 211, 101, 172, 80, 114, 59, 199, 123, 229, 10, 253, 33, 160, 25, 121, 163, 208, 121, 46, 230, 24, 96, 79, 140, 219, 254, 5, 232, 221, 168, 201, 58, 92, 113, 10, 184, 250, 76, 42, 199, 153, 203, 235, 186, 228, 186, 229, 209, 180, 87, 187, 47, 127, 16, 122, 241, 51, 94, 95, 180, 63, 2, 57, 234, 106, 253, 57, 73, 244, 31, 199, 117, 79, 225, 192, 122, 158, 208, 136, 238, 208, 150, 45, 240, 36, 0, 95, 75, 97, 52, 100, 65, 146, 147, 231, 226, 168, 36, 198, 102, 85, 196, 91, 27, 184 }
                         });
                 });
 
@@ -111,6 +111,12 @@ namespace MovieBookingApi.Migrations
 
                     b.Property<int>("ShowId")
                         .HasColumnType("int");
+
+                    b.Property<float>("SnackAmount")
+                        .HasColumnType("real");
+
+                    b.Property<float>("TicketAmount")
+                        .HasColumnType("real");
 
                     b.Property<float>("TotalAmount")
                         .HasColumnType("real");
@@ -178,7 +184,7 @@ namespace MovieBookingApi.Migrations
                     b.Property<int>("ArtistId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MemberType")
+                    b.Property<int>("MemberTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("MovieId")
@@ -188,16 +194,13 @@ namespace MovieBookingApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("memberTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ArtistId");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MemberTypeId");
 
-                    b.HasIndex("memberTypeId");
+                    b.HasIndex("MovieId");
 
                     b.ToTable("CastCrews");
                 });
@@ -384,6 +387,21 @@ namespace MovieBookingApi.Migrations
                     b.HasIndex("LanguageId");
 
                     b.ToTable("Movies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CertificateId = 3,
+                            Description = "First Rule of Fight Club is You do not talk about Fight Club",
+                            Duration = 139,
+                            FormatId = 1,
+                            LanguageId = 1,
+                            LetterBoxUrl = "https://letterboxd.com/film/fight-club/",
+                            PosterUrl = "https://a.ltrbxd.com/resized/film-poster/5/1/5/6/8/51568-fight-club-0-500-0-750-crop.jpg?v=768b32dfa4",
+                            RealeaseDate = new DateTime(1999, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Fight Club"
+                        });
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.Show", b =>
@@ -394,26 +412,18 @@ namespace MovieBookingApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MovieId1")
                         .HasColumnType("int");
 
                     b.Property<int>("ScreenId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("ShowTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("ShowDateTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MovieId");
-
-                    b.HasIndex("MovieId1");
 
                     b.HasIndex("ScreenId");
 
@@ -431,6 +441,9 @@ namespace MovieBookingApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -446,6 +459,35 @@ namespace MovieBookingApi.Migrations
                     b.HasIndex("TheaterId");
 
                     b.ToTable("Snacks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Salted Popcorn",
+                            IsAvailable = true,
+                            Name = "Regular Popcorn",
+                            Price = 250f,
+                            TheaterId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Crispy Nachos",
+                            IsAvailable = true,
+                            Name = "Nachos",
+                            Price = 200f,
+                            TheaterId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Hot Coffee",
+                            IsAvailable = true,
+                            Name = "Coffee",
+                            Price = 200f,
+                            TheaterId = 1
+                        });
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.SnackOrder", b =>
@@ -457,6 +499,9 @@ namespace MovieBookingApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("BookingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("SnackId")
@@ -503,2054 +548,6 @@ namespace MovieBookingApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieBookingApi.Models.TheaterModels.SchemaLayout", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Column")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsSeat")
-                        .HasColumnType("bit");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
-                    b.Property<int>("Row")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SchemaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SchemaId");
-
-                    b.ToTable("ScreenSchemas");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 1,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 31,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 2,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 33,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 34,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 35,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 36,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 37,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 38,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 39,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 40,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 41,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 42,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 43,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 44,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 45,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 46,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 47,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 48,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 3,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 49,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 50,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 51,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 52,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 53,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 54,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 55,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 56,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 57,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 58,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 59,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 60,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 61,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 62,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 63,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 64,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 4,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 65,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 66,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 67,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 68,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 69,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 70,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 71,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 72,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 73,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 74,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 75,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 76,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 77,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 78,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 79,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 80,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 5,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 81,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 82,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 83,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 84,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 85,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 86,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 87,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 88,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 89,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 90,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 91,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 92,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 93,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 94,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 95,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 96,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 6,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 97,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 98,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 99,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 100,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 101,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 102,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 103,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 104,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 105,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 106,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 107,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 108,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 109,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 110,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 111,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 112,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 7,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 113,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 114,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 115,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 116,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 117,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 118,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 119,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 120,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 121,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 122,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 123,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 124,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 125,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 126,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 127,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 128,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 8,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 129,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 130,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 131,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 132,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 133,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 134,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 135,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 136,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 137,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 138,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 139,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 140,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 141,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 142,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 143,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 144,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 9,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 145,
-                            Column = 0,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 146,
-                            Column = 1,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 147,
-                            Column = 2,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 148,
-                            Column = 3,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 149,
-                            Column = 4,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 150,
-                            Column = 5,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 151,
-                            Column = 6,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 152,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 153,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 154,
-                            Column = 9,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 155,
-                            Column = 10,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 156,
-                            Column = 11,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 157,
-                            Column = 12,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 158,
-                            Column = 13,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 159,
-                            Column = 14,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 160,
-                            Column = 15,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 10,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 161,
-                            Column = 0,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 162,
-                            Column = 1,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 163,
-                            Column = 2,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 164,
-                            Column = 3,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 165,
-                            Column = 4,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 166,
-                            Column = 5,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 167,
-                            Column = 6,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 168,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 169,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 170,
-                            Column = 9,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 171,
-                            Column = 10,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 172,
-                            Column = 11,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 173,
-                            Column = 12,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 174,
-                            Column = 13,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 175,
-                            Column = 14,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 176,
-                            Column = 15,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 11,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 177,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 178,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 179,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 180,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 181,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 182,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 183,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 184,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 185,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 186,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 187,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 188,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 189,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 190,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 191,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 192,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 12,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 193,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 194,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 195,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 196,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 197,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 198,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 199,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 200,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 201,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 202,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 203,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 204,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 205,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 206,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 207,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 208,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 13,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 209,
-                            Column = 0,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 210,
-                            Column = 1,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 211,
-                            Column = 2,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 212,
-                            Column = 3,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 213,
-                            Column = 4,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 214,
-                            Column = 5,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 215,
-                            Column = 6,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 216,
-                            Column = 7,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 217,
-                            Column = 8,
-                            IsSeat = false,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 218,
-                            Column = 9,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 219,
-                            Column = 10,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 220,
-                            Column = 11,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 221,
-                            Column = 12,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 222,
-                            Column = 13,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 223,
-                            Column = 14,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        },
-                        new
-                        {
-                            Id = 224,
-                            Column = 15,
-                            IsSeat = true,
-                            Price = 100f,
-                            Row = 14,
-                            SchemaId = 1
-                        });
-                });
-
             modelBuilder.Entity("MovieBookingApi.Models.TheaterModels.Screen", b =>
                 {
                     b.Property<int>("Id")
@@ -2584,6 +581,2198 @@ namespace MovieBookingApi.Migrations
                             SchemaId = 1,
                             ScreenName = "Screen 1",
                             TheaterId = 1
+                        });
+                });
+
+            modelBuilder.Entity("MovieBookingApi.Models.TheaterModels.ScreenLayout", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Column")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsSeat")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Row")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SchemaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchemaId");
+
+                    b.ToTable("ScreenLayouts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 1,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 2,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 3,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 4,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 65,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 69,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 75,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 76,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 77,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 78,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 79,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 80,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 5,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 81,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 82,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 83,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 84,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 85,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 86,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 87,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 88,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 89,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 90,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 91,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 92,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 93,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 94,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 95,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 96,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 6,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 97,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 98,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 99,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 100,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 101,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 102,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 103,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 104,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 105,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 106,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 107,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 108,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 109,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 110,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 111,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 112,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 7,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 113,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 114,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 115,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 116,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 117,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 118,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 119,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 120,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 121,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 122,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 123,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 124,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 125,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 126,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 127,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 128,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 8,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 129,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 130,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 131,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 132,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 133,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 134,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 135,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 136,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 137,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 138,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 139,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 140,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 141,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 142,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 143,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 144,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 9,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 145,
+                            Column = 1,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 146,
+                            Column = 2,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 147,
+                            Column = 3,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 148,
+                            Column = 4,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 149,
+                            Column = 5,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 150,
+                            Column = 6,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 151,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 152,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 153,
+                            Column = 9,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 154,
+                            Column = 10,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 155,
+                            Column = 11,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 156,
+                            Column = 12,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 157,
+                            Column = 13,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 158,
+                            Column = 14,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 159,
+                            Column = 15,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 160,
+                            Column = 16,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 10,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 161,
+                            Column = 1,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 162,
+                            Column = 2,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 163,
+                            Column = 3,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 164,
+                            Column = 4,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 165,
+                            Column = 5,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 166,
+                            Column = 6,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 167,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 168,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 169,
+                            Column = 9,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 170,
+                            Column = 10,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 171,
+                            Column = 11,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 172,
+                            Column = 12,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 173,
+                            Column = 13,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 174,
+                            Column = 14,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 175,
+                            Column = 15,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 176,
+                            Column = 16,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 11,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 177,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 178,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 179,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 180,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 181,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 182,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 183,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 184,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 185,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 186,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 187,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 188,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 189,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 190,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 191,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 192,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 12,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 193,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 194,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 195,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 196,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 197,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 198,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 199,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 200,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 201,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 202,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 203,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 204,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 205,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 206,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 207,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 208,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 13,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 209,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 210,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 211,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 212,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 213,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 214,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 215,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 216,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 217,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 218,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 219,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 220,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 221,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 222,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 223,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 224,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 14,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 225,
+                            Column = 1,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 226,
+                            Column = 2,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 227,
+                            Column = 3,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 228,
+                            Column = 4,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 229,
+                            Column = 5,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 230,
+                            Column = 6,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 231,
+                            Column = 7,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 232,
+                            Column = 8,
+                            IsSeat = false,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 233,
+                            Column = 9,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 234,
+                            Column = 10,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 235,
+                            Column = 11,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 236,
+                            Column = 12,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 237,
+                            Column = 13,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 238,
+                            Column = 14,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 239,
+                            Column = 15,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
+                        },
+                        new
+                        {
+                            Id = 240,
+                            Column = 16,
+                            IsSeat = true,
+                            Price = 100f,
+                            Row = 15,
+                            SchemaId = 1
                         });
                 });
 
@@ -2688,6 +2877,15 @@ namespace MovieBookingApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "mynameisshrish@gmail.com",
+                            Name = "Shrish",
+                            Phone = "1231233123"
+                        });
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.UserAuth", b =>
@@ -2715,6 +2913,15 @@ namespace MovieBookingApi.Migrations
                         .IsUnique();
 
                     b.ToTable("UserAuths");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PasswordHash = new byte[] { 64, 205, 157, 238, 173, 37, 81, 179, 57, 17, 117, 14, 180, 164, 18, 216, 29, 6, 90, 101, 204, 255, 199, 106, 3, 163, 105, 40, 59, 250, 144, 13, 252, 207, 235, 215, 76, 216, 120, 96, 149, 101, 205, 18, 19, 231, 97, 96, 197, 206, 5, 220, 166, 37, 173, 103, 112, 165, 22, 82, 81, 1, 145, 105 },
+                            PasswordHashKey = new byte[] { 134, 166, 195, 10, 72, 43, 176, 102, 194, 1, 112, 80, 133, 253, 197, 195, 68, 155, 120, 177, 161, 140, 148, 63, 32, 159, 22, 104, 154, 10, 229, 217, 79, 72, 151, 10, 39, 196, 18, 53, 2, 62, 220, 46, 251, 235, 37, 81, 191, 9, 73, 131, 148, 252, 77, 140, 219, 72, 77, 75, 124, 141, 37, 90, 225, 104, 123, 20, 210, 168, 212, 194, 38, 128, 185, 30, 139, 54, 95, 105, 236, 187, 78, 243, 101, 68, 159, 231, 116, 77, 213, 205, 172, 26, 145, 196, 151, 185, 86, 106, 241, 169, 62, 218, 18, 135, 88, 52, 7, 14, 0, 12, 141, 9, 171, 0, 142, 142, 182, 92, 221, 23, 47, 133, 123, 42, 177, 248 },
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.AdminAuth", b =>
@@ -2755,23 +2962,23 @@ namespace MovieBookingApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MovieBookingApi.Models.MovieModels.MemberType", "MemberType")
+                        .WithMany()
+                        .HasForeignKey("MemberTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MovieBookingApi.Models.MovieModels.Movie", "Movie")
                         .WithMany("CastCrews")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieBookingApi.Models.MovieModels.MemberType", "memberType")
-                        .WithMany()
-                        .HasForeignKey("memberTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Artist");
 
-                    b.Navigation("Movie");
+                    b.Navigation("MemberType");
 
-                    b.Navigation("memberType");
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.MovieModels.Movie", b =>
@@ -2804,14 +3011,10 @@ namespace MovieBookingApi.Migrations
             modelBuilder.Entity("MovieBookingApi.Models.Show", b =>
                 {
                     b.HasOne("MovieBookingApi.Models.MovieModels.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Shows")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("MovieBookingApi.Models.MovieModels.Movie", null)
-                        .WithMany("Shows")
-                        .HasForeignKey("MovieId1");
 
                     b.HasOne("MovieBookingApi.Models.TheaterModels.Screen", "Screen")
                         .WithMany("Shows")
@@ -2846,23 +3049,12 @@ namespace MovieBookingApi.Migrations
                     b.HasOne("MovieBookingApi.Models.Snack", "Snack")
                         .WithMany()
                         .HasForeignKey("SnackId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Booking");
 
                     b.Navigation("Snack");
-                });
-
-            modelBuilder.Entity("MovieBookingApi.Models.TheaterModels.SchemaLayout", b =>
-                {
-                    b.HasOne("MovieBookingApi.Models.TheaterModels.Schema", "Schema")
-                        .WithMany("Layouts")
-                        .HasForeignKey("SchemaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Schema");
                 });
 
             modelBuilder.Entity("MovieBookingApi.Models.TheaterModels.Screen", b =>
@@ -2884,15 +3076,26 @@ namespace MovieBookingApi.Migrations
                     b.Navigation("Theater");
                 });
 
+            modelBuilder.Entity("MovieBookingApi.Models.TheaterModels.ScreenLayout", b =>
+                {
+                    b.HasOne("MovieBookingApi.Models.TheaterModels.Schema", "Schema")
+                        .WithMany("Layouts")
+                        .HasForeignKey("SchemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Schema");
+                });
+
             modelBuilder.Entity("MovieBookingApi.Models.Ticket", b =>
                 {
                     b.HasOne("MovieBookingApi.Models.Booking", "Booking")
                         .WithMany("Tickets")
                         .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieBookingApi.Models.TheaterModels.SchemaLayout", "Seat")
+                    b.HasOne("MovieBookingApi.Models.TheaterModels.ScreenLayout", "Seat")
                         .WithMany()
                         .HasForeignKey("SeatId")
                         .OnDelete(DeleteBehavior.Cascade)

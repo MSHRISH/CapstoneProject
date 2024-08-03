@@ -57,7 +57,7 @@ window.addEventListener('beforeunload', function(event){
 
 
 document.addEventListener('DOMContentLoaded', function() {
-     
+
     const bookingId=getQueryParam('bookingid');
 
     if(!bookingId){
@@ -177,6 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
                 alert(error);
+                window.location.href="Home.html";
             });
     });
 

@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var options={
             method: 'POST',
             headers: {
+                'accept':'text/plain',
                 'Content-Type': 'application/json',
                 'Authorization': "Bearer "+User.token
             },

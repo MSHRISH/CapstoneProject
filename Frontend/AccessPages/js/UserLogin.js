@@ -1,3 +1,4 @@
+
 loginForm=document.getElementById("user-login-form");
 
 loginForm.addEventListener("submit",function(event){
@@ -43,5 +44,6 @@ loginForm.addEventListener("submit",function(event){
             // Handle any errors that occurred during the fetch
             console.error('Fetch error:', error);
             alert(error);
+            window.location.reload();
         });
 });

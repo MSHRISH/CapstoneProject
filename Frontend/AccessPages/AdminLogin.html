@@ -14,12 +14,15 @@
     
 
     <link rel="stylesheet" href="../Global/css/global.css">
-    
+    <script src="js/ReRoutingAdmins.js"></script>
 
 </head>
 <body class="flex items-center justify-center h-screen bg-gradient-to-b from-slate-300 to-slate-200">
     <!--Login Modol-->
-    <div class="flex flex-col items-center w-80 h-80 bg-gray-400 px-2 py-4">
+    <div class="flex flex-col items-center w-80 h-fit bg-gray-400 px-2 py-4 rounded-lg">
+        <span>
+            <img src="../UserPage/media/logo.png">
+        </span>
         <span class="font-bold text-[30px]">Admin Login</span>
         <form id="admin-login-form">
             <div class="relative m-6">
@@ -28,7 +31,7 @@
                 </span>
                 <input type="email" id="email-input" name="email-input" required placeholder="Email" class=" bg-white bg-opacity-50 rounded border-white border-1 placeholder:text-[black] placeholder:text-left py-2 pl-9 pr-3">
                 <p id="email-error" class="mb-2 absolute hidden text-red-600 font-bold">
-                    Please provide a valid email.
+                    Invalid email
                 </p>
             </div>
             <div class="relative m-6">
@@ -43,7 +46,11 @@
             <div class="flex justify-center items-center">
                 <button type="submit" class="mt-6 mb-2 bg-slate-600 hover:bg-lime-600 rounded border-white border-1 p-2 w-24 text-[snow]">Login</button>
             </div>
+            <div class="flex items-center justify-center">
+                <span><a href="../index.html" class="text-blue-700 font-semibold hover:underline">Sign-up Page</a></span>
+            </div>
         </form>
+        
     </div>
 </body>
 </html>

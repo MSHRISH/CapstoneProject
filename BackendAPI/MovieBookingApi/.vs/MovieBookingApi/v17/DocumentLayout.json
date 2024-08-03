@@ -7,10 +7,6 @@
       "RelativeMoniker": "D:0:0:{4C2E9DBA-A84C-432A-BA17-EC8D5644FBC6}|MovieBookingApi\\MovieBookingApi.csproj|solutionrelative:moviebookingapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4C2E9DBA-A84C-432A-BA17-EC8D5644FBC6}|MovieBookingApi\\MovieBookingApi.csproj|c:\\presidio\\capstone project\\backendapi\\moviebookingapi\\moviebookingapi\\context\\moviebookingcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4C2E9DBA-A84C-432A-BA17-EC8D5644FBC6}|MovieBookingApi\\MovieBookingApi.csproj|solutionrelative:moviebookingapi\\context\\moviebookingcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4C2E9DBA-A84C-432A-BA17-EC8D5644FBC6}|MovieBookingApi\\MovieBookingApi.csproj|c:\\presidio\\capstone project\\backendapi\\moviebookingapi\\moviebookingapi\\services\\bookingservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C2E9DBA-A84C-432A-BA17-EC8D5644FBC6}|MovieBookingApi\\MovieBookingApi.csproj|solutionrelative:moviebookingapi\\services\\bookingservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -33,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{4C2E9DBA-A84C-432A-BA17-EC8D5644FBC6}|MovieBookingApi\\MovieBookingApi.csproj|c:\\presidio\\capstone project\\backendapi\\moviebookingapi\\moviebookingapi\\services\\theaterservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C2E9DBA-A84C-432A-BA17-EC8D5644FBC6}|MovieBookingApi\\MovieBookingApi.csproj|solutionrelative:moviebookingapi\\services\\theaterservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4C2E9DBA-A84C-432A-BA17-EC8D5644FBC6}|MovieBookingApi\\MovieBookingApi.csproj|c:\\presidio\\capstone project\\backendapi\\moviebookingapi\\moviebookingapi\\migrations\\20240803080956_init2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4C2E9DBA-A84C-432A-BA17-EC8D5644FBC6}|MovieBookingApi\\MovieBookingApi.csproj|solutionrelative:moviebookingapi\\migrations\\20240803080956_init2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,44 +50,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "20240803080956_Init2.cs",
-              "DocumentMoniker": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Migrations\\20240803080956_Init2.cs",
-              "RelativeDocumentMoniker": "MovieBookingApi\\Migrations\\20240803080956_Init2.cs",
-              "ToolTip": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Migrations\\20240803080956_Init2.cs",
-              "RelativeToolTip": "MovieBookingApi\\Migrations\\20240803080956_Init2.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-03T08:09:57.094Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MovieBookingContext.cs",
-              "DocumentMoniker": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Context\\MovieBookingContext.cs",
-              "RelativeDocumentMoniker": "MovieBookingApi\\Context\\MovieBookingContext.cs",
-              "ToolTip": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Context\\MovieBookingContext.cs",
-              "RelativeToolTip": "MovieBookingApi\\Context\\MovieBookingContext.cs",
-              "ViewState": "AQIAACMBAAAAAAAAAAAwwDQBAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-03T07:41:14.832Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\appsettings.json",
               "RelativeDocumentMoniker": "MovieBookingApi\\appsettings.json",
               "ToolTip": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\appsettings.json",
               "RelativeToolTip": "MovieBookingApi\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAACgAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAB+AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-08-03T07:35:05.706Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Show.cs",
               "DocumentMoniker": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Models\\Show.cs",
               "RelativeDocumentMoniker": "MovieBookingApi\\Models\\Show.cs",
@@ -107,7 +75,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "TheaterServices.cs",
               "DocumentMoniker": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Services\\TheaterServices.cs",
               "RelativeDocumentMoniker": "MovieBookingApi\\Services\\TheaterServices.cs",
@@ -119,7 +87,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "BookingServices.cs",
               "DocumentMoniker": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Services\\BookingServices.cs",
               "RelativeDocumentMoniker": "MovieBookingApi\\Services\\BookingServices.cs",
@@ -131,7 +99,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "BookingDetailsDTO.cs",
               "DocumentMoniker": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Models\\DTOs\\BookingDTOs\\BookingDetailsDTO.cs",
               "RelativeDocumentMoniker": "MovieBookingApi\\Models\\DTOs\\BookingDTOs\\BookingDetailsDTO.cs",
@@ -143,7 +111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "IBookingServices.cs",
               "DocumentMoniker": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Iterfaces\\IBookingServices.cs",
               "RelativeDocumentMoniker": "MovieBookingApi\\Iterfaces\\IBookingServices.cs",
@@ -155,7 +123,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "BookingController.cs",
               "DocumentMoniker": "C:\\Presidio\\Capstone Project\\BackendAPI\\MovieBookingApi\\MovieBookingApi\\Controllers\\BookingController.cs",
               "RelativeDocumentMoniker": "MovieBookingApi\\Controllers\\BookingController.cs",

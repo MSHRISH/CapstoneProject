@@ -37,11 +37,13 @@ loginForm.addEventListener("submit",function(event){
             console.log(data);
             localStorage.setItem('AdminToken', JSON.stringify(data));
             alert("Login Successfull Redirecting to Dashboard");
+            window.location.href="../AdminPage/AddShow.html";
             
         })
         .catch(error => {
             // Handle any errors that occurred during the fetch
             console.error('Fetch error:', error);
             alert(error)
+            window.location.reload();
         });
 });

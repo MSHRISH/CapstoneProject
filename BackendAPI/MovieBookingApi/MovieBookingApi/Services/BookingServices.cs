@@ -665,7 +665,7 @@ namespace MovieBookingApi.Services
             var bookings = await _BookingRepository.GetAll();
             var unpaidbookings = bookings.Where(b => b.PaymentStatus == false).Select(b => new BookingDetailsDTO
             {
-                BookingId = b.Id
+                BookingId = b.Id, BookedOn=b.BookedOn
             }).ToList();
             return unpaidbookings;
 

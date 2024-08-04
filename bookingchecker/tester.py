@@ -1,6 +1,9 @@
 import requests
 import time
 import json
+import pytz
+from datetime import datetime, timezone
+
 
 # Constants
 USEREMAIL = "Shrish@gmail.com"
@@ -34,6 +37,12 @@ def get_unpaid_bookings(token):
     return response.json()
 
 unpaid_bookings=get_unpaid_bookings(get_token(USEREMAIL,PASSWORD))
+for booking in unpaid_bookings:
+    booking_time_str = booking['bookedOn']
+    booking_time = datetime.fromisoformat(booking_time_str)
+    print(booking_time)
+    
+    # current_time_utc = datetime.utcnow()
+    current_utc_time = datetime.now(timezone.utc)
 
-for i in unpaid_bookings:
-    print(i['bookingId'])
+    print(current_utc_time)

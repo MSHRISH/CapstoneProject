@@ -1,6 +1,7 @@
 import requests
 import time
 import json
+from datetime import datetime, timedelta, timezone
 
 # Constants
 USEREMAIL = 'Shrish@gmail.com'
@@ -43,8 +44,16 @@ def main():
             unpaid_bookings = get_unpaid_bookings(token)
             
             for booking in unpaid_bookings:
-                delete_booking(token, booking['bookingId'])
-                print(f"Deleted booking ID: {booking['bookingId']}")
+                 booking_time_str = booking['bookedOn']
+                 booking_time = datetime.fromisoformat(booking_time_str)
+                 current_utc_time = datetime.now(timezone.utc)
+                 if booking_time.tzinfo is None:
+                     booking_time = booking_time.replace(tzinfo=timezone.utc)
+                 if current_utc_time - booking_time > timedelta(minutes=3):
+                    delete_booking(token, booking['bookingId'])
+                    print(f"Deleted booking ID: {booking['bookingId']} (Booked at: {booking_time_str})")
+                 else:
+                    print(f"Booking ID: {booking['bookingId']} is not older than 3 minutes (Booked at: {booking_time_str})")
             
             print("Completed one cycle. Sleeping for 60 seconds.")
             time.sleep(60)

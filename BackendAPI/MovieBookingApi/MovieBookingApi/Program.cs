@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Azure.Identity;
 
 
 namespace MovieBookingApi
@@ -20,9 +21,14 @@ namespace MovieBookingApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+          
 
             builder.Services.AddControllers();
+
+            // Add services to the container.Key Vault
+            var keyVaultUri = new Uri("https://moviebookinvault.vault.azure.net/");
+            builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -81,8 +87,11 @@ namespace MovieBookingApi
             #endregion
 
             #region Context
-            builder.Services.AddDbContext<MovieBookingContext>(
-                options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+            //builder.Services.AddDbContext<MovieBookingContext>(
+            //options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+
+            builder.Services.AddDbContext<MovieBookingContext>(options =>
+                options.UseSqlServer(builder.Configuration["defaultConnection"]));
             #endregion
 
             #region Repository

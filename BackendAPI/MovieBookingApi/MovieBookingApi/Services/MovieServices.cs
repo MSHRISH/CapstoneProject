@@ -14,12 +14,11 @@ namespace MovieBookingApi.Services
         private readonly IRepository<int, Certification> _certificationRepository;
         private readonly IRepository<int, Format> _formatRepository;
         private readonly IRepository<int, Language> _languageRepository;
-        private readonly IRepository<int, MemberType> _memberTypeRepository;
+        
 
         public MovieServices(IRepository<int,Movie> movieRepository, IRepository<int, Artist> artistRepository,
                             IRepository<int,CastCrew> castCrewRepository, IRepository<int,Certification> certificationRepository,
-                            IRepository<int,Format> formatRepository,IRepository<int,Language> languageRepository,
-                            IRepository<int,MemberType> memberTypeRepository) 
+                            IRepository<int,Format> formatRepository,IRepository<int,Language> languageRepository) 
         {
             _movieRepository= movieRepository;
             _artistRepository= artistRepository;
@@ -27,7 +26,6 @@ namespace MovieBookingApi.Services
             _certificationRepository= certificationRepository;
             _formatRepository= formatRepository;
             _languageRepository= languageRepository;
-            _memberTypeRepository= memberTypeRepository;
         }
 
         public async Task<ArtistDetailsDTO> AddArtist(AddArtistDTO addArtistDTO)
@@ -161,12 +159,8 @@ namespace MovieBookingApi.Services
             {
                 throw new MovieNotFoundExecption();
             }
-            var membertype=await _memberTypeRepository.Get(addCastCrewDTO.MemberType);
-            if (membertype == null)
-            {
-                throw new NoSuchMemberTypeExecption();
-            }
-            var castCrew=new CastCrew { ArtistId=artist.Id,  MovieId=movie.Id, MemberTypeId=addCastCrewDTO.MemberType, Role=addCastCrewDTO.Role };
+           
+            var castCrew=new CastCrew { ArtistId=artist.Id,  MovieId=movie.Id, Role=addCastCrewDTO.Role };
             castCrew=await _castCrewRepository.Add(castCrew);
             if (castCrew == null)
             {
@@ -178,7 +172,7 @@ namespace MovieBookingApi.Services
                 ArtistId = artist.Id,
                 ArtistName=artist.Name,
                 MovieId = movie.Id,
-                MemberType = addCastCrewDTO.MemberType,
+         
                 Role = addCastCrewDTO.Role,
                 Id = castCrew.Id,
             };
@@ -204,7 +198,7 @@ namespace MovieBookingApi.Services
                                   ArtistName = artist.Name,
                                   MovieId = movie.Id,
                                   Role = castcrew.Role,
-                                  MemberType = castcrew.MemberTypeId
+                                 
                               };
             return castCrewDTO.ToList();
         }

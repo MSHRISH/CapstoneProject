@@ -18,9 +18,10 @@ namespace MovieBookingApi.Context
         public DbSet<Language> Languages { get; set; }
         public DbSet<Certification> Certifications { get; set; }
         public DbSet<Movie> Movies { get; set; }
-        public DbSet<MemberType> MemberTypes { get; set; }
-        public DbSet<CastCrew> CastCrews { get; set; }
+       // public DbSet<MemberType> MemberTypes { get; set; }
         public DbSet<Artist> Artists { get; set; }
+        public DbSet<CastCrew> CastCrews { get; set; }
+       
         public DbSet<Theater> Theaters { get; set; }
         public DbSet<Screen> Screens { get; set; }
         public DbSet<Schema> Schemas { get; set; }
@@ -48,17 +49,21 @@ namespace MovieBookingApi.Context
             modelBuilder.Entity<Certification>(ConfigureCertification);
             BuildCertifications(modelBuilder);
 
+            //Movie
             modelBuilder.Entity<Movie>(ConfigureMovie);
             BuildMovies(modelBuilder);
-            modelBuilder.Entity<CastCrew>(ConfigureCastCrew);
 
             //MemberTypes (i.e Cast/Crew)
-            modelBuilder.Entity<MemberType>(ConfigureMemberType);
-            BuildMemberTypes(modelBuilder);
+            //modelBuilder.Entity<MemberType>(ConfigureMemberType);
+           // BuildMemberTypes(modelBuilder);
 
             //Artists
             modelBuilder.Entity<Artist>(ConfigureArtist);
             BuildArtists(modelBuilder);
+
+            //CastCrew
+            modelBuilder.Entity<CastCrew>(ConfigureCastCrew);
+            BuildCastCrew(modelBuilder);      
 
             //Theater
             modelBuilder.Entity<Theater>(ConfigureTheater);
@@ -68,13 +73,15 @@ namespace MovieBookingApi.Context
             modelBuilder.Entity<Schema>(ConfigureSchema);
             BuildSchemas(modelBuilder);
 
+            //ScreenLayout
+            modelBuilder.Entity<ScreenLayout>(ConfigureScreenLayout);
+            BuildSchemaLayout(modelBuilder);
+
             //Screens
             modelBuilder.Entity<Screen>(ConfigureScreen);
             BuildScreens(modelBuilder);
 
-            //ScreenLayout
-            modelBuilder.Entity<ScreenLayout>(ConfigureScreenLayout);
-            BuildSchemaLayout(modelBuilder);
+            
 
             //Shows
             modelBuilder.Entity<Show>(ConfigureShow);
@@ -101,7 +108,8 @@ namespace MovieBookingApi.Context
             BuildUserAuth(modelBuilder);
         }
 
-      
+        
+
         private void ConfigureMemberType(EntityTypeBuilder<MemberType> builder)
         {
             builder.HasKey(mt => mt.Id);
@@ -140,7 +148,8 @@ namespace MovieBookingApi.Context
                 new Language { Id = 1, LanguageName = "English" },
                 new Language { Id = 2, LanguageName = "Tamil" },
                 new Language { Id = 3, LanguageName = "Hindi" },
-                new Language { Id = 4, LanguageName = "Japanese" }
+                new Language { Id=4, LanguageName ="Korean"},
+                new Language { Id = 5, LanguageName = "Japanese" }
                 );
         }
         private void ConfigureCertification(EntityTypeBuilder<Certification> builder)
@@ -185,10 +194,28 @@ namespace MovieBookingApi.Context
                 new Movie { Id=1, Title="Fight Club", CertificateId=3, Description ="First Rule of Fight Club is You do not talk about Fight Club",
                      FormatId =1, Duration=139, LanguageId=1, LetterBoxUrl = "https://letterboxd.com/film/fight-club/", RealeaseDate = new DateTime(1999, 10, 15)
                      , PosterUrl = "https://a.ltrbxd.com/resized/film-poster/5/1/5/6/8/51568-fight-club-0-500-0-750-crop.jpg?v=768b32dfa4"
+                },
+
+                new Movie {Id=2,Title="Leo", CertificateId=1, Description= "Bloody Sweet!\r\nA mild-mannered man becomes a local hero through an act of violence, but it brings forth consequences with connection to a dangerous world, one which will shake his carefully constructed life to its very core.",
+                            FormatId=1, Duration=163, LanguageId=2, LetterBoxUrl= "https://letterboxd.com/film/leo-2023-1/",RealeaseDate= new DateTime(2023,10,19)
+                            ,PosterUrl= "https://a.ltrbxd.com/resized/film-poster/8/5/3/7/3/3/853733-leo-0-500-0-750-crop.jpg?v=36bd55c98c"
+                },
+
+                new Movie { Id=3, Title="Raayan", CertificateId=3, Description= "Blood is Thicker than Everything.\r\nAfter his family is killed, a young man trains to avenge their murders. Seeking those responsible, his quest leads him through the criminal underworld.",
+                           FormatId=1, Duration=143, LanguageId=2, LetterBoxUrl= "https://letterboxd.com/film/raayan/", RealeaseDate=new DateTime(2024,7,26),
+                           PosterUrl= "https://a.ltrbxd.com/resized/film-poster/1/0/2/4/2/1/2/1024212-raayan-0-500-0-750-crop.jpg?v=d118dd747c"
+                },
+                new Movie { Id=4, Title= "Deadpool & Wolverine", CertificateId=3, Description= "Come together.\r\nA listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat, Wade must reluctantly suit-up again with an even more reluctant Wolverine. ",
+                            FormatId=3, Duration=128, LanguageId=1, LetterBoxUrl= "https://letterboxd.com/film/deadpool-wolverine/", RealeaseDate=new DateTime(2024,07,26),
+                            PosterUrl= "https://a.ltrbxd.com/resized/film-poster/4/6/2/8/7/0/462870-deadpool-wolverine-0-500-0-750-crop.jpg?v=1aa778d2c6"
+                },
+                new Movie {Id=5, Title= "Oldboy", CertificateId=3, Description= "15 years of imprisonment, five days of vengeance\r\nWith no clue how he came to be imprisoned, drugged and tortured for 15 years, a desperate businessman seeks revenge on his captors",
+                           FormatId=1, Duration=120, LanguageId=4, LetterBoxUrl= "https://letterboxd.com/film/oldboy/", RealeaseDate=new DateTime(2003,11,10),
+                           PosterUrl= "https://a.ltrbxd.com/resized/film-poster/5/1/4/5/4/51454-oldboy-0-500-0-750-crop.jpg?v=294dbcadef"
                 }
                 );
         }
-
+    
         private void ConfigureCastCrew(EntityTypeBuilder<CastCrew> builder)
         {
             builder.HasKey(c => c.Id);
@@ -201,9 +228,9 @@ namespace MovieBookingApi.Context
                 .WithMany()
                 .HasForeignKey(c => c.ArtistId);
 
-            builder.HasOne(c => c.MemberType)
-                .WithMany()
-                .HasForeignKey(c => c.MemberTypeId);
+           // builder.HasOne(c => c.MemberType)
+                //.WithMany()
+                //.HasForeignKey(c => c.MemberTypeId);
         }
         private void ConfigureArtist(EntityTypeBuilder<Artist> builder)
         {
@@ -217,7 +244,49 @@ namespace MovieBookingApi.Context
             modelBuilder.Entity<Artist>().HasData(
                 new Artist { Id = 1, Name = "Brad Pitt", About = "Great Actor." },
                 new Artist { Id = 2, Name = "Edward Norton", About = "Great Actor." },
-                new Artist { Id = 3, Name = "David Fincher", About = "Great Director." }
+                new Artist { Id = 3, Name = "David Fincher", About = "Great Director." },
+                
+                new Artist { Id=4, Name="Vijay", About="Tamil Actor"},
+                new Artist { Id=5, Name="Lokesh Kanagaraj", About="Tamil Director"},
+                new Artist { Id=6, Name="Sanjay Dutt", About="Actor"},
+
+                new Artist { Id=7, Name="Dhanush", About="Tamil Actor"},
+                new Artist { Id=8, Name="Selvaraghavan", About="Tamil Artist"},
+                new Artist { Id=9, Name= "Dushara Vijayan", About="Tamil Actress" },
+
+                new Artist { Id=10, Name="Ryan Renolds", About="Hollywood Actor"},
+                new Artist { Id=11, Name="Hugh Jackman", About="Hollywood Actor"},
+                new Artist { Id=12, Name="Shawn Lavy", About="Hollywood Director"},
+
+                new Artist { Id=13, Name= "Choi Min-sik", About="Korean Actor"},
+                new Artist { Id=14, Name="Yoo ji-tae", About="Korean Actor"},
+                new Artist { Id=15, Name="Park Chan-wook",About="Korean Director"}
+
+                );
+        }
+        private void BuildCastCrew(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CastCrew>().HasData(
+                new CastCrew { Id=1, ArtistId=1, MovieId=1, Role="Tyler Durden"},
+                new CastCrew { Id=2, ArtistId=2,  MovieId=1, Role="The Narrator"},
+                new CastCrew { Id=3, ArtistId=3,  MovieId=1, Role="Director"},
+                
+                new CastCrew { Id = 4, ArtistId = 4,  MovieId = 2, Role = "Parthiban/Leo" },
+                new CastCrew { Id=5, ArtistId=5,  MovieId=2, Role="director"},
+                new CastCrew { Id=6, ArtistId=6,  MovieId=2, Role="Anthony"},
+                
+                new CastCrew { Id=7, ArtistId=7,  MovieId=3, Role="Raayan"},
+                new CastCrew { Id=8, ArtistId=8, MovieId=3, Role="Sekhar"},
+                new CastCrew { Id=9, ArtistId=9,  MovieId=3, Role="Durga"},
+
+                new CastCrew { Id=10, ArtistId=10,  MovieId=4, Role="Deadpool"},
+                new CastCrew { Id=11, ArtistId=11, MovieId=4, Role="Wolverine"},
+                new CastCrew { Id=12, ArtistId=12, MovieId=4, Role="Director"},
+
+                new CastCrew { Id=13, ArtistId=13, MovieId=5, Role="Oh Dae-su"},
+                new CastCrew { Id=14, ArtistId=14, MovieId=5, Role="Yoo Woo-jin"},
+                new CastCrew { Id = 15, ArtistId = 15, MovieId = 5, Role="Director"}
+                
                 );
         }
         private void ConfigureTheater(EntityTypeBuilder<Theater> builder)
@@ -233,7 +302,8 @@ namespace MovieBookingApi.Context
             modelBuilder.Entity<Theater>().HasData(
                 new Theater { Id = 1, Name = "INOX Theater", Phone = "1231231231", Address = "xyz,xxx", District = "Chennai" },
                 new Theater { Id = 2, Name = "Rohini Theater", Phone = "1234123434", Address = "asd,asd", District = "Chennai" },
-                new Theater { Id = 3, Name = "Theater X", Phone = "1234512345", Address = "qwe,asd", District = "Chennai" }
+                new Theater { Id = 3, Name = "Thanga Regal", Phone = "1234512345", Address = "qwe,asd", District = "Madurai" },
+                new Theater { Id=4, Name="Gopuram Cinemas", Phone="1231231239", Address="asd, asd", District="Madurai"}
                 );
         }
 
@@ -255,7 +325,12 @@ namespace MovieBookingApi.Context
         private void BuildScreens(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Screen>().HasData(
-                new Screen { Id = 1, ScreenName = "Screen 1", TheaterId = 1, SchemaId = 1 }
+                new Screen { Id = 1, ScreenName = "Screen 1", TheaterId = 1, SchemaId = 1 },
+                new Screen { Id=2, ScreenName="King Sony 4K", TheaterId=2, SchemaId = 2 },
+                new Screen { Id=3, ScreenName="Queen Qube Laser", TheaterId=2, SchemaId=3},
+                new Screen { Id=4, ScreenName="Prince", TheaterId=3, SchemaId=1},
+                new Screen { Id=5, ScreenName="G1", TheaterId=4, SchemaId=2},
+                new Screen { Id=6, ScreenName="G2", TheaterId=4, SchemaId=3}
                 );
         }
         private void ConfigureSchema(EntityTypeBuilder<Schema> builder)
@@ -269,7 +344,9 @@ namespace MovieBookingApi.Context
         private void BuildSchemas(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Schema>().HasData(
-                new Schema { Id = 1, Name = "Schema 1", RowDimension = 15, ColumnDimension = 16 }
+                new Schema { Id = 1, Name = "Schema 1", RowDimension = 15, ColumnDimension = 16 },
+                new Schema { Id=2, Name="Schema 2", RowDimension=10, ColumnDimension=15},
+                new Schema { Id=3, Name="Schema 3", RowDimension=12, ColumnDimension=13}
                 );
         }
 
@@ -305,12 +382,81 @@ namespace MovieBookingApi.Context
                     id++;
                 }
             }
+
+            
+            for(int row = 1; row <= 10; row++)
+            {
+                for(int column = 1;column <= 15; column++)
+                {
+                    bool IsSeat = true;
+                    if (column == 8)
+                    {
+                        IsSeat = false;
+                    }
+                    modelBuilder.Entity<ScreenLayout>().HasData(
+                        new ScreenLayout { Id=id, Row=row, Column=column, Price=240, IsSeat=IsSeat, SchemaId = 2 }
+                        );
+                    id++;
+                }
+            }
+
+            
+            for(int row = 1;row <= 12; row++)
+            {
+                for(int column = 1;column <= 13; column++)
+                {
+                    bool IsSeat = true;
+                    if(column == 7||row==11) 
+                    { 
+                        IsSeat = false; 
+                    }
+                    if (row == 12)
+                    {
+                        IsSeat= true;
+                    }
+                    modelBuilder.Entity<ScreenLayout>().HasData(
+                        new ScreenLayout { Id = id, Row = row, Column = column, Price = 200, IsSeat = IsSeat, SchemaId = 3 }
+                        );
+                    id++;
+                }
+            }
         }
         
         private void BuildShows(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Show>().HasData(
-               new Show { Id = 1, ShowDateTime = new DateTime(2024, 8, 15, 14, 30, 0), MovieId = 1, ScreenId = 1}
+               new Show { Id = 1, ShowDateTime = new DateTime(2024, 8, 7, 9, 30, 0), MovieId = 1, ScreenId = 1},
+               new Show { Id=2, ShowDateTime=new DateTime(2024,8,7,14,30,0),MovieId=1, ScreenId=1},
+               new Show { Id=3, ShowDateTime=new DateTime(2024, 8,7,10,0,0), MovieId=1, ScreenId=3},
+               new Show { Id=4, ShowDateTime=new DateTime(2024,8,7,16,30,0), MovieId=1,ScreenId=6},
+               new Show { Id = 5, ShowDateTime = new DateTime(2024, 8, 8, 9, 30, 0), MovieId = 1, ScreenId = 1 },
+
+               new Show { Id=6, ShowDateTime = new DateTime(2024,8,7, 9, 30,0), MovieId=2, ScreenId=2},
+               new Show { Id=7,ShowDateTime =new DateTime(2024,8,7,13,30,0),MovieId=2,ScreenId=2},
+               new Show { Id=8, ShowDateTime = new DateTime(2024,8,7,14,5,0), MovieId=2, ScreenId=3},
+               new Show { Id=9, ShowDateTime = new DateTime(2024,8,7,9,30,0), MovieId=2, ScreenId=4},
+               new Show { Id=10, ShowDateTime=new DateTime(2024,8,7,9,0,0), MovieId=2, ScreenId=5},
+               new Show { Id = 11, ShowDateTime = new DateTime(2024, 8, 8, 9, 30, 0), MovieId = 2, ScreenId = 2 },
+               new Show { Id = 12, ShowDateTime = new DateTime(2024, 8, 8, 13, 30, 0), MovieId = 2, ScreenId = 2 },
+               new Show { Id = 13, ShowDateTime = new DateTime(2024, 8, 8, 14, 5, 0), MovieId = 2, ScreenId = 3 },
+               new Show { Id = 14, ShowDateTime = new DateTime(2024, 8, 8, 9, 30, 0), MovieId = 2, ScreenId = 4 },
+               new Show { Id = 15, ShowDateTime = new DateTime(2024, 8, 8, 9, 0, 0), MovieId = 2, ScreenId = 5 },
+
+               new Show { Id = 16, ShowDateTime = new DateTime(2024, 8, 8, 14, 30, 0), MovieId = 3, ScreenId = 5 },
+               new Show { Id = 17, ShowDateTime = new DateTime(2024, 8, 8, 18, 30, 0), MovieId = 3, ScreenId = 5 },
+               new Show { Id = 18, ShowDateTime = new DateTime(2024, 8, 7, 18, 45, 0), MovieId = 3, ScreenId = 1 },
+               new Show { Id = 19, ShowDateTime = new DateTime(2024, 8, 9, 14, 30, 0), MovieId = 3, ScreenId = 5 },
+               new Show { Id = 20, ShowDateTime = new DateTime(2024, 8, 9, 18, 30, 0), MovieId = 3, ScreenId = 5 },
+               new Show { Id = 21, ShowDateTime = new DateTime(2024, 8, 8, 18, 45, 0), MovieId = 3, ScreenId = 1 },
+
+
+                new Show { Id = 22, ShowDateTime = new DateTime(2024, 8, 7, 22, 45, 0), MovieId = 4, ScreenId = 1 },
+                new Show { Id = 23, ShowDateTime = new DateTime(2024, 8, 7, 20, 45, 0), MovieId = 4, ScreenId = 6 },
+                new Show { Id = 24, ShowDateTime = new DateTime(2024, 8, 8, 22, 45, 0), MovieId = 4, ScreenId = 1 },
+                new Show { Id = 25, ShowDateTime = new DateTime(2024, 8, 8, 20, 45, 0), MovieId = 4, ScreenId = 6 },
+
+                new Show { Id = 26, ShowDateTime = new DateTime(2024, 8, 8, 14, 45, 0), MovieId = 5, ScreenId = 1 },
+                new Show { Id = 27, ShowDateTime = new DateTime(2024, 8, 8, 10, 45, 0), MovieId = 5, ScreenId = 6 }
                 );
         }
         private void ConfigureShow(EntityTypeBuilder<Show> builder)
@@ -379,9 +525,21 @@ namespace MovieBookingApi.Context
         private void BuildSnacks(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Snack>().HasData(
-                new Snack { Id=1, Name="Regular Popcorn", Description="Salted Popcorn", IsAvailable=true, Price=250, TheaterId=1},
-                new Snack { Id=2, Name="Nachos", Description="Crispy Nachos", IsAvailable=true, Price=200, TheaterId=1},
-                new Snack { Id=3, Name="Coffee", Description="Hot Coffee", IsAvailable=true, Price=200, TheaterId=1}
+                new Snack { Id=1, Name="Regular Popcorn", Description="Salted Popcorn", IsAvailable=true, Price=350, TheaterId=1},
+                new Snack { Id=2, Name="Nachos", Description="Crispy Nachos", IsAvailable=true, Price=260, TheaterId=1},
+                new Snack { Id=3, Name="Coffee", Description="Hot Coffee", IsAvailable=true, Price=280, TheaterId=1},
+
+                new Snack { Id = 4, Name = "Salted Popcorn", Description = "Salted Popcorn", IsAvailable = true, Price = 200, TheaterId = 2 },
+                new Snack { Id = 5, Name = "Chips", Description = "Crispy Chips", IsAvailable = true, Price = 150, TheaterId = 2 },
+                new Snack { Id = 6, Name = "Coffee", Description = "Hot Coffee", IsAvailable = true, Price = 100, TheaterId = 2 },
+
+                new Snack { Id = 7, Name = "Popcorn", Description = "Salted Popcorn", IsAvailable = true, Price = 150, TheaterId = 3 },
+                new Snack { Id = 8, Name = "Sweet Corn", Description = "Corn", IsAvailable = true, Price = 100, TheaterId = 3 },
+                new Snack { Id = 9, Name = "Coffee", Description = "Hot Coffee", IsAvailable = true, Price = 50, TheaterId = 3 },
+
+                new Snack { Id = 10, Name = "Salted Popcorn", Description = "Salted Popcorn", IsAvailable = true, Price = 250, TheaterId = 4 },
+                new Snack { Id = 11, Name = "Nachos", Description = "Crispy Nachos", IsAvailable = true, Price = 200, TheaterId = 4 },
+                new Snack { Id = 12, Name = "Coke", Description = "Cold Coke", IsAvailable = true, Price = 200, TheaterId = 4 }
                 );
         }
         private void ConfigureSnackOrder(EntityTypeBuilder<SnackOrder> builder)
@@ -452,7 +610,7 @@ namespace MovieBookingApi.Context
         private void BuildUser(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Email = "mynameisshrish@gmail.com", Name = "Shrish", Phone = "1231233123" }
+                new User { Id = 1, Email = "Naresh@gmail.com", Name = "Naresh", Phone = "1231233122" }
                 );
         }
 

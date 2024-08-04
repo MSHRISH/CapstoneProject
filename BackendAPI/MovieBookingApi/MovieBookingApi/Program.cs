@@ -91,7 +91,7 @@ namespace MovieBookingApi
             builder.Services.AddScoped<IRepository<int, Artist>, ArtistRepository>();
             builder.Services.AddScoped<IRepository<int, Booking>, BookingRepository>();
             builder.Services.AddScoped<IRepository<int, CastCrew>, CastCrewRepository>();
-            builder.Services.AddScoped<IRepository<int,MemberType>,MemberTypeRepository>();
+        
             builder.Services.AddScoped<IRepository<int, Certification>, CertificationRepository>();
             builder.Services.AddScoped<IRepository<int, Format>, FormatRepository>();
             builder.Services.AddScoped<IRepository<int, Language>, LanguageRepository>();

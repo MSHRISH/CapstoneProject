@@ -280,5 +280,23 @@ namespace MovieBookingApi.Controllers
                 return BadRequest(new ErrorModel(400, ex.Message));
             }
         }
+
+        [HttpGet("GetAllUnpaidBookings")]
+        [ProducesResponseType(typeof(List<BookingDetailsDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "RequireAdminRole")]
+        public async Task<ActionResult<List<BookingDetailsDTO>>> GetAllUnpaidBookings()
+        {
+            try
+            {
+                var res = await _bookingServices.GetAllUnpaidBookings();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorModel(400, ex.Message));
+            }
+
+        }
     }
 }

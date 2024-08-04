@@ -6,6 +6,9 @@ namespace MovieBookingApi.Iterfaces
 {
     public interface IBookingServices
     {
+        //Get All UnPaidBookings
+        public Task<List<BookingDetailsDTO>> GetAllUnpaidBookings();
+
         //CheckIf a User is Elgible for Discount
         public Task<bool> DiscountEligibility(int userid);
         //Add A Show

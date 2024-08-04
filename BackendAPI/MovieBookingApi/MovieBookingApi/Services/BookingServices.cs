@@ -659,5 +659,16 @@ namespace MovieBookingApi.Services
             var res = movie.Select(m => new AllmoviesMiniDTO { MovieId = m.Id, MovieName = m.Title, ReleaseDate = m.RealeaseDate }).ToList();
             return res;
         }
+
+        public async Task<List<BookingDetailsDTO>> GetAllUnpaidBookings()
+        {
+            var bookings = await _BookingRepository.GetAll();
+            var unpaidbookings = bookings.Where(b => b.PaymentStatus == false).Select(b => new BookingDetailsDTO
+            {
+                BookingId = b.Id
+            }).ToList();
+            return unpaidbookings;
+
+        }
     }
 }
